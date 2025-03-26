@@ -1,6 +1,5 @@
 package com.bank.model;
 
-
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -14,19 +13,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Entity
-@Table(name = "type_user")
+@Table(name = "tipo_documento_user")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TypeUser {
+public class TipoDocumentoUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String tipo;
 	
-	@OneToMany(mappedBy = "typeUser", fetch = FetchType.LAZY, targetEntity = User.class)
+	@OneToMany(mappedBy = "tipoDocumento", fetch = FetchType.LAZY, targetEntity = User.class)
 	private List<User> users;
 }
