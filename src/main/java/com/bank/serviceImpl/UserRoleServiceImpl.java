@@ -6,25 +6,25 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import com.bank.model.RoleUser;
 import com.bank.dto.RoleUserDTO;
 import com.bank.repository.RoleUserRepository;
 import com.bank.service.RoleUserService;
-
+@Service
 public class UserRoleServiceImpl implements RoleUserService{
 	@Autowired
 	private RoleUserRepository roleUserRepository;
 	
-	@Autowired
-	private ConversionService conversionService;
-	
 	@Override
 	public List<RoleUserDTO> listUserRols() {
 		List<RoleUserDTO> list = roleUserRepository.findAll().stream()
-				.map(roleUserEntity -> conversionService.convert(roleUserEntity, RoleUserDTO.class))
+				.map(roleUserEntity -> RoleUserDTO
+						.builder()
+						.id(roleUserEntity.getId())
+						.tipo(roleUserEntity.getTipo())
+						.build())
 				.collect(Collectors.toList());
 		return list;
 	}
@@ -34,7 +34,12 @@ public class UserRoleServiceImpl implements RoleUserService{
 		if(result.isEmpty()) {
 			  //crear funcion para controlar las excepciones
 		}
-		return conversionService.convert(result.get(), RoleUserDTO.class);
+		RoleUser rl = result.get();
+		return RoleUserDTO
+				.builder()
+				.id(rl.getId())
+				.tipo(rl.getTipo())
+				.build();
 	}
 	@Override
 	public RoleUserDTO saveUserRole(RoleUserDTO userRoleDTO) {
@@ -42,10 +47,18 @@ public class UserRoleServiceImpl implements RoleUserService{
 			//crear funcion para controlar las excepciones
 		}
 		
-		RoleUser roleUserTransformado = conversionService.convert(userRoleDTO, RoleUser.class);
+		RoleUser roleUserTransformado = RoleUser
+											.builder()
+											.id(userRoleDTO.getId())
+											.tipo(userRoleDTO.getTipo())
+											.build();
 		RoleUser result = roleUserRepository.save(Objects.requireNonNull(roleUserTransformado));
 		
-		return conversionService.convert(result, RoleUserDTO.class);
+		return RoleUserDTO
+				.builder()
+				.id(result.getId())
+				.tipo(result.getTipo())
+				.build();
 	}
 	@Override
 	public RoleUserDTO updateUserRole(RoleUserDTO userRoleDTO) {
@@ -53,9 +66,17 @@ public class UserRoleServiceImpl implements RoleUserService{
 			//crear funcion para controlar las excepciones
 		}
 		
-		RoleUser roleUserTransformado = conversionService.convert(userRoleDTO, RoleUser.class);
+		RoleUser roleUserTransformado = RoleUser
+				.builder()
+				.id(userRoleDTO.getId())
+				.tipo(userRoleDTO.getTipo())
+				.build();
 		RoleUser result = roleUserRepository.save(Objects.requireNonNull(roleUserTransformado));
-		return conversionService.convert(result, RoleUserDTO.class);
+		return RoleUserDTO
+				.builder()
+				.id(result.getId())
+				.tipo(result.getTipo())
+				.build();
 	}
 	
 	@Override

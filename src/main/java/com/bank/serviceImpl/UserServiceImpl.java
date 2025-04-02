@@ -4,23 +4,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.UserDTO;
+import com.bank.model.User;
 import com.bank.repository.UserRepository;
 import com.bank.service.UserService;
-
+@Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	
+	//modificar los permisos de acuerdo a la tabla user role
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado " + username));
+		return org.springframework.security.core.userdetails.User.builder()
+				.username(user.getUsername())
+				.password(user.getPassword())
+				.authorities(List.of(new SimpleGrantedAuthority("USUARIO")))
+				.build();
 	}
 	
 	@Override
