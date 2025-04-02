@@ -45,6 +45,5 @@ public class User {
 	private RoleUser typeUser;
 	
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, targetEntity = Cuenta.class)
-	private List<Cuenta> cuentas;
+	
 }
