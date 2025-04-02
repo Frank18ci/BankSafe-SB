@@ -34,13 +34,15 @@ public class User {
 	private String nombres;
 	private String apellidos;
 	private int edad;
-	//agregar el username puede ser el documento si lo consideramos como numero pero faltaria validar el tipo y el numero en ese caso
-	
+	// validar spring security 
+	private String username;
 	private String password;
+	
+	//
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TypeUser.class)
-	private TypeUser typeUser;
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = RoleUser.class)
+	private RoleUser typeUser;
 	
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, targetEntity = Cuenta.class)
