@@ -20,4 +20,6 @@ public class Tarjeta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	private String numeroTarjeta;
 }
