@@ -20,4 +20,5 @@ public class TipoPrestamo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+ private String tipo;
 }
