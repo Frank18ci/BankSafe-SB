@@ -20,6 +20,7 @@ public class Tarjeta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+	private int cvv;
+	private Date fechaVencimiento;
 	private String numeroTarjeta;
 }
