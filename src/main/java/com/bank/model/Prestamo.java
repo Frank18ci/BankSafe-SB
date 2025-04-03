@@ -20,6 +20,7 @@ public class Prestamo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	private int hola;
+	private int intTipoPrestamo;
+	private Date FechaRegistro;
+	private Date FechaFinalizado;
 }
