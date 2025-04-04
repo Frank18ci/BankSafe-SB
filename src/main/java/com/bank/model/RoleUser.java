@@ -26,10 +26,6 @@ public class RoleUser {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String tipo;
- private Date fechaIngreso;
- private Date fechaEditado;
- 
- private int idRol;
 	
 	@OneToMany(mappedBy = "roleUser", fetch = FetchType.LAZY, targetEntity = User.class)
 	private List<User> users;
