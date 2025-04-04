@@ -29,8 +29,6 @@ public class Tarjeta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-
-	
 	@Column(length = 3)
 	private String cvv;
 	
