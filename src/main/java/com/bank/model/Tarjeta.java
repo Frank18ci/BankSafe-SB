@@ -44,9 +44,7 @@ public class Tarjeta {
 	private Double monto;
 	
 	@ManyToOne
-	
 	private User user;
-	
 	@ManyToOne
 	private TipoTarjeta tipoTarjeta;
 	@ManyToOne
