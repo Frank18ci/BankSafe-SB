@@ -9,7 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.bank.security.jwt.JwtUtils;
-import com.bank.serviceImpl.UserServiceImpl;
+import com.bank.serviceImpl.TarjetaServiceImpl;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
 	private JwtUtils jwtUtils;
 	
 	@Autowired
-	UserServiceImpl userService;
+	TarjetaServiceImpl tarjetaServiceImpl;
 	
 	@Override
 	protected void doFilterInternal( HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -32,7 +32,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
 			String token = tokenHeader.substring(7);
 			if(jwtUtils.isTokenValid(token)) {
 				String username = jwtUtils.getUsernameFromToken(token);
-				UserDetails userDetails = userService.loadUserByUsername(username);
+				UserDetails userDetails = tarjetaServiceImpl.loadUserByUsername(username);
 				UsernamePasswordAuthenticationToken authenticationToken = 
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);

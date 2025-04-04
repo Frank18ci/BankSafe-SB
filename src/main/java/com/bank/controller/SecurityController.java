@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.dto.TarjetaDTO;
 import com.bank.dto.UserDTO;
+import com.bank.model.Tarjeta;
 import com.bank.model.User;
+import com.bank.repository.TarjetaRepository;
 import com.bank.repository.UserRepository;
 
 @RestController
@@ -21,23 +24,25 @@ public class SecurityController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	
 	@Autowired
-	private UserRepository clienteRepository;
+	private TarjetaRepository tarjetaRepository;
 	
 	@PostMapping("/createUser")
-	public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO){
-		User user = User.builder()
-				.username(userDTO.getUsername())
-				.password(passwordEncoder.encode(userDTO.getPassword()))
+	public ResponseEntity<?> createUser(@RequestBody TarjetaDTO tarjetaDTO){
+		
+		Tarjeta tarjeta = Tarjeta.builder()
+				.numeroTarjeta(tarjetaDTO.getNumeroTarjeta())
+				.claveInternet(passwordEncoder.encode(tarjetaDTO.getClaveInternet()))
 				.build();
 		
-		clienteRepository.save(user);
-		return ResponseEntity.ok(user);
+		tarjetaRepository.save(tarjeta);
+		return ResponseEntity.ok(tarjeta);
 		}
 	@GetMapping("/perfil")
 	public String getPerfilUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		User user = (User) authentication.getPrincipal();
-        return "Bienvenido, " + user.getUsername() + ". Tu password es " + user.getPassword();
+		Tarjeta tarjeta = (Tarjeta) authentication.getPrincipal();
+        return "Bienvenido, " + tarjeta.getUser().getNombres() + " numero de tarjeta " + tarjeta.getNumeroTarjeta() + ". Tu password es " + tarjeta.getClaveInternet();
 	}
 }

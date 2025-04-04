@@ -20,13 +20,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.bank.security.filters.JwtAuthenticationFilter;
 import com.bank.security.filters.JwtAuthorizationFilter;
 import com.bank.security.jwt.JwtUtils;
-import com.bank.serviceImpl.UserServiceImpl;
-
+import com.bank.serviceImpl.TarjetaServiceImpl;
 @Configuration
 public class SecurityConfig {
 	
 	@Autowired
-	UserServiceImpl userService;
+	TarjetaServiceImpl tarjetaServiceImpl;
 	
 	@Autowired
 	JwtUtils jwtUtils;
@@ -45,8 +44,9 @@ public class SecurityConfig {
 				.csrf(config -> config.disable())
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/*").permitAll();
+					//auth.requestMatchers("/*").permitAll();
 					auth.requestMatchers("/auth/*").permitAll();
+					auth.requestMatchers("/login/*").permitAll();
 					auth.anyRequest().authenticated();
 				})
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -66,7 +66,7 @@ public class SecurityConfig {
 	@Bean
 	DaoAuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder) {
 	    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	    authProvider.setUserDetailsService(userService);
+	    authProvider.setUserDetailsService(tarjetaServiceImpl);
 	    authProvider.setPasswordEncoder(passwordEncoder);
 	    return authProvider;
 	}

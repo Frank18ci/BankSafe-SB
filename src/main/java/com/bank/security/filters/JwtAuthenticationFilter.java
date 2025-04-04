@@ -2,7 +2,7 @@ package com.bank.security.filters;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.bank.model.User;
+import com.bank.model.Tarjeta;
 import com.bank.security.jwt.JwtUtils;
 
 import java.io.IOException;
@@ -33,15 +33,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request,
 	        HttpServletResponse response) throws AuthenticationException {
-	    User userEntity;
+	    Tarjeta tarjetaEntity;
 	    try {
-	        userEntity = new ObjectMapper().readValue(request.getInputStream(), User.class);
+	        tarjetaEntity = new ObjectMapper().readValue(request.getInputStream(), Tarjeta.class);
 	    } catch (IOException e) {
 	        throw new RuntimeException("Error al leer la solicitud de autenticación", e);
 	    }
 
 	    UsernamePasswordAuthenticationToken authenticationToken = 
-	            new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword());
+	            new UsernamePasswordAuthenticationToken(tarjetaEntity.getNumeroTarjeta(), tarjetaEntity.getClaveInternet());
 
 	    return getAuthenticationManager().authenticate(authenticationToken);
 	}
@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	    Map<String, Object> httpResponse = new HashMap<>();
 	    httpResponse.put("token", token);
 	    httpResponse.put("Message", "Authentication success");
-	    httpResponse.put("Username", userDetails.getUsername());
+	    httpResponse.put("User", userDetails);
 
 	    response.setStatus(HttpStatus.OK.value());
 	    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
