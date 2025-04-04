@@ -28,22 +28,17 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
-	private TipoDocumentoUser tipoDocumento;
-	private String documento;
+	private String numeroDocumento;
 	private String nombres;
 	private String apellidos;
-	private int edad;
-	// validar spring security 
-	private String username;
-	private String password;
-	
-	//
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
+	
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = RoleUser.class)
-	private RoleUser typeUser;
-	
-	
+	private RoleUser roleUser;
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
+	private TipoDocumentoUser tipoDocumento;
+	@OneToMany(mappedBy = "user")
+	private List<Tarjeta> tarjetas;
 	
 }
