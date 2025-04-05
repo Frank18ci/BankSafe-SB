@@ -3,6 +3,7 @@ package com.bank.model;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,15 +28,23 @@ import lombok.NoArgsConstructor;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column (name="id")
 	private int id;
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
+	@Column
 	private TipoDocumentoUser tipoDocumento;
+	@Column
 	private String documento;
+	@Column
 	private String nombres;
+	@Column
 	private String apellidos;
+	@Column
 	private int edad;
 	// validar spring security 
+	@Column
 	private String username;
+	@Column
 	private String password;
 	
 	//
