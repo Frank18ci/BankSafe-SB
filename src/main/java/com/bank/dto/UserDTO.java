@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
 	private int id;
-	
-	private String documento;
+	private String numeroDocumento;
 	private String nombres;
 	private String apellidos;
-	private int edad;
-	private String username;
-	private String password;
 	private Date fechaNacimiento;
+	private String imagePath;
+	private RoleUserDTO roleUserDTO;
+	private TipoDocumentoUserDTO tipoDocumentoUserDTO;
+	
 }

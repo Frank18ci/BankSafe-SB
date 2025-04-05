@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.bank.dto.RoleUserDTO;
+import com.bank.dto.TipoDocumentoUserDTO;
 import com.bank.dto.UserDTO;
 import com.bank.model.User;
 import com.bank.repository.UserRepository;
@@ -21,30 +23,49 @@ public class UserServiceImpl implements UserService {
 	
 		
 	@Override
-	public List<UserDTO> listUsers() {
-		//Falta agregar attributos al mapper
+	public List<UserDTO> list() {
+		
 		List<UserDTO> users = userRepository.findAll().stream()
-				.map(userEntity -> UserDTO.builder()
-						.id(userEntity.getId())
-						.nombres(userEntity.getApellidos())
-						.apellidos(userEntity.getApellidos())
-						.fechaNacimiento(userEntity.getFechaNacimiento())
+				.map(ue -> UserDTO.builder()
+						.id(ue.getId())
+						.numeroDocumento(ue.getNumeroDocumento())
+						.nombres(ue.getApellidos())
+						.apellidos(ue.getApellidos())
+						.fechaNacimiento(ue.getFechaNacimiento())
+						.imagePath(ue.getImagePath())
+						.roleUserDTO(RoleUserDTO.builder()
+								.id(ue.getRoleUser().getId())
+								.tipo(ue.getRoleUser().getTipo())
+								.build())
+						.tipoDocumentoUserDTO(TipoDocumentoUserDTO.builder()
+								.id(ue.getTipoDocumento().getId())
+								.tipo(ue.getTipoDocumento().getTipo())
+								.build())
 						.build())
 				.collect(Collectors.toList());
+				
 		return users;
 	}
 	@Override
-	public UserDTO findUser(int id) {
+	public UserDTO find(int id) {
 		return null;
 	}
 	@Override
-	public UserDTO updateUser(UserDTO userDTO) {
+	public UserDTO create(UserDTO userDTO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public void deleteUser(int id) {
+	public UserDTO update(UserDTO userDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void delete(int id) {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//Metodos para convertir 
+	
 }
