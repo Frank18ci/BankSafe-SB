@@ -25,7 +25,8 @@ public class TipoDocumentoUser {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	@Column
+	@Column(unique = true)
+
 	private String tipo;
 	
 	@OneToMany(mappedBy = "tipoDocumento", fetch = FetchType.LAZY, targetEntity = User.class)

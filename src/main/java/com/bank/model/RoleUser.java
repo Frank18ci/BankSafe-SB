@@ -30,6 +30,6 @@ public class RoleUser {
 	@Column
 	private String tipo;
 	
-	@OneToMany(mappedBy = "typeUser", fetch = FetchType.LAZY, targetEntity = User.class)
+	@OneToMany(mappedBy = "roleUser", fetch = FetchType.LAZY, targetEntity = User.class)
 	private List<User> users;
 }

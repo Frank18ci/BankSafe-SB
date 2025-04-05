@@ -30,15 +30,18 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column (name="id")
 	private int id;
+
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
-	@Column
-	private TipoDocumentoUser tipoDocumento;
 	@Column
 	private String documento;
 	@Column
+
+	private String numeroDocumento;
+
 	private String nombres;
 	@Column
 	private String apellidos;
+
 	@Column
 	private int edad;
 	// validar spring security 
@@ -50,9 +53,12 @@ public class User {
 	//
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
+	
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = RoleUser.class)
-	private RoleUser typeUser;
-	
-	
+	private RoleUser roleUser;
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
+	private TipoDocumentoUser tipoDocumento;
+	@OneToMany(mappedBy = "user")
+	private List<Tarjeta> tarjetas;
 	
 }

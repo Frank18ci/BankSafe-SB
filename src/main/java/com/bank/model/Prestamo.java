@@ -27,6 +27,7 @@ public class Prestamo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
+//<<<<<<< HEAD
 	@Column
 	private BigDecimal montoPrestamo;
 	@Column
@@ -40,4 +41,9 @@ public class Prestamo {
 	@Column
     private String estado;
 	//
+//======
+	private int intTipoPrestamo;
+	private Date FechaRegistro;
+	private Date FechaFinalizado;
+//>>>>>>> c48deed48c81a95ac0d8dc6def437b4a9684e1a8
 }

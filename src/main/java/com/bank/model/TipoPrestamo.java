@@ -22,6 +22,10 @@ public class TipoPrestamo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
+
 	@Column
 	private String nombre;
+
+	private String tipo;
+
 }

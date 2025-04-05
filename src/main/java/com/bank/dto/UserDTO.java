@@ -19,6 +19,7 @@ public class UserDTO {
 	private String nombres;
 	private String apellidos;
 	private int edad;
+	private String username;
 	private String password;
 	private Date fechaNacimiento;
 }
