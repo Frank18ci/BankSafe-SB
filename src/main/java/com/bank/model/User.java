@@ -63,5 +63,6 @@ public class User {
 	private TipoDocumentoUser tipoDocumento;
 	@OneToMany(mappedBy = "user")
 	private List<Tarjeta> tarjetas;
+	//
 	
 }

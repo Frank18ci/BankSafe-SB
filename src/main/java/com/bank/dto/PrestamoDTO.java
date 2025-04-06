@@ -13,10 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PrestamoDTO {
+	
 	private int id;
 	private BigDecimal montoPrestamo;
-    private BigDecimal interes;
-    private Integer plazoMeses;
+	private BigDecimal interes;
+	private Integer plazoMeses;
     private Date fechaInicio;
     private Date fechaFin;
     private String estado;
