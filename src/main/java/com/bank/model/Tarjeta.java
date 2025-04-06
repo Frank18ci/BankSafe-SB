@@ -1,9 +1,7 @@
 package com.bank.model;
 
+
 import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,8 +25,8 @@ import lombok.NoArgsConstructor;
 public class Tarjeta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
+	@Column(name = "id")
+	private int id;	
 	@Column(length = 3)
 	private String cvv;
 	

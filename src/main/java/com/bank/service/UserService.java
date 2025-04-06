@@ -8,7 +8,7 @@ import com.bank.dto.UserDTO;
 public interface UserService {
 	public List<UserDTO> list();
 	public UserDTO find(int id);
-	public UserDTO create(UserDTO userDTO);
+	public UserDTO save(UserDTO userDTO);
 	public UserDTO update(UserDTO userDTO);
 	public void delete(int id);
 }
