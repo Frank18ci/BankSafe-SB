@@ -41,14 +41,6 @@ public class User {
 	private String nombres;
 	@Column
 	private String apellidos;
-
-	@Column
-	private int edad;
-	// validar spring security 
-	@Column
-	private String username;
-	@Column
-	private String password;
 	
 	//
 	@Temporal(TemporalType.DATE)
@@ -60,7 +52,7 @@ public class User {
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = RoleUser.class)
 	private RoleUser roleUser;
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
-	private TipoDocumentoUser tipoDocumento;
+	private TipoDocumentoUser tipoDocumentoUser;
 	@OneToMany(mappedBy = "user")
 	private List<Tarjeta> tarjetas;
 	//
