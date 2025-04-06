@@ -31,4 +31,8 @@ public class Transacion {
 	private String descripcion;
 	@Column
 	private Date fecha;
+	//
+	private TipoTransacion tipoTransaccion;
+	private Tarjeta tarjeta;
+	private User User;
 }

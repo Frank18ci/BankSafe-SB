@@ -13,74 +13,63 @@ import com.bank.dto.RoleUserDTO;
 import com.bank.repository.RoleUserRepository;
 import com.bank.service.RoleUserService;
 @Service
-public class UserRoleServiceImpl implements RoleUserService{
+public class RoleUserServiceImpl implements RoleUserService{
 	@Autowired
 	private RoleUserRepository roleUserRepository;
 	
+	private RoleUserDTO roleUserToRoleUserDTO(RoleUser roleUser) {
+		return RoleUserDTO
+				.builder()
+				.id(roleUser.getId())
+				.tipo(roleUser.getTipo())
+				.build();
+	}
+	private RoleUser roleUserDTOToRoleUser(RoleUserDTO roleUserDTO) {
+		return RoleUser
+				.builder()
+				.id(roleUserDTO.getId())
+				.tipo(roleUserDTO.getTipo())
+				.build();
+	}
+	
 	@Override
-	public List<RoleUserDTO> listUserRols() {
+	public List<RoleUserDTO> list() {
 		List<RoleUserDTO> list = roleUserRepository.findAll().stream()
-				.map(roleUserEntity -> RoleUserDTO
-						.builder()
-						.id(roleUserEntity.getId())
-						.tipo(roleUserEntity.getTipo())
-						.build())
+				.map(roleUserEntity -> roleUserToRoleUserDTO(roleUserEntity))
 				.collect(Collectors.toList());
 		return list;
 	}
 	@Override
-	public RoleUserDTO findUserRole(int id) {
+	public RoleUserDTO find(int id) {
 		Optional<RoleUser> result = roleUserRepository.findById(id);
 		if(result.isEmpty()) {
 			  //crear funcion para controlar las excepciones
 		}
 		RoleUser rl = result.get();
-		return RoleUserDTO
-				.builder()
-				.id(rl.getId())
-				.tipo(rl.getTipo())
-				.build();
+		return roleUserToRoleUserDTO(rl);
 	}
+
 	@Override
-	public RoleUserDTO saveUserRole(RoleUserDTO userRoleDTO) {
+	public RoleUserDTO save(RoleUserDTO userRoleDTO) {
 		if(Objects.isNull(userRoleDTO.getId())) {
 			//crear funcion para controlar las excepciones
 		}
-		
-		RoleUser roleUserTransformado = RoleUser
-											.builder()
-											.id(userRoleDTO.getId())
-											.tipo(userRoleDTO.getTipo())
-											.build();
+		RoleUser roleUserTransformado = roleUserDTOToRoleUser(userRoleDTO);
 		RoleUser result = roleUserRepository.save(Objects.requireNonNull(roleUserTransformado));
-		
-		return RoleUserDTO
-				.builder()
-				.id(result.getId())
-				.tipo(result.getTipo())
-				.build();
+		return roleUserToRoleUserDTO(result);
 	}
 	@Override
-	public RoleUserDTO updateUserRole(RoleUserDTO userRoleDTO) {
+	public RoleUserDTO update(RoleUserDTO userRoleDTO) {
 		if(Objects.isNull(userRoleDTO.getId())) {
 			//crear funcion para controlar las excepciones
 		}
-		
-		RoleUser roleUserTransformado = RoleUser
-				.builder()
-				.id(userRoleDTO.getId())
-				.tipo(userRoleDTO.getTipo())
-				.build();
+		RoleUser roleUserTransformado = roleUserDTOToRoleUser(userRoleDTO);
 		RoleUser result = roleUserRepository.save(Objects.requireNonNull(roleUserTransformado));
-		return RoleUserDTO
-				.builder()
-				.id(result.getId())
-				.tipo(result.getTipo())
-				.build();
+		return roleUserToRoleUserDTO(result);
 	}
 	
 	@Override
-	public void deleteUserRole(int id) {
+	public void delete(int id) {
 		roleUserRepository.deleteById(id);
 	}
 }

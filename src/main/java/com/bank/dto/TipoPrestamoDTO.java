@@ -1,5 +1,6 @@
 package com.bank.dto;
 
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
@@ -11,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoMonedaTarjetaDTO {
+public class TipoPrestamoDTO {
+
 	private int id;
 	private String nombre;
-	private String simbolo;
 	private String tipo;
 }

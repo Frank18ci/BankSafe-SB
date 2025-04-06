@@ -13,10 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TarjetaDTO {
 	private int id;
-	private String claveInternet;
 	private String cvv;
-	private String numeroTarjeta;
 	private Date fechaVencimiento;
+	private String numeroTarjeta;
+	private String claveInternet;
+	private Double monto;
 	
 	private UserDTO user;
 	private TipoTarjetaDTO tipoTarjetaDTO;

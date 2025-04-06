@@ -54,6 +54,9 @@ public class User {
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
+	
+	private String imagePath;
+	
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = RoleUser.class)
 	private RoleUser roleUser;
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
