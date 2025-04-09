@@ -33,14 +33,14 @@ public class RoleUserServiceImpl implements RoleUserService{
 	}
 	
 	@Override
-	public List<RoleUserDTO> listUserRols() {
+	public List<RoleUserDTO> list() {
 		List<RoleUserDTO> list = roleUserRepository.findAll().stream()
 				.map(roleUserEntity -> roleUserToRoleUserDTO(roleUserEntity))
 				.collect(Collectors.toList());
 		return list;
 	}
 	@Override
-	public RoleUserDTO findUserRole(int id) {
+	public RoleUserDTO find(int id) {
 		Optional<RoleUser> result = roleUserRepository.findById(id);
 		if(result.isEmpty()) {
 			  //crear funcion para controlar las excepciones
@@ -50,7 +50,7 @@ public class RoleUserServiceImpl implements RoleUserService{
 	}
 
 	@Override
-	public RoleUserDTO saveUserRole(RoleUserDTO userRoleDTO) {
+	public RoleUserDTO save(RoleUserDTO userRoleDTO) {
 		if(Objects.isNull(userRoleDTO.getId())) {
 			//crear funcion para controlar las excepciones
 		}
@@ -59,7 +59,7 @@ public class RoleUserServiceImpl implements RoleUserService{
 		return roleUserToRoleUserDTO(result);
 	}
 	@Override
-	public RoleUserDTO updateUserRole(RoleUserDTO userRoleDTO) {
+	public RoleUserDTO update(RoleUserDTO userRoleDTO) {
 		if(Objects.isNull(userRoleDTO.getId())) {
 			//crear funcion para controlar las excepciones
 		}
@@ -69,7 +69,7 @@ public class RoleUserServiceImpl implements RoleUserService{
 	}
 	
 	@Override
-	public void deleteUserRole(int id) {
+	public void delete(int id) {
 		roleUserRepository.deleteById(id);
 	}
 }

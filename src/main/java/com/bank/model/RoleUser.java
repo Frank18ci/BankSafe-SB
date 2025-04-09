@@ -3,6 +3,7 @@ package com.bank.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +25,9 @@ import lombok.NoArgsConstructor;
 public class RoleUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name ="id")
 	private int id;
+	@Column
 	private String tipo;
 	
 	@OneToMany(mappedBy = "roleUser", fetch = FetchType.LAZY, targetEntity = User.class)

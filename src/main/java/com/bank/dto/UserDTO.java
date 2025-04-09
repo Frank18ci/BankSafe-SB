@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
 	private int id;
+	private String documento;
 	private String numeroDocumento;
 	private String nombres;
 	private String apellidos;

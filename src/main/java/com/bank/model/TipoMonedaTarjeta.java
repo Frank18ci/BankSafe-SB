@@ -2,6 +2,7 @@ package com.bank.model;
 
 import java.util.List;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,8 +24,14 @@ import lombok.NoArgsConstructor;
 public class TipoMonedaTarjeta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	
+
+	@Column
+	private String nombre;
+	@Column
+	private String simbolo;
+
 	@Column(unique = true)
 	private String tipo;
 	

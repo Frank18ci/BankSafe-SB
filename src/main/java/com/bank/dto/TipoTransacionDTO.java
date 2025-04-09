@@ -1,7 +1,8 @@
 package com.bank.dto;
 
+import java.math.BigDecimal;
+import java.util.Date;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoMonedaTarjetaDTO {
+public class TipoTransacionDTO {
 	private int id;
-	private String nombre;
-	private String simbolo;
-	private String tipo;
+	private BigDecimal monto;
+	private Date fecha;
+	private String descripcion;
 }
