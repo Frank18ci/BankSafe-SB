@@ -31,11 +31,9 @@ public class User {
 	@Column (name="id")
 	private int id;
 
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
 	@Column
 	private String documento;
 	@Column
-
 	private String numeroDocumento;
 
 	private String nombres;

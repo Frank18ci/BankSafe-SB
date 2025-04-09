@@ -29,6 +29,6 @@ public class TipoDocumentoUser {
 
 	private String tipo;
 	
-	@OneToMany(mappedBy = "tipoDocumento", fetch = FetchType.LAZY, targetEntity = User.class)
+	@OneToMany(mappedBy = "tipoDocumentoUser", fetch = FetchType.LAZY, targetEntity = User.class)
 	private List<User> users;
 }

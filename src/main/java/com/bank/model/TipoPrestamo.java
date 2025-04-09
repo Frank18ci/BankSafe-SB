@@ -23,9 +23,7 @@ public class TipoPrestamo {
 	@Column(name="id")
 	private int id;
 
-	@Column
-	private String nombre;
-
+	@Column(unique = true)
 	private String tipo;
 
 }

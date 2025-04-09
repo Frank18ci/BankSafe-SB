@@ -21,9 +21,9 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 	private TarjetaRepository tarjetaRepository;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Tarjeta tarjeta = tarjetaRepository.findTarjetaByNumeroTarjeta(username)
-				.orElseThrow(() -> new UsernameNotFoundException("Tarjeta no encontrado " + username));
-		
+		//Tarjeta tarjeta = tarjetaRepository.findTarjetaByNumeroTarjeta(username)
+		//.orElseThrow(() -> new UsernameNotFoundException("Tarjeta no encontrado " + username));
+		Tarjeta tarjeta = new Tarjeta();
 		return User.builder()
 				.username(tarjeta.getNumeroTarjeta())
 				.password(tarjeta.getClaveInternet())
