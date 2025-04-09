@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bank.dto.RoleUserDTO;
 import com.bank.dto.TipoDocumentoUserDTO;
 import com.bank.dto.UserDTO;
+import com.bank.exception.ResourceNotFound;
 import com.bank.model.RoleUser;
 import com.bank.model.TipoDocumentoUser;
 import com.bank.model.User;
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserService {
 	public UserDTO find(int id) {
 		Optional<User> result = userRepository.findById(id);
 		if(result.isEmpty()) {
-			  //crear funcion para controlar las excepciones
+			  throw new ResourceNotFound("Usuario no encontrado "  + id );
 		}
 		User u = result.get();
 		return UserToUserDTO(u);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.bank.model.RoleUser;
 import com.bank.dto.RoleUserDTO;
+import com.bank.exception.ResourceNotFound;
 import com.bank.repository.RoleUserRepository;
 import com.bank.service.RoleUserService;
 @Service
@@ -52,7 +53,7 @@ public class RoleUserServiceImpl implements RoleUserService{
 	@Override
 	public RoleUserDTO save(RoleUserDTO userRoleDTO) {
 		if(Objects.isNull(userRoleDTO.getId())) {
-			//crear funcion para controlar las excepciones
+			throw new ResourceNotFound("No espeficaste un id " + userRoleDTO.getId() );
 		}
 		RoleUser roleUserTransformado = roleUserDTOToRoleUser(userRoleDTO);
 		RoleUser result = roleUserRepository.save(Objects.requireNonNull(roleUserTransformado));
