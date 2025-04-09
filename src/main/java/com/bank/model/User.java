@@ -1,9 +1,9 @@
 package com.bank.model;
 
 import java.util.Date;
+
 import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,24 +28,14 @@ import lombok.NoArgsConstructor;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column (name="id")
 	private int id;
 
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
-	@Column
-	private String documento;
-	@Column
-
 	private String numeroDocumento;
-
 	private String nombres;
-	@Column
 	private String apellidos;
 	
-	//
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
-	
 	
 	private String imagePath;
 	
@@ -53,8 +43,11 @@ public class User {
 	private RoleUser roleUser;
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
 	private TipoDocumentoUser tipoDocumentoUser;
+	
 	@OneToMany(mappedBy = "user")
 	private List<Tarjeta> tarjetas;
-	//
-	
+	@OneToMany(mappedBy = "user")
+	private List<Prestamo> prestamos;
+	@OneToMany(mappedBy = "user")
+	private List<Transacion> transaciones;
 }

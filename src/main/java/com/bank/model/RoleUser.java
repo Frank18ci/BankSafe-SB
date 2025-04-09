@@ -25,9 +25,8 @@ import lombok.NoArgsConstructor;
 public class RoleUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="id")
 	private int id;
-	@Column
+	@Column(unique = true)
 	private String tipo;
 	
 	@OneToMany(mappedBy = "roleUser", fetch = FetchType.LAZY, targetEntity = User.class)

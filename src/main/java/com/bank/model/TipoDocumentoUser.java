@@ -23,12 +23,10 @@ import lombok.NoArgsConstructor;
 public class TipoDocumentoUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private int id;
 	@Column(unique = true)
-
 	private String tipo;
 	
-	@OneToMany(mappedBy = "tipoDocumento", fetch = FetchType.LAZY, targetEntity = User.class)
+	@OneToMany(mappedBy = "tipoDocumentoUser", fetch = FetchType.LAZY, targetEntity = User.class)
 	private List<User> users;
 }

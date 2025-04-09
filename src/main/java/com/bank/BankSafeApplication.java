@@ -1,12 +1,13 @@
 package com.bank;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.bank.dto.RoleUserDTO;
 import com.bank.dto.TipoDocumentoUserDTO;
+import com.bank.service.RoleUserService;
 import com.bank.service.TipoDocumentoUserService;
 
 @SpringBootApplication
@@ -17,7 +18,7 @@ public class BankSafeApplication {
 	}
 	
 	@Bean
-    CommandLineRunner cargarDatosIniciales(TipoDocumentoUserService tipoDocumentoUserService) {
+    CommandLineRunner cargarDatosIniciales(TipoDocumentoUserService tipoDocumentoUserService, RoleUserService roleUserService) {
         return args -> {
         	TipoDocumentoUserDTO tipoDocumentoUserDTO = TipoDocumentoUserDTO.builder()
         			.tipo("DNI")
@@ -31,7 +32,14 @@ public class BankSafeApplication {
         			.tipo("Carné de Extranjería")
         			.build();
         	tipoDocumentoUserService.save(tipoDocumentoUserDTO);
-        	
+        	RoleUserDTO roleUserDTO = RoleUserDTO.builder()
+        			.tipo("ADMIND")
+        			.build();
+        	roleUserService.save(roleUserDTO);
+        	roleUserDTO = RoleUserDTO.builder()
+        			.tipo("USUARIO")
+        			.build();
+        	roleUserService.save(roleUserDTO);
         };
     }
 }

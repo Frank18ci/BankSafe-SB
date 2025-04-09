@@ -15,6 +15,5 @@ import lombok.NoArgsConstructor;
 public class TipoPrestamoDTO {
 
 	private int id;
-	private String nombre;
 	private String tipo;
 }
