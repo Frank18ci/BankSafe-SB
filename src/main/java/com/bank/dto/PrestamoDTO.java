@@ -23,7 +23,6 @@ public class PrestamoDTO {
     private Date fechaInicio;
     private Date fechaFin;
     private String estado;
-	private int intTipoPrestamo;
 	private Date FechaRegistro;
 	private Date FechaFinalizado;
 	//
