@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 				.builder()
 				.id(user.getId())
 				.numeroDocumento(user.getNumeroDocumento())
-				.nombres(user.getApellidos())
+				.nombres(user.getNombres())
 				.apellidos(user.getApellidos())
 				.fechaNacimiento(user.getFechaNacimiento())
 				.imagePath(user.getImagePath())
