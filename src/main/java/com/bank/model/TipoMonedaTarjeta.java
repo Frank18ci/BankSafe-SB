@@ -27,9 +27,9 @@ public class TipoMonedaTarjeta {
 	@Column(name = "id")
 	private int id;
 
-	@Column
+	
 	private String nombre;
-	@Column
+	
 	private String simbolo;
 
 	@Column(unique = true)
