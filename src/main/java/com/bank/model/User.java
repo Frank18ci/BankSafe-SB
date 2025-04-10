@@ -29,7 +29,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
+	private String documento;
 	private String numeroDocumento;
 	private String nombres;
 	private String apellidos;

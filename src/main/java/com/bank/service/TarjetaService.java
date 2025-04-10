@@ -7,8 +7,9 @@ import com.bank.dto.TarjetaDTO;
 
 
 public interface TarjetaService {
-	public List<TarjetaDTO> listTarjetas();
-	public TarjetaDTO findTarjeta(int id);
-	public TarjetaDTO updateTarjeta(TarjetaDTO tarjetaDTO);
-	public void deleteTarjeta(int id);
+	public List<TarjetaDTO> list();
+	public TarjetaDTO save(TarjetaDTO tarjetaDTO);
+	public TarjetaDTO find(int id);
+	public TarjetaDTO update(TarjetaDTO tarjetaDTO);
+	public void delete(int id);
 }
