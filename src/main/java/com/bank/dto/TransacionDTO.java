@@ -17,4 +17,8 @@ public class TransacionDTO {
 	private BigDecimal monto;
 	private String descripcion;
 	private Date fecha;
+	//
+	private TipoTransacionDTO tipoTransacionDTO;
+	private TarjetaDTO tarjetaDTO;
+	private UserDTO userDTO;
 }

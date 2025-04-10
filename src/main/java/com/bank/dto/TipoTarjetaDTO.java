@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TipoTarjetaDTO {
 	private int id;
-	private String nombre;
 	private String tipo;
 }
