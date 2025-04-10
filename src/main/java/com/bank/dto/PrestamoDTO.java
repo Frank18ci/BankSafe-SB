@@ -3,6 +3,8 @@ package com.bank.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.bank.model.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +26,7 @@ public class PrestamoDTO {
 	private int intTipoPrestamo;
 	private Date FechaRegistro;
 	private Date FechaFinalizado;
+	//
+	private UserDTO userDTO;
+	private TipoPrestamoDTO tipoPrestamoDTO;
 }
