@@ -36,7 +36,6 @@ public class TarjetaController {
 	public ResponseEntity<?> getUsers() {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(tarjetaService.list());
 	}
-	private final String uploadDir = "uploads/";
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getTarjeta(@PathVariable int id){
@@ -56,7 +55,7 @@ public class TarjetaController {
 	public ResponseEntity<?> deleteTarjeta(@PathVariable int id){
 		tarjetaService.delete(id);
 		Map<String, Object> mapper = new HashMap<String, Object>();
-		 mapper.put("message", "User Eliminado" + id);
+		 mapper.put("message", "Tarjeta Eliminado" + id);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper);
 	}
 }
