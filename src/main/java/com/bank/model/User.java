@@ -4,6 +4,7 @@ import java.util.Date;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -44,7 +45,7 @@ public class User {
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
 	private TipoDocumentoUser tipoDocumentoUser;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<Tarjeta> tarjetas;
 	@OneToMany(mappedBy = "user")
 	private List<Prestamo> prestamos;

@@ -3,6 +3,7 @@ package com.bank.security.filters;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
 	private JwtUtils jwtUtils;
 	
 	@Autowired
+
 	TarjetaServiceImpl tarjetaServiceImpl;
 	
 	@Override

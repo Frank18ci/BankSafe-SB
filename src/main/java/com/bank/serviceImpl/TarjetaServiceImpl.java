@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.RoleUserDTO;
@@ -25,6 +26,7 @@ import com.bank.model.Tarjeta;
 import com.bank.model.TipoDocumentoUser;
 import com.bank.model.TipoMonedaTarjeta;
 import com.bank.model.TipoTarjeta;
+import com.bank.repository.RoleUserRepository;
 import com.bank.repository.TarjetaRepository;
 import com.bank.service.TarjetaService;
 
@@ -32,11 +34,18 @@ import com.bank.service.TarjetaService;
 public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 	@Autowired
 	private TarjetaRepository tarjetaRepository;
+	@Autowired
+	private RoleUserRepository roleUserRepository;
+	
+	@Override
+	public TarjetaDTO findByNumeroTarjeta(String numeroTarjeta) {
+		return tarjetaToTarjetaDTO(tarjetaRepository.findTarjetaByNumeroTarjeta(numeroTarjeta).get());
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		//Tarjeta tarjeta = tarjetaRepository.findTarjetaByNumeroTarjeta(username)
-		//.orElseThrow(() -> new UsernameNotFoundException("Tarjeta no encontrado " + username));
-		Tarjeta tarjeta = new Tarjeta();
+		Tarjeta tarjeta = tarjetaRepository.findTarjetaByNumeroTarjeta(username)
+		.orElseThrow(() -> new UsernameNotFoundException("Tarjeta no encontrado " + username));
 		return User.builder()
 				.username(tarjeta.getNumeroTarjeta())
 				.password(tarjeta.getClaveInternet())
@@ -52,27 +61,27 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 				.numeroTarjeta(tarjeta.getNumeroTarjeta())
 				.claveInternet(tarjeta.getClaveInternet())
 				.monto(tarjeta.getMonto())
-				.userDTO(UserDTO.builder()
+				.user(UserDTO.builder()
 						.id(tarjeta.getUser().getId())
 						.documento(tarjeta.getUser().getDocumento())
 						.nombres(tarjeta.getUser().getNumeroDocumento())
 						.apellidos(tarjeta.getUser().getApellidos())
 						.fechaNacimiento(tarjeta.getUser().getFechaNacimiento())
 						.imagePath(tarjeta.getUser().getImagePath())
-						.roleUserDTO(RoleUserDTO.builder()
+						.roleUser(RoleUserDTO.builder()
 								.id(tarjeta.getUser().getRoleUser().getId())
 								.tipo(tarjeta.getUser().getRoleUser().getTipo())
 								.build())
-						.tipoDocumentoUserDTO(TipoDocumentoUserDTO.builder()
+						.tipoDocumentoUser(TipoDocumentoUserDTO.builder()
 								.id(tarjeta.getUser().getTipoDocumentoUser().getId())
 								.tipo(tarjeta.getUser().getTipoDocumentoUser().getTipo())
 								.build())
 						.build())
-				.tipoTarjetaDTO(TipoTarjetaDTO.builder()
+				.tipoTarjeta(TipoTarjetaDTO.builder()
 						.id(tarjeta.getTipoTarjeta().getId())
 						.tipo(tarjeta.getTipoTarjeta().getTipo())
 						.build())
-				.tipoMonedaTarjetaDTO(TipoMonedaTarjetaDTO.builder()
+				.tipoMonedaTarjeta(TipoMonedaTarjetaDTO.builder()
 						.id(tarjeta.getTipoMonedaTarjeta().getId())
 						.nombre(tarjeta.getTipoMonedaTarjeta().getNombre())
 						.simbolo(tarjeta.getTipoMonedaTarjeta().getSimbolo())
@@ -90,30 +99,30 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 				.claveInternet(tarjetaDTO.getClaveInternet())
 				.monto(tarjetaDTO.getMonto())
 				.user(com.bank.model.User.builder()
-						.id(tarjetaDTO.getUserDTO().getId())
-						.documento(tarjetaDTO.getUserDTO().getDocumento())
-						.nombres(tarjetaDTO.getUserDTO().getNumeroDocumento())
-						.apellidos(tarjetaDTO.getUserDTO().getApellidos())
-						.fechaNacimiento(tarjetaDTO.getUserDTO().getFechaNacimiento())
-						.imagePath(tarjetaDTO.getUserDTO().getImagePath())
+						.id(tarjetaDTO.getUser().getId())
+						.documento(tarjetaDTO.getUser().getDocumento())
+						.nombres(tarjetaDTO.getUser().getNumeroDocumento())
+						.apellidos(tarjetaDTO.getUser().getApellidos())
+						.fechaNacimiento(tarjetaDTO.getUser().getFechaNacimiento())
+						.imagePath(tarjetaDTO.getUser().getImagePath())
 						.roleUser(RoleUser.builder()
-								.id(tarjetaDTO.getUserDTO().getRoleUserDTO().getId())
-								.tipo(tarjetaDTO.getUserDTO().getRoleUserDTO().getTipo())
+								.id(tarjetaDTO.getUser().getRoleUser().getId())
+								.tipo(tarjetaDTO.getUser().getRoleUser().getTipo())
 								.build())
 						.tipoDocumentoUser(TipoDocumentoUser.builder()
-								.id(tarjetaDTO.getUserDTO().getTipoDocumentoUserDTO().getId())
-								.tipo(tarjetaDTO.getUserDTO().getTipoDocumentoUserDTO().getTipo())
+								.id(tarjetaDTO.getUser().getTipoDocumentoUser().getId())
+								.tipo(tarjetaDTO.getUser().getTipoDocumentoUser().getTipo())
 								.build())
 						.build())
 				.tipoTarjeta(TipoTarjeta.builder()
-						.id(tarjetaDTO.getTipoTarjetaDTO().getId())
-						.tipo(tarjetaDTO.getTipoTarjetaDTO().getTipo())
+						.id(tarjetaDTO.getTipoTarjeta().getId())
+						.tipo(tarjetaDTO.getTipoTarjeta().getTipo())
 						.build())
 				.tipoMonedaTarjeta(TipoMonedaTarjeta.builder()
-						.id(tarjetaDTO.getTipoMonedaTarjetaDTO().getId())
-						.nombre(tarjetaDTO.getTipoMonedaTarjetaDTO().getNombre())
-						.simbolo(tarjetaDTO.getTipoMonedaTarjetaDTO().getSimbolo())
-						.tipo(tarjetaDTO.getTipoMonedaTarjetaDTO().getTipo())
+						.id(tarjetaDTO.getTipoMonedaTarjeta().getId())
+						.nombre(tarjetaDTO.getTipoMonedaTarjeta().getNombre())
+						.simbolo(tarjetaDTO.getTipoMonedaTarjeta().getSimbolo())
+						.tipo(tarjetaDTO.getTipoMonedaTarjeta().getTipo())
 						.build())
 				.build();
 	}
@@ -148,11 +157,18 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 		tarjetaRepository.deleteById(id);
 		
 	}
+	
 	@Override
 	public TarjetaDTO save(TarjetaDTO tarjetaDTO) {
 		if(Objects.isNull(tarjetaDTO.getId())) {
 			//crear funcion para controlar las excepciones
 		}
+		UserDTO user = tarjetaDTO.getUser();
+		user.setRoleUser(RoleUserDTO.builder()
+				.id(roleUserRepository.findRoleUserByTipo("USUARIO").get().getId())
+				.build());
+		tarjetaDTO.setUser(user);
+		
 		Tarjeta userTransformado = tarjetaDTOTotarjeta(tarjetaDTO);
 		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(userTransformado));
 		return tarjetaToTarjetaDTO(result);
