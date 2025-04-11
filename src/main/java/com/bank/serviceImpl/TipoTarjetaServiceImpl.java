@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.TipoTarjetaDTO;
-import com.bank.dto.UserDTO;
+
 import com.bank.exception.ResourceNotFound;
 import com.bank.model.TipoTarjeta;
-import com.bank.model.User;
+
 import com.bank.repository.TipoTarjetaRepository;
 import com.bank.service.TipoTarjetaService;
 
