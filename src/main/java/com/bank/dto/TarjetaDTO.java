@@ -19,7 +19,7 @@ public class TarjetaDTO {
 	private String claveInternet;
 	private Double monto;
 	
-	private UserDTO userDTO;
-	private TipoTarjetaDTO tipoTarjetaDTO;
-	private TipoMonedaTarjetaDTO tipoMonedaTarjetaDTO;
+	private UserDTO user;
+	private TipoTarjetaDTO tipoTarjeta;
+	private TipoMonedaTarjetaDTO tipoMonedaTarjeta;
 }

@@ -1,7 +1,7 @@
 package com.bank.dto;
 
 import java.util.Date;
-
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +20,8 @@ public class UserDTO {
 	private String apellidos;
 	private Date fechaNacimiento;
 	private String imagePath;
-	private RoleUserDTO roleUserDTO;
-	private TipoDocumentoUserDTO tipoDocumentoUserDTO;
+	private RoleUserDTO roleUser;
+	private TipoDocumentoUserDTO tipoDocumentoUser;
+	private List<TarjetaDTO> tarjetas;
 	
 }
