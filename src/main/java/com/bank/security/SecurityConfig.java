@@ -47,7 +47,9 @@ public class SecurityConfig {
 					auth.requestMatchers("/*").permitAll();
 					auth.requestMatchers("/auth/*").permitAll();
 					auth.requestMatchers("/login/*").permitAll();
-					auth.requestMatchers("/user/*").permitAll();
+					auth.requestMatchers("/user/**").permitAll();
+					auth.requestMatchers("/user/img").permitAll();
+					auth.requestMatchers("/uploads/*").permitAll();
 					auth.anyRequest().authenticated();
 				})
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
