@@ -36,7 +36,7 @@ public class RoleUserServiceImpl implements RoleUserService{
 	@Override
 	public List<RoleUserDTO> list() {
 		List<RoleUserDTO> list = roleUserRepository.findAll().stream()
-				.map(roleUserEntity -> roleUserToRoleUserDTO(roleUserEntity))
+				.map(roleUserEntity -> roleUserToRoleUserDTO(roleUserEntity) )
 				.collect(Collectors.toList());
 		return list;
 	}
