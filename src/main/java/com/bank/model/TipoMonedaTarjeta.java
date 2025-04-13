@@ -35,6 +35,8 @@ public class TipoMonedaTarjeta {
 	@Column(unique = true)
 	private String tipo;
 	
+	private boolean estado;
+	
 	@OneToMany(mappedBy = "tipoMonedaTarjeta")
 	private List<Tarjeta> tarjetas;
 }

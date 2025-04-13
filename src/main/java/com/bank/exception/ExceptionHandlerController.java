@@ -18,4 +18,12 @@ public class ExceptionHandlerController {
 				LocalDateTime.now());
 		return ResponseEntity.status(404).body(error);
 	}
+	@ExceptionHandler(BadRequestParam.class)
+	public ResponseEntity<?> badRequestParam(BadRequestParam ex){
+		ErrorResponse error = new ErrorResponse(
+				HttpStatus.BAD_REQUEST.value(), 
+				ex.getMessage(), 
+				LocalDateTime.now());
+		return ResponseEntity.status(400).body(error);
+	}
 }
