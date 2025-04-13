@@ -28,6 +28,8 @@ public class TipoPrestamo {
 	@Column(unique = true)
 	private String tipo;
 
+	private boolean estado;
+	
 	@OneToMany(mappedBy = "tipoPrestamo")
 	private List<Prestamo> prestamos; 
 	

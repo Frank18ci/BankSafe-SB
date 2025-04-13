@@ -47,6 +47,8 @@ public class Tarjeta {
 	
 	private Double monto;
 	
+	private boolean estado;
+	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "user_id")
 	private User user;

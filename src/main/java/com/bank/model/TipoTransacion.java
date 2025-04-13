@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -33,6 +32,8 @@ public class TipoTransacion {
 	private Date fecha;
 	@Column
 	private String descripcion;
+	
+	private boolean estado;
 	
 	@OneToMany(mappedBy = "tipoTransaccion")
 	private List<Transacion> transaciones;

@@ -27,6 +27,8 @@ public class TipoTarjeta {
 	@Column(unique = true)
 	private String tipo;
 	
+	private boolean estado;
+	
 	@OneToMany(mappedBy = "tipoTarjeta")
 	private List<Tarjeta> tarjetas;
 

@@ -35,9 +35,11 @@ public class Prestamo {
     private Integer plazoMeses;
     private Date fechaInicio;
     private Date fechaFin;
-    private String estado;
+    private String estadoPrestamo;
 	private Date FechaRegistro;
 	private Date FechaFinalizado;
+	
+	private boolean estado;
 	
 	@ManyToOne
 	private User user;
