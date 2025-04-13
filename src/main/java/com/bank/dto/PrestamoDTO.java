@@ -2,8 +2,10 @@ package com.bank.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import com.bank.model.User;
+import com.bank.model.Prestamo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,12 +24,45 @@ public class PrestamoDTO {
 	private Integer plazoMeses;
     private Date fechaInicio;
     private Date fechaFin;
-    private String estado;
+    private String estadoPrestamo;
 	private Date FechaRegistro;
 	private Date FechaFinalizado;
-	//
-	private UserDTO userDTO;
-	private TipoPrestamoDTO tipoPrestamoDTO;
 	
+	private UserDTO user;
+	private TipoPrestamoDTO tipoPrestamo;
+	
+	public static PrestamoDTO prestamoToPrestamoDTO(Prestamo prestamo) {
+		return PrestamoDTO.builder()
+				.montoPrestamo(prestamo.getMontoPrestamo())
+				.interes(prestamo.getInteres())
+				.plazoMeses(prestamo.getPlazoMeses())
+				.fechaInicio(prestamo.getFechaInicio())
+				.fechaFin(prestamo.getFechaFin())
+				.estadoPrestamo(prestamo.getEstadoPrestamo())
+				.FechaRegistro(prestamo.getFechaRegistro())
+				.FechaFinalizado(prestamo.getFechaFinalizado())
+				.user(UserDTO.userToUserDTO(prestamo.getUser()))
+				.tipoPrestamo(TipoPrestamoDTO.tipoPrestamoToTipoPrestamoDTO(prestamo.getTipoPrestamo()))
+				.build();
+	}
+	public static List<PrestamoDTO> listPrestamoToListPrestamoDTO(List<Prestamo> prestamos){
+		return prestamos.stream()
+				.map(PrestamoDTO::prestamoToPrestamoDTO)
+				.collect(Collectors.toList());
+	}
+	public static Prestamo prestamoDTOToPrestamo(PrestamoDTO prestamoDTO) {
+		return Prestamo.builder()
+				.montoPrestamo(prestamoDTO.getMontoPrestamo())
+				.interes(prestamoDTO.getInteres())
+				.plazoMeses(prestamoDTO.getPlazoMeses())
+				.fechaInicio(prestamoDTO.getFechaInicio())
+				.fechaFin(prestamoDTO.getFechaFin())
+				.estadoPrestamo(prestamoDTO.getEstadoPrestamo())
+				.FechaRegistro(prestamoDTO.getFechaRegistro())
+				.FechaFinalizado(prestamoDTO.getFechaFinalizado())
+				.user(UserDTO.userDTOToUser(prestamoDTO.getUser()))
+				.tipoPrestamo(TipoPrestamoDTO.tipoPrestamoDTOToTipoPrestamo(prestamoDTO.getTipoPrestamo()))
+				.build();
+	}
 	
 }

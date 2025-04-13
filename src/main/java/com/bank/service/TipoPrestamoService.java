@@ -6,8 +6,10 @@ import com.bank.dto.TipoPrestamoDTO;
 
 public interface TipoPrestamoService {
 	public List<TipoPrestamoDTO> list();
+	public List<TipoPrestamoDTO> listByAll();
 	public TipoPrestamoDTO save(TipoPrestamoDTO tipoPrestamoDTO);
 	public TipoPrestamoDTO find(int id);
+	public TipoPrestamoDTO findByAll(int id);
 	public TipoPrestamoDTO update(TipoPrestamoDTO tipoPrestamoDTO);
-	public void delete(int id);
+	public String delete(int id);
 }
