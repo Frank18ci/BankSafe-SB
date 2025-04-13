@@ -19,7 +19,7 @@ import com.bank.dto.TipoMonedaTarjetaDTO;
 import com.bank.service.TipoMonedaTarjetaService;
 
 @RestController
-@RequestMapping("/tipoTarjeta")
+@RequestMapping("/tipoMonedaTarjeta")
 public class TipoMonedaTarjetaController {
 	@Autowired
 	private TipoMonedaTarjetaService tipoMonedaTarjetaService;

@@ -29,6 +29,8 @@ public class RoleUser {
 	@Column(unique = true)
 	private String tipo;
 	
+	private boolean estado;
+	
 	@OneToMany(mappedBy = "roleUser", fetch = FetchType.LAZY, targetEntity = User.class)
 	private List<User> users;
 }

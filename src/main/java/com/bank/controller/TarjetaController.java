@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.dto.TarjetaDTO;
@@ -37,12 +39,20 @@ public class TarjetaController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(tarjetaService.list());
 	}
 	
+	@GetMapping("/buscar/{numeroTarjeta}")
+	public ResponseEntity<?> getTarjetaByNumero(@PathVariable String numeroTarjeta) {
+		return ResponseEntity.status(200).body(tarjetaService.findByNumeroTarjeta(numeroTarjeta));
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getTarjeta(@PathVariable int id){
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(tarjetaService.find(id));
 	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@PostMapping
 	public ResponseEntity<?> createTarjeta (@RequestBody TarjetaDTO tarjetaDTO ){
+		tarjetaDTO.setClaveInternet(passwordEncoder.encode(tarjetaDTO.getClaveInternet()));
 		TarjetaDTO u = tarjetaService.save(tarjetaDTO);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(u);
 	}
@@ -58,4 +68,5 @@ public class TarjetaController {
 		 mapper.put("message", "Tarjeta Eliminado" + id);
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper);
 	}
+	
 }

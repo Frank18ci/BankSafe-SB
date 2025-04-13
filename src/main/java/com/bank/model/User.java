@@ -4,6 +4,7 @@ import java.util.Date;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,25 +30,32 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String documento;
+	
 	private String numeroDocumento;
+	
 	private String nombres;
+	
 	private String apellidos;
+	
+	private String imagePath;
 	
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
-	private String imagePath;
+	private boolean estado;
 	
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = RoleUser.class)
 	private RoleUser roleUser;
+	
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
 	private TipoDocumentoUser tipoDocumentoUser;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<Tarjeta> tarjetas;
+	
 	@OneToMany(mappedBy = "user")
 	private List<Prestamo> prestamos;
+	
 	@OneToMany(mappedBy = "user")
 	private List<Transacion> transaciones;
 }

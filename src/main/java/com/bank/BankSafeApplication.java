@@ -7,8 +7,12 @@ import org.springframework.context.annotation.Bean;
 
 import com.bank.dto.RoleUserDTO;
 import com.bank.dto.TipoDocumentoUserDTO;
+import com.bank.dto.TipoMonedaTarjetaDTO;
+import com.bank.dto.TipoTarjetaDTO;
 import com.bank.service.RoleUserService;
 import com.bank.service.TipoDocumentoUserService;
+import com.bank.service.TipoMonedaTarjetaService;
+import com.bank.service.TipoTarjetaService;
 
 @SpringBootApplication
 public class BankSafeApplication {
@@ -18,7 +22,7 @@ public class BankSafeApplication {
 	}
 	
 	@Bean
-    CommandLineRunner cargarDatosIniciales(TipoDocumentoUserService tipoDocumentoUserService, RoleUserService roleUserService) {
+    CommandLineRunner cargarDatosIniciales(TipoDocumentoUserService tipoDocumentoUserService, RoleUserService roleUserService, TipoTarjetaService tipoTarjetaService, TipoMonedaTarjetaService tipoMonedaTarjetaService) {
         return args -> {
         	TipoDocumentoUserDTO tipoDocumentoUserDTO = TipoDocumentoUserDTO.builder()
         			.tipo("DNI")
@@ -40,6 +44,24 @@ public class BankSafeApplication {
         			.tipo("USUARIO")
         			.build();
         	roleUserService.save(roleUserDTO);
+        	TipoMonedaTarjetaDTO tipoMonedaTarjetaDTO= TipoMonedaTarjetaDTO.builder()
+        		.tipo("SOLES")
+        		.build();
+        	tipoMonedaTarjetaService.save(tipoMonedaTarjetaDTO);
+        	
+        	tipoMonedaTarjetaDTO= TipoMonedaTarjetaDTO.builder()
+            		.tipo("DOLARES")
+            		.build();
+            tipoMonedaTarjetaService.save(tipoMonedaTarjetaDTO);
+            TipoTarjetaDTO tipoTarjetaDTO = TipoTarjetaDTO.builder()
+            		.tipo("CREDITO")
+            		.build();
+            tipoTarjetaService.save(tipoTarjetaDTO);
+            tipoTarjetaDTO = TipoTarjetaDTO.builder()
+            		.tipo("DEBITO")
+            		.build();
+            tipoTarjetaService.save(tipoTarjetaDTO);
+            
         };
     }
 }

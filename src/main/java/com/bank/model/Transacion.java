@@ -29,6 +29,8 @@ public class Transacion {
 	private String descripcion;
 	private Date fecha;
 	
+	private boolean estado;
+	
 	@ManyToOne
 	private TipoTransacion tipoTransaccion;
 	@ManyToOne

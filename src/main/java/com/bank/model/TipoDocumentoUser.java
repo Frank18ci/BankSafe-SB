@@ -27,6 +27,8 @@ public class TipoDocumentoUser {
 	@Column(unique = true)
 	private String tipo;
 	
+	private boolean estado;
+	
 	@OneToMany(mappedBy = "tipoDocumentoUser", fetch = FetchType.LAZY, targetEntity = User.class)
 	private List<User> users;
 }

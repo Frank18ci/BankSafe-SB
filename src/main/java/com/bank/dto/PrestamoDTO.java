@@ -28,4 +28,6 @@ public class PrestamoDTO {
 	//
 	private UserDTO userDTO;
 	private TipoPrestamoDTO tipoPrestamoDTO;
+	
+	
 }
