@@ -21,6 +21,7 @@ public class TipoTransacionDTO {
 	private BigDecimal monto;
 	private Date fecha;
 	private String descripcion;
+	
 	public static TipoTransacionDTO tipoTransacionToTipoTransacionDTO(TipoTransacion tipoTransacion) {
 		return TipoTransacionDTO.builder()
 				.id(tipoTransacion.getId())

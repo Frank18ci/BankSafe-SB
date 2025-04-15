@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bank.dto.TipoTransacionDTO;
-import com.bank.dto.UserDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
 import com.bank.model.TipoTransacion;
-import com.bank.model.User;
 import com.bank.repository.TipoTransaccionRepository;
 import com.bank.service.TipoTransacionService;
-
+@Service
 public class TipoTransacionServiceImpl implements TipoTransacionService {
 	
 	@Autowired
@@ -46,8 +45,9 @@ public class TipoTransacionServiceImpl implements TipoTransacionService {
 
 	@Override
 	public TipoTransacionDTO save(TipoTransacionDTO transacionDTO) {
-		TipoTransacion Transformado = TipoTransacionDTO.tipoTransacionDTOToTipoTransacion(transacionDTO);
-		TipoTransacion result = tipoTransaccionRepository.save(Objects.requireNonNull(Transformado));
+		TipoTransacion tipoTransacionTransformado = TipoTransacionDTO.tipoTransacionDTOToTipoTransacion(transacionDTO);
+		tipoTransacionTransformado.setEstado(true);
+		TipoTransacion result = tipoTransaccionRepository.save(Objects.requireNonNull(tipoTransacionTransformado));
 		return TipoTransacionDTO.tipoTransacionToTipoTransacionDTO(result);
 	}
 
@@ -56,8 +56,8 @@ public class TipoTransacionServiceImpl implements TipoTransacionService {
 		if(Objects.isNull(transacionDTO.getId())) {
 			throw new BadRequestParam("Falta el paremetro id");
 		}
-		TipoTransacion roleUserTransformado = TipoTransacionDTO.tipoTransacionDTOToTipoTransacion(transacionDTO);
-		TipoTransacion result = tipoTransaccionRepository.save(Objects.requireNonNull(roleUserTransformado));
+		TipoTransacion tipoTransacionTransformado = TipoTransacionDTO.tipoTransacionDTOToTipoTransacion(transacionDTO);
+		TipoTransacion result = tipoTransaccionRepository.save(Objects.requireNonNull(tipoTransacionTransformado));
 		return TipoTransacionDTO.tipoTransacionToTipoTransacionDTO(result);
 	}
 

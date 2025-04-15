@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,28 +25,28 @@ public class TipoMonedaTarjetaController {
 	
 	@GetMapping
 	public ResponseEntity<?> getTipoTarjeta() {
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(tipoMonedaTarjetaService.list());
+		return ResponseEntity.status(200).body(tipoMonedaTarjetaService.list());
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getTipoTarjeta(@PathVariable int id){
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(tipoMonedaTarjetaService.find(id));
+	public ResponseEntity<?> getTipoTarjetaById(@PathVariable int id){
+		return ResponseEntity.status(200).body(tipoMonedaTarjetaService.find(id));
 	}
 	@PostMapping
-	public ResponseEntity<?> createTipoTarjeta (@RequestBody TipoMonedaTarjetaDTO tipoMonedaTarjetaDTO ){
+	public ResponseEntity<?> createTipoTarjeta(@RequestBody TipoMonedaTarjetaDTO tipoMonedaTarjetaDTO ){
 		TipoMonedaTarjetaDTO u = tipoMonedaTarjetaService.save(tipoMonedaTarjetaDTO);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(u);
+		return ResponseEntity.status(201).body(u);
 	}
 	@PutMapping
 	public ResponseEntity<?> updateTipoTarjeta (@RequestBody TipoMonedaTarjetaDTO tipoMonedaTarjetaDTO ){
 		TipoMonedaTarjetaDTO u = tipoMonedaTarjetaService.update(tipoMonedaTarjetaDTO);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(u);
+		return ResponseEntity.status(200).body(u);
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteTipoTarjeta(@PathVariable int id){
-		tipoMonedaTarjetaService.delete(id);
+		String mensaje = tipoMonedaTarjetaService.delete(id);
 		Map<String, Object> mapper = new HashMap<String, Object>();
-		 mapper.put("message", "Tipo Tarjeta Eliminado" + id);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper);
+		 mapper.put("message", mensaje);
+		return ResponseEntity.status(200).body(mapper);
 	}
 
 }

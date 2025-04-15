@@ -47,6 +47,7 @@ public class TipoMonedaTarjetaServiceImpl implements TipoMonedaTarjetaService {
 	public TipoMonedaTarjetaDTO save(TipoMonedaTarjetaDTO tipoMonedaTarjetaDTO) {
 		
 		TipoMonedaTarjeta tipoMonedaTarjetaTransformado = TipoMonedaTarjetaDTO.tipoMonedaTarjetaDTOToTipoMonedaTarjeta(tipoMonedaTarjetaDTO);
+		tipoMonedaTarjetaTransformado.setEstado(true);
 		TipoMonedaTarjeta result = tipoMonedaTarjetaRepository.save(Objects.requireNonNull(tipoMonedaTarjetaTransformado));
 		return TipoMonedaTarjetaDTO.tipoMonedaTarjetaToTipoMonedaTarjetaDTO(result);
 	}

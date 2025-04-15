@@ -49,7 +49,7 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 		return users;
 	}
 	@Override
-	public List<TarjetaDTO> listAll() {
+	public List<TarjetaDTO> listByAll() {
 		List<TarjetaDTO> users = TarjetaDTO.listTarjetaToTarjetaDTO(tarjetaRepository.findAll());
 		return users;
 	}
@@ -69,11 +69,12 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 	public TarjetaDTO save(TarjetaDTO tarjetaDTO) {
 		UserDTO user = tarjetaDTO.getUser();
 		user.setRoleUser(RoleUserDTO.builder()
-				.id(roleUserRepository.findRoleUserByTipo("USUARIO").get().getId())
+				.id(roleUserRepository.findRoleUserByTipoAndEstado("USUARIO", true).get().getId())
 				.build());
 		tarjetaDTO.setUser(user);
 		
 		Tarjeta userTransformado = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaDTO);
+		userTransformado.setEstado(true);
 		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(userTransformado));
 		return TarjetaDTO.tarjetaToTarjetaDTO(result);
 	}

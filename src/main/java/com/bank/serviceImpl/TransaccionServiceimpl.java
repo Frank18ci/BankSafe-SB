@@ -4,18 +4,15 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bank.dto.TransacionDTO;
-import com.bank.dto.UserDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
 import com.bank.model.Transacion;
-import com.bank.model.User;
-import com.bank.repository.RoleUserRepository;
-import com.bank.repository.TipoTransaccionRepository;
 import com.bank.repository.TransacionRepository;
 import com.bank.service.TransaccionService;
-
+@Service
 public class TransaccionServiceimpl implements TransaccionService {
 	@Autowired
 	private TransacionRepository transaccionRepository;
@@ -48,8 +45,9 @@ public class TransaccionServiceimpl implements TransaccionService {
 
 	@Override
 	public TransacionDTO save(TransacionDTO transacionDTO) {
-		Transacion Transformado = TransacionDTO.transacionDTOToTransacion(transacionDTO);
-		Transacion result = transaccionRepository.save(Objects.requireNonNull(Transformado));
+		Transacion transacionTransformado = TransacionDTO.transacionDTOToTransacion(transacionDTO);
+		transacionTransformado.setEstado(true);
+		Transacion result = transaccionRepository.save(Objects.requireNonNull(transacionTransformado));
 		return TransacionDTO.transacionToTransacionDTO(result);
 	}
 
@@ -58,8 +56,8 @@ public class TransaccionServiceimpl implements TransaccionService {
 		if(Objects.isNull(transacionDTO.getId())) {
 			throw new BadRequestParam("Falta el paremetro id");
 		}
-		Transacion Transformado = TransacionDTO.transacionDTOToTransacion(transacionDTO);
-		Transacion result = transaccionRepository.save(Objects.requireNonNull(Transformado));
+		Transacion transacionTransformado = TransacionDTO.transacionDTOToTransacion(transacionDTO);
+		Transacion result = transaccionRepository.save(Objects.requireNonNull(transacionTransformado));
 		return TransacionDTO.transacionToTransacionDTO(result);
 	}
 

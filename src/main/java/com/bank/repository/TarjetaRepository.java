@@ -11,9 +11,6 @@ import com.bank.model.TipoMonedaTarjeta;
 import com.bank.model.TipoTarjeta;
 import com.bank.model.User;
 
-
-
-
 @Repository
 public interface TarjetaRepository extends JpaRepository<Tarjeta, Integer> {
 	List<Tarjeta> findTarjetaByEstado(boolean estado);

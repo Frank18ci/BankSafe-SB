@@ -2,16 +2,12 @@ package com.bank.serviceImpl;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.model.RoleUser;
-import com.bank.model.User;
 import com.bank.dto.RoleUserDTO;
-import com.bank.dto.UserDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
 import com.bank.repository.RoleUserRepository;
@@ -50,6 +46,7 @@ public class RoleUserServiceImpl implements RoleUserService{
 	@Override
 	public RoleUserDTO save(RoleUserDTO userRoleDTO) {
 		RoleUser rolUserTransformado = RoleUserDTO.rolUserDTOToRolUser(userRoleDTO);
+		rolUserTransformado.setEstado(true);
 		RoleUser result = roleUserRepository.save(Objects.requireNonNull(rolUserTransformado));
 		return RoleUserDTO.rolUserToRolUserDTO(result);
 	}
