@@ -14,6 +14,5 @@ import java.util.List;
 public interface RoleUserRepository extends JpaRepository<RoleUser, Integer> {
 	List<RoleUser> findRolUserByEstado(boolean estado);
 	Optional<RoleUser> findRolUserByIdAndEstado(int id, boolean estado);
-	Optional<RoleUser> findRoleUserByTipo(String tipo);
-	Optional<RoleUser> findRoleUserById(int id);
+	Optional<RoleUser> findRoleUserByTipoAndEstado(String tipo, boolean estado);
 }

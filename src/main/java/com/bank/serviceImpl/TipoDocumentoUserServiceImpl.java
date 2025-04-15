@@ -2,18 +2,14 @@ package com.bank.serviceImpl;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.TipoDocumentoUserDTO;
-import com.bank.dto.UserDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
 import com.bank.model.TipoDocumentoUser;
-import com.bank.model.User;
 import com.bank.repository.TipoDocumentoUserRepository;
 import com.bank.service.TipoDocumentoUserService;
 @Service
@@ -50,6 +46,7 @@ public class TipoDocumentoUserServiceImpl implements TipoDocumentoUserService {
 	@Override
 	public TipoDocumentoUserDTO save(TipoDocumentoUserDTO tipoDocumentoUserDTO) {
 		TipoDocumentoUser userTransformado = TipoDocumentoUserDTO.tipoDocumentoUserDTOToTipoDocumentoUser(tipoDocumentoUserDTO);
+		userTransformado.setEstado(true);
 		TipoDocumentoUser result = tipoDocumentoUserRepository.save(Objects.requireNonNull(userTransformado));
 		return TipoDocumentoUserDTO.tipoDocumentoUserToTipoDocumentoUserDTO(result);
 	}

@@ -35,6 +35,6 @@ public class TipoTransacion {
 	
 	private boolean estado;
 	
-	@OneToMany(mappedBy = "tipoTransaccion")
+	@OneToMany(mappedBy = "tipoTransacion")
 	private List<Transacion> transaciones;
 }

@@ -1,7 +1,6 @@
 package com.bank.dto;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.bank.model.RoleUser;
@@ -18,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class RoleUserDTO {
 	private int id;
 	private String tipo;
+	
 	public static RoleUserDTO rolUserToRolUserDTO(RoleUser roleUser){
 		return RoleUserDTO
 				.builder()

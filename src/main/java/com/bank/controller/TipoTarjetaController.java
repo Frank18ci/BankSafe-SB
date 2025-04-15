@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.dto.TipoTarjetaDTO;
-import com.bank.dto.UserDTO;
 import com.bank.service.TipoTarjetaService;
-import com.bank.service.UserService;
 
 @RestController
 @RequestMapping("/tipoTarjeta")
@@ -28,27 +25,27 @@ public class TipoTarjetaController {
 	
 	@GetMapping
 	public ResponseEntity<?> getTipoTarjeta() {
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(tipoTarjetaService.list());
+		return ResponseEntity.status(200).body(tipoTarjetaService.list());
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getTipoTarjeta(@PathVariable int id){
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(tipoTarjetaService.find(id));
+	public ResponseEntity<?> getTipoTarjetaById(@PathVariable int id){
+		return ResponseEntity.status(200).body(tipoTarjetaService.find(id));
 	}
 	@PostMapping
-	public ResponseEntity<?> createTipoTarjeta (@RequestBody TipoTarjetaDTO tipoTarjetaDTO ){
-		TipoTarjetaDTO u = tipoTarjetaService.save(tipoTarjetaDTO);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(u);
+	public ResponseEntity<?> createTipoTarjeta(@RequestBody TipoTarjetaDTO tipoTarjeta ){
+		TipoTarjetaDTO u = tipoTarjetaService.save(tipoTarjeta);
+		return ResponseEntity.status(201).body(u);
 	}
 	@PutMapping
-	public ResponseEntity<?> updateTipoTarjeta (@RequestBody TipoTarjetaDTO tipoTarjetaDTO ){
-		TipoTarjetaDTO u = tipoTarjetaService.update(tipoTarjetaDTO);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(u);
+	public ResponseEntity<?> updateTipoTarjeta(@RequestBody TipoTarjetaDTO tipoTarjeta ){
+		TipoTarjetaDTO u = tipoTarjetaService.update(tipoTarjeta);
+		return ResponseEntity.status(200).body(u);
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteTipoTarjeta(@PathVariable int id){
-		tipoTarjetaService.delete(id);
+		String mensaje = tipoTarjetaService.delete(id);
 		Map<String, Object> mapper = new HashMap<String, Object>();
-		 mapper.put("message", "Tipo Tarjeta Eliminado" + id);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper);
+		 mapper.put("message", mensaje);
+		return ResponseEntity.status(200).body(mapper);
 	}
 }

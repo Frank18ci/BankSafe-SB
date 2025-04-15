@@ -28,12 +28,10 @@ public class UserServiceImpl implements UserService {
 		return users;
 	}
 	@Override
-	public List<UserDTO> listbyAll() {
+	public List<UserDTO> listByAll() {
 		List<UserDTO> users = UserDTO.listUserToUserDTO(userRepository.findAll());		
 		return users;
 	}
-	
-
 	
 	@Override
 	public UserDTO find(int id) {
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserDTO findbyAll(int id) {
+	public UserDTO findByAll(int id) {
 		User result = userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFound("Usuario no encontrado "  + id ));;
 		return UserDTO.userToUserDTO(result);
@@ -55,10 +53,11 @@ public class UserServiceImpl implements UserService {
 		
 		//Agree the default value to role register for first time
 		userDTO.setRoleUser(RoleUserDTO.builder()
-				.id(roleUserRepository.findRoleUserByTipo("USUARIO").get().getId())
+				.id(roleUserRepository.findRoleUserByTipoAndEstado("USUARIO", true).get().getId())
 				.build());
 		//
 		User userTransformado = UserDTO.userDTOToUser(userDTO);
+		userTransformado.setEstado(true);
 		User result = userRepository.save(Objects.requireNonNull(userTransformado));
 		return UserDTO.userToUserDTO(result);
 	}

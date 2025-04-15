@@ -47,6 +47,7 @@ public class TipoTarjetaServiceImpl implements TipoTarjetaService {
 	@Override
 	public TipoTarjetaDTO save(TipoTarjetaDTO tipoTarjetaDTO) {
 		TipoTarjeta tarjetaTransformado = TipoTarjetaDTO.tipoTarjetaDTOToTipoTarjeta(tipoTarjetaDTO);
+		tarjetaTransformado.setEstado(true);
 		TipoTarjeta result = tipoTarjetaRepository.save(Objects.requireNonNull(tarjetaTransformado));
 		return TipoTarjetaDTO.tipoTarjetaToTipoTarjetaDTO(result);
 	}

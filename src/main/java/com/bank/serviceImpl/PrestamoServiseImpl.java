@@ -16,17 +16,18 @@ import com.bank.service.PrestamoService;
 public class PrestamoServiseImpl implements PrestamoService {
 	@Autowired
 	private PrestamoRepository prestamoRepository;
+	
 	@Override
 	public List<PrestamoDTO> list() {
 		List<PrestamoDTO> prestamos = PrestamoDTO.listPrestamoToListPrestamoDTO(prestamoRepository.findPrestamoByEstado(true));
 		return prestamos;
 	}
+	
 	@Override
 	public List<PrestamoDTO> listByAll() {
 		List<PrestamoDTO> prestamos = PrestamoDTO.listPrestamoToListPrestamoDTO(prestamoRepository.findAll());
 		return prestamos;
 	}
-
 
 	@Override
 	public PrestamoDTO find(int id) {
@@ -44,6 +45,7 @@ public class PrestamoServiseImpl implements PrestamoService {
 	@Override
 	public PrestamoDTO save(PrestamoDTO prestamoDTO) {
 		Prestamo prestamoTransformado = PrestamoDTO.prestamoDTOToPrestamo(prestamoDTO);
+		prestamoTransformado.setEstado(true);
 		Prestamo result = prestamoRepository.save(Objects.requireNonNull(prestamoTransformado));
 		return PrestamoDTO.prestamoToPrestamoDTO(result);
 	}

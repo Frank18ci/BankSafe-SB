@@ -5,14 +5,12 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 import java.util.HashMap;
 import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,8 +37,31 @@ public class UserController {
 	
 	@GetMapping
 	public ResponseEntity<?> getUsers() {
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.list());
+		return ResponseEntity.status(200).body(userService.list());
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getUserById(@PathVariable int id){
+		return ResponseEntity.status(200).body(userService.find(id));
+	}
+	@PostMapping
+	public ResponseEntity<?> createUser(@RequestBody UserDTO user ){
+		UserDTO u = userService.save(user);
+		return ResponseEntity.status(201).body(u);
+	}
+	@PutMapping
+	public ResponseEntity<?> updateUser(@RequestBody UserDTO user ){
+		UserDTO u = userService.update(user);
+		return ResponseEntity.status(200).body(u);
+	}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable int id){
+		String mensaje = userService.delete(id);
+		Map<String, Object> mapper = new HashMap<String, Object>();
+		 mapper.put("message", mensaje);
+		return ResponseEntity.status(200).body(mapper);
+	}
+	
 	
 	@GetMapping("images/{img}")
 	public ResponseEntity<?> getImagen(@PathVariable String img) throws IOException{
@@ -84,27 +105,6 @@ public class UserController {
 		} catch (IOException e) {
 			return ResponseEntity.status(500).body("Error al subir la imagen");
 		}
-	}
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getUser(@PathVariable int id){
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.find(id));
-	}
-	@PostMapping
-	public ResponseEntity<?> createUser (@RequestBody UserDTO userDTO ){
-		UserDTO u = userService.save(userDTO);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(u);
-	}
-	@PutMapping
-	public ResponseEntity<?> updateUser (@RequestBody UserDTO userDTO ){
-		UserDTO u = userService.update(userDTO);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(u);
-	}
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteUser(@PathVariable int id){
-		userService.delete(id);
-		Map<String, Object> mapper = new HashMap<String, Object>();
-		 mapper.put("message", "User Eliminado" + id);
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(mapper);
 	}
 	
 	

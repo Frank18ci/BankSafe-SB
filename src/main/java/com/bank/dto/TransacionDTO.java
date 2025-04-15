@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.bank.model.TipoTransacion;
 import com.bank.model.Transacion;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class TransacionDTO {
 	private BigDecimal monto;
 	private String descripcion;
 	private Date fecha;
-	//
+	
 	private TipoTransacionDTO tipoTransacion;
 	private TarjetaDTO tarjeta;
 	private UserDTO user;
