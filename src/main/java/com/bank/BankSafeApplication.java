@@ -8,11 +8,15 @@ import org.springframework.context.annotation.Bean;
 import com.bank.dto.RoleUserDTO;
 import com.bank.dto.TipoDocumentoUserDTO;
 import com.bank.dto.TipoMonedaTarjetaDTO;
+import com.bank.dto.TipoPrestamoDTO;
 import com.bank.dto.TipoTarjetaDTO;
+import com.bank.dto.TipoTransacionDTO;
 import com.bank.service.RoleUserService;
 import com.bank.service.TipoDocumentoUserService;
 import com.bank.service.TipoMonedaTarjetaService;
+import com.bank.service.TipoPrestamoService;
 import com.bank.service.TipoTarjetaService;
+import com.bank.service.TipoTransacionService;
 
 @SpringBootApplication
 public class BankSafeApplication {
@@ -22,7 +26,14 @@ public class BankSafeApplication {
 	}
 	
 	@Bean
-    CommandLineRunner cargarDatosIniciales(TipoDocumentoUserService tipoDocumentoUserService, RoleUserService roleUserService, TipoTarjetaService tipoTarjetaService, TipoMonedaTarjetaService tipoMonedaTarjetaService) {
+    CommandLineRunner cargarDatosIniciales(
+    		TipoDocumentoUserService tipoDocumentoUserService,
+    		RoleUserService roleUserService,
+    		TipoTarjetaService tipoTarjetaService,
+    		TipoMonedaTarjetaService tipoMonedaTarjetaService,
+    		TipoPrestamoService tipoPrestamoService,
+    		TipoTransacionService tipoTransacionService
+    		) {
         return args -> {
         	TipoDocumentoUserDTO tipoDocumentoUserDTO = TipoDocumentoUserDTO.builder()
         			.tipo("DNI")
@@ -62,6 +73,26 @@ public class BankSafeApplication {
             		.build();
             tipoTarjetaService.save(tipoTarjetaDTO);
             
+            TipoPrestamoDTO tipoPrestamoDTO = TipoPrestamoDTO.builder()
+            		.tipo("TRIMESTRAL")
+            		.build();
+            tipoPrestamoService.save(tipoPrestamoDTO);
+            tipoPrestamoDTO = TipoPrestamoDTO.builder()
+                    .tipo("SEMESTRAL")
+                    .build();
+            tipoPrestamoService.save(tipoPrestamoDTO);
+            tipoPrestamoDTO = TipoPrestamoDTO.builder()
+                    .tipo("MENSUAL")
+                    .build();
+            tipoPrestamoService.save(tipoPrestamoDTO);
+            TipoTransacionDTO tipoTransacionDTO = TipoTransacionDTO.builder()
+            		.tipo("TRANSFERENCIA")
+            		.build();
+            tipoTransacionService.save(tipoTransacionDTO);
+            tipoTransacionDTO = TipoTransacionDTO.builder()
+            		.tipo("PAGO DE SERVICIO")
+            		.build();
+            tipoTransacionService.save(tipoTransacionDTO);
         };
     }
 }

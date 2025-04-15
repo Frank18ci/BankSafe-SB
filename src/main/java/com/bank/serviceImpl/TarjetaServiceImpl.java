@@ -10,15 +10,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bank.dto.RoleUserDTO;
 import com.bank.dto.TarjetaDTO;
 import com.bank.dto.UserDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
+import com.bank.model.RoleUser;
 import com.bank.model.Tarjeta;
 import com.bank.repository.RoleUserRepository;
 import com.bank.repository.TarjetaRepository;
+import com.bank.repository.UserRepository;
 import com.bank.service.TarjetaService;
 
 @Service
@@ -27,6 +30,8 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 	private TarjetaRepository tarjetaRepository;
 	@Autowired
 	private RoleUserRepository roleUserRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Override
 	public TarjetaDTO findByNumeroTarjeta(String numeroTarjeta) {
@@ -65,17 +70,32 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 				.orElseThrow(() -> new ResourceNotFound("Tarjeta no encontrado"));
 		return TarjetaDTO.tarjetaToTarjetaDTO(t);
 	}
+	@Transactional
 	@Override
 	public TarjetaDTO save(TarjetaDTO tarjetaDTO) {
-		UserDTO user = tarjetaDTO.getUser();
-		user.setRoleUser(RoleUserDTO.builder()
-				.id(roleUserRepository.findRoleUserByTipoAndEstado("USUARIO", true).get().getId())
-				.build());
-		tarjetaDTO.setUser(user);
+		UserDTO userDTO = tarjetaDTO.getUser();
+		 RoleUser role = roleUserRepository
+			        .findRoleUserByTipoAndEstado("USUARIO", true)
+			        .orElseThrow(() -> new ResourceNotFound("Rol USUARIO no encontrado"));
+		 RoleUserDTO roleDTO = RoleUserDTO.rolUserToRolUserDTO(role);
+		userDTO.setRoleUser(roleDTO); 
+		tarjetaDTO.setUser(userDTO);
 		
-		Tarjeta userTransformado = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaDTO);
-		userTransformado.setEstado(true);
-		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(userTransformado));
+		Tarjeta tarjetaTransformado = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaDTO);
+		tarjetaTransformado.setEstado(true);
+		
+		com.bank.model.User user;
+		if(userDTO.getId() <= 0) {
+			System.out.println(userDTO.getId() <= 0);
+			user = tarjetaTransformado.getUser();
+		      user.setRoleUser(role);
+		      user.setEstado(true);
+		      userRepository.save(user);
+		} else {
+			user = userRepository.findUserByIdAndEstado(userDTO.getId(), true)
+				    .orElseThrow(() -> new ResourceNotFound("Usuario no encontrado con id: " + userDTO.getId()));
+		}
+		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(tarjetaTransformado));
 		return TarjetaDTO.tarjetaToTarjetaDTO(result);
 	}
 	@Override
@@ -83,8 +103,8 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 		if(Objects.isNull(tarjetaDTO.getId())) {
 			throw new BadRequestParam("Faltan paramentros tarjeta");
 		}
-		Tarjeta userTransformado = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaDTO);
-		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(userTransformado));
+		Tarjeta tarjetaTransformado = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaDTO);
+		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(tarjetaTransformado));
 		return TarjetaDTO.tarjetaToTarjetaDTO(result);
 	}
 	@Override

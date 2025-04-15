@@ -34,7 +34,11 @@ public class Transacion {
 	@ManyToOne
 	private TipoTransacion tipoTransacion;
 	@ManyToOne
-	private Tarjeta tarjeta;
+	private Tarjeta tarjetaOrigen;
+	@ManyToOne
+	private Tarjeta tarjetaDestino;
+	
+	
 	@ManyToOne
 	private User user;
 }

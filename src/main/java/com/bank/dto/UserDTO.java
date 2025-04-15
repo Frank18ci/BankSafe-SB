@@ -50,7 +50,7 @@ public class UserDTO {
 				.builder()
 				.id(userDTO.getId())
 				.numeroDocumento(userDTO.getNumeroDocumento())
-				.nombres(userDTO.getApellidos())
+				.nombres(userDTO.getNombres())
 				.apellidos(userDTO.getApellidos())
 				.fechaNacimiento(userDTO.getFechaNacimiento())
 				.imagePath(userDTO.getImagePath())

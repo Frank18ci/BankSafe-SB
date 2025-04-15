@@ -23,7 +23,8 @@ public class TransacionDTO {
 	private Date fecha;
 	
 	private TipoTransacionDTO tipoTransacion;
-	private TarjetaDTO tarjeta;
+	private TarjetaDTO tarjetaOrigen;
+	private TarjetaDTO tarjetaDestino;
 	private UserDTO user;
 	
 	public static TransacionDTO transacionToTransacionDTO(Transacion transacion) {
@@ -34,7 +35,8 @@ public class TransacionDTO {
 				.descripcion(transacion.getDescripcion())
 				.fecha(transacion.getFecha())
 				.tipoTransacion(TipoTransacionDTO.tipoTransacionToTipoTransacionDTO(transacion.getTipoTransacion()))
-				.tarjeta(TarjetaDTO.tarjetaToTarjetaDTO(transacion.getTarjeta()))
+				.tarjetaOrigen(TarjetaDTO.tarjetaToTarjetaDTO(transacion.getTarjetaOrigen()))
+				.tarjetaDestino(TarjetaDTO.tarjetaToTarjetaDTO(transacion.getTarjetaDestino()))
 				.user(UserDTO.userToUserDTO(transacion.getUser()))
 				.build();
 	}
@@ -51,7 +53,8 @@ public class TransacionDTO {
 				.descripcion(transacionDTO.getDescripcion())
 				.fecha(transacionDTO.getFecha())
 				.tipoTransacion(TipoTransacionDTO.tipoTransacionDTOToTipoTransacion(transacionDTO.getTipoTransacion()))
-				.tarjeta(TarjetaDTO.tarjetaDTOTotarjeta(transacionDTO.getTarjeta()))
+				.tarjetaOrigen(TarjetaDTO.tarjetaDTOTotarjeta(transacionDTO.getTarjetaOrigen()))
+				.tarjetaDestino(TarjetaDTO.tarjetaDTOTotarjeta(transacionDTO.getTarjetaDestino()))
 				.user(UserDTO.userDTOToUser(transacionDTO.getUser()))
 				.build();
 	}
