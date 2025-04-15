@@ -16,7 +16,7 @@ import com.bank.model.User;
 
 @Repository
 public interface TarjetaRepository extends JpaRepository<Tarjeta, Integer> {
-	List<Tarjeta> findByEstado(boolean estado);
+	List<Tarjeta> findTarjetaByEstado(boolean estado);
 	Optional<Tarjeta> findTarjetaByIdAndEstado(int id, boolean estado);
 	Optional<Tarjeta> findTarjetaByNumeroTarjetaAndEstado(String numeroTarjeta, boolean estado);
 	Optional<Tarjeta> findTarjetaByTipoMonedaTarjetaAndEstado(TipoMonedaTarjeta tipoMonedaTarjeta, boolean estado);
