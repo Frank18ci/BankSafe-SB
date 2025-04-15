@@ -32,7 +32,7 @@ public class Transacion {
 	private boolean estado;
 	
 	@ManyToOne
-	private TipoTransacion tipoTransaccion;
+	private TipoTransacion tipoTransacion;
 	@ManyToOne
 	private Tarjeta tarjeta;
 	@ManyToOne

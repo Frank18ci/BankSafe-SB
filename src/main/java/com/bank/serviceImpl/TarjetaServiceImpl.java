@@ -45,7 +45,7 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 	
 	@Override
 	public List<TarjetaDTO> list() {
-		List<TarjetaDTO> users = TarjetaDTO.listTarjetaToTarjetaDTO(tarjetaRepository.findByEstado(true));
+		List<TarjetaDTO> users = TarjetaDTO.listTarjetaToTarjetaDTO(tarjetaRepository.findTarjetaByEstado(true));
 		return users;
 	}
 	@Override

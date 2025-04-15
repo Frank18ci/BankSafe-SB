@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.model.RoleUser;
+import com.bank.model.User;
 import com.bank.dto.RoleUserDTO;
+import com.bank.dto.UserDTO;
+import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
 import com.bank.repository.RoleUserRepository;
 import com.bank.service.RoleUserService;
@@ -17,60 +20,60 @@ import com.bank.service.RoleUserService;
 public class RoleUserServiceImpl implements RoleUserService{
 	@Autowired
 	private RoleUserRepository roleUserRepository;
-	
-	private RoleUserDTO roleUserToRoleUserDTO(RoleUser roleUser) {
-		return RoleUserDTO
-				.builder()
-				.id(roleUser.getId())
-				.tipo(roleUser.getTipo())
-				.build();
+
+	@Override
+	public List<RoleUserDTO> listByAll() {
+		List<RoleUserDTO> roleUsers = RoleUserDTO.listRoleUserToListUserDTO(roleUserRepository.findAll());
+		return roleUsers;
 	}
-	private RoleUser roleUserDTOToRoleUser(RoleUserDTO roleUserDTO) {
-		return RoleUser
-				.builder()
-				.id(roleUserDTO.getId())
-				.tipo(roleUserDTO.getTipo())
-				.build();
-	}
-	
+
 	@Override
 	public List<RoleUserDTO> list() {
-		List<RoleUserDTO> list = roleUserRepository.findAll().stream()
-				.map(roleUserEntity -> roleUserToRoleUserDTO(roleUserEntity) )
-				.collect(Collectors.toList());
-		return list;
+		List<RoleUserDTO> roleUsers = RoleUserDTO.listRoleUserToListUserDTO(roleUserRepository.findRolUserByEstado(true));
+		return roleUsers;
 	}
+
 	@Override
 	public RoleUserDTO find(int id) {
-		Optional<RoleUser> result = roleUserRepository.findById(id);
-		if(result.isEmpty()) {
-			  //crear funcion para controlar las excepciones
-		}
-		RoleUser rl = result.get();
-		return roleUserToRoleUserDTO(rl);
+		RoleUser roleUser = roleUserRepository.findRolUserByIdAndEstado(id, true)
+				.orElseThrow(() -> new ResourceNotFound("RolUsuario no encontrado "  + id ));
+		return RoleUserDTO.rolUserToRolUserDTO(roleUser);
+	}
+
+	@Override
+	public RoleUserDTO findByAll(int id) {
+		RoleUser roleUser = roleUserRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFound("RolUsuario no encontrado "  + id ));;
+		return RoleUserDTO.rolUserToRolUserDTO(roleUser);
 	}
 
 	@Override
 	public RoleUserDTO save(RoleUserDTO userRoleDTO) {
-		if(Objects.isNull(userRoleDTO.getId())) {
-			throw new ResourceNotFound("No espeficaste un id " + userRoleDTO.getId() );
-		}
-		RoleUser roleUserTransformado = roleUserDTOToRoleUser(userRoleDTO);
-		RoleUser result = roleUserRepository.save(Objects.requireNonNull(roleUserTransformado));
-		return roleUserToRoleUserDTO(result);
+		RoleUser rolUserTransformado = RoleUserDTO.rolUserDTOToRolUser(userRoleDTO);
+		RoleUser result = roleUserRepository.save(Objects.requireNonNull(rolUserTransformado));
+		return RoleUserDTO.rolUserToRolUserDTO(result);
 	}
+
 	@Override
 	public RoleUserDTO update(RoleUserDTO userRoleDTO) {
 		if(Objects.isNull(userRoleDTO.getId())) {
-			//crear funcion para controlar las excepciones
+			throw new BadRequestParam("Falta el paremetro id");
 		}
-		RoleUser roleUserTransformado = roleUserDTOToRoleUser(userRoleDTO);
-		RoleUser result = roleUserRepository.save(Objects.requireNonNull(roleUserTransformado));
-		return roleUserToRoleUserDTO(result);
+		RoleUser rolUserTransformado = RoleUserDTO.rolUserDTOToRolUser(userRoleDTO);
+		RoleUser result = roleUserRepository.save(Objects.requireNonNull(rolUserTransformado));
+		return RoleUserDTO.rolUserToRolUserDTO(result);
 	}
-	
+
 	@Override
-	public void delete(int id) {
-		roleUserRepository.deleteById(id);
+	public String delete(int id) {
+		RoleUser u = roleUserRepository.findRolUserByIdAndEstado(id, true)
+				.orElseThrow(() -> new ResourceNotFound("Rol Usuario no encontrado "  + id ));
+		u.setEstado(false);
+		roleUserRepository.save(u);
+		return "Usuario eliminado correctamente";
 	}
+
+	
+	
+	
 }

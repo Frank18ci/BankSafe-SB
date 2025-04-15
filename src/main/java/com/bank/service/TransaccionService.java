@@ -6,9 +6,11 @@ import com.bank.dto.TransacionDTO;
 
 
 public interface TransaccionService {
+	public List<TransacionDTO> listByAll();
 	public List<TransacionDTO> list();
-	public TransacionDTO save(TransacionDTO transacionDTO);
 	public TransacionDTO find(int id);
+	public TransacionDTO findByAll(int id);
+	public TransacionDTO save(TransacionDTO transacionDTO);
 	public TransacionDTO update(TransacionDTO transacionDTO);
-	public void delete(int id);
+	public String delete(int id);
 }
