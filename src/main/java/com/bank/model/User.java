@@ -44,7 +44,7 @@ public class User {
 	
 	private boolean estado;
 	
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = RoleUser.class)
+	@ManyToOne(targetEntity = RoleUser.class)
 	private RoleUser roleUser;
 	
 	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)

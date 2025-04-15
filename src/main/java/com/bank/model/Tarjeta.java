@@ -49,7 +49,7 @@ public class Tarjeta {
 	
 	private boolean estado;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	@ManyToOne
