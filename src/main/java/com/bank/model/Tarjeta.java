@@ -49,7 +49,7 @@ public class Tarjeta {
 	
 	private boolean estado;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 	@ManyToOne
@@ -57,6 +57,8 @@ public class Tarjeta {
 	@ManyToOne
 	private TipoMonedaTarjeta tipoMonedaTarjeta;
 	
-	@OneToMany(mappedBy = "tarjeta")
-	private List<Transacion> transaciones;
+	@OneToMany(mappedBy = "tarjetaOrigen")
+	private List<Transacion> transacionesOrigen;
+	@OneToMany(mappedBy = "tarjetaDestino")
+	private List<Transacion> transacionesDestino;
 }
