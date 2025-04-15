@@ -22,7 +22,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter{
 	private JwtUtils jwtUtils;
 	
 	@Autowired
-
 	TarjetaServiceImpl tarjetaServiceImpl;
 	
 	@Override
