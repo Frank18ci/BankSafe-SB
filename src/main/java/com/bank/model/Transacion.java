@@ -26,7 +26,6 @@ public class Transacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private BigDecimal monto;
-	private String descripcion;
 	private Date fecha;
 	
 	private boolean estado;
@@ -39,6 +38,4 @@ public class Transacion {
 	private Tarjeta tarjetaDestino;
 	
 	
-	@ManyToOne
-	private User user;
 }
