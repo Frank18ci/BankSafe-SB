@@ -39,11 +39,22 @@ public class UserController {
 	public ResponseEntity<?> getUsers() {
 		return ResponseEntity.status(200).body(userService.list());
 	}
+	@GetMapping("listTarjetas")
+	public ResponseEntity<?> getUsersI() {
+		return ResponseEntity.status(200).body(userService.listI());
+	}
+	
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUserById(@PathVariable int id){
 		return ResponseEntity.status(200).body(userService.find(id));
 	}
+	
+	@GetMapping("/userTarjetas/{id}")
+	public ResponseEntity<?> getUserByIdI(@PathVariable int id){
+		return ResponseEntity.status(200).body(userService.findI(id));
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> createUser(@RequestBody UserDTO user ){
 		UserDTO u = userService.save(user);

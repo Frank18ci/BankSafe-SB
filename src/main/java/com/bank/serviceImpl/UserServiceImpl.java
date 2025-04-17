@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bank.dto.RoleUserDTO;
 import com.bank.dto.UserDTO;
+import com.bank.dto.UserIDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
 import com.bank.model.User;
@@ -32,6 +33,11 @@ public class UserServiceImpl implements UserService {
 		List<UserDTO> users = UserDTO.listUserToUserDTO(userRepository.findAll());		
 		return users;
 	}
+	@Override
+	public List<UserIDTO> listI() {
+		List<UserIDTO> users = UserIDTO.listUserToListUserIDTO(userRepository.findAll());
+		return users;
+	}
 	
 	@Override
 	public UserDTO find(int id) {
@@ -46,6 +52,12 @@ public class UserServiceImpl implements UserService {
 		User result = userRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFound("Usuario no encontrado "  + id ));;
 		return UserDTO.userToUserDTO(result);
+	}
+	@Override
+	public UserIDTO findI(int id) {
+		User result = userRepository.findUserByIdAndEstado(id, true)
+				.orElseThrow(() -> new ResourceNotFound("Usuario no encontrado "  + id ));
+		return UserIDTO.userToUserIDTO(result);
 	}
 	
 	@Override
