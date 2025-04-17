@@ -18,4 +18,8 @@ public class CambioMonedaController {
 	public ResponseEntity<?> getAll(@PathVariable String nombre){
 		return ResponseEntity.status(200).body(cambioMonedaConnector.getConversion(nombre));
 	}
+	@GetMapping("/{base}/{target}")
+	public ResponseEntity<?> getBaseToTarget(@PathVariable String base, @PathVariable String target){
+		return ResponseEntity.status(200).body(cambioMonedaConnector.getConversion(base, target));
+	}
 }

@@ -56,6 +56,4 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Prestamo> prestamos;
 	
-	@OneToMany(mappedBy = "user")
-	private List<Transacion> transaciones;
 }
