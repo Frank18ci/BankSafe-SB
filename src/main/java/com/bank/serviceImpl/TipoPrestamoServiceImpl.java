@@ -20,7 +20,8 @@ public class TipoPrestamoServiceImpl implements TipoPrestamoService {
 	
 	@Override
 	public List<TipoPrestamoDTO> list() {
-		List<TipoPrestamoDTO> tipoPrestamos = TipoPrestamoDTO.listTipoPretamoToListTipoPrestamoDTO(tipoPrestamoRepository.findTipoPrestamoByEstado(true));
+		List<TipoPrestamoDTO> tipoPrestamos = TipoPrestamoDTO
+				.listTipoPretamoToListTipoPrestamoDTO(tipoPrestamoRepository.findTipoPrestamoByEstadoTrue());
 		return tipoPrestamos;
 	}
 	@Override
@@ -31,7 +32,7 @@ public class TipoPrestamoServiceImpl implements TipoPrestamoService {
 
 	@Override
 	public TipoPrestamoDTO find(int id) {
-		TipoPrestamo result = tipoPrestamoRepository.findTipoPrestamoByIdAndEstado(id, true)
+		TipoPrestamo result = tipoPrestamoRepository.findTipoPrestamoByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo Prestamo no encontrado "  + id ));
 		return TipoPrestamoDTO.tipoPrestamoToTipoPrestamoDTO(result);
 	}
@@ -64,7 +65,7 @@ public class TipoPrestamoServiceImpl implements TipoPrestamoService {
 
 	@Override
 	public String delete(int id) {
-		TipoPrestamo result = tipoPrestamoRepository.findTipoPrestamoByIdAndEstado(id, true)
+		TipoPrestamo result = tipoPrestamoRepository.findTipoPrestamoByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo Prestamo no encontrado "  + id ));
 		result.setEstado(false);
 		tipoPrestamoRepository.save(result);

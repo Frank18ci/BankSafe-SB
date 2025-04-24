@@ -45,6 +45,7 @@ public class Tarjeta {
 	
 	private Double monto;
 	
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
 	@ManyToOne

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 public interface TipoDocumentoUserRepository extends JpaRepository<TipoDocumentoUser, Integer> {
-	List<TipoDocumentoUser> findTipoDocumentoByEstado(boolean estado);
-	Optional<TipoDocumentoUser> findTipoDocumentoByIdAndEstado(int id, boolean estado);
-	Optional<RoleUser> findTipoDocumentoUserByTipoAndEstado(String tipo, boolean estado);
+	List<TipoDocumentoUser> findTipoDocumentoByEstadoTrue();
+	Optional<TipoDocumentoUser> findTipoDocumentoByIdAndEstadoTrue(int id);
+	Optional<RoleUser> findTipoDocumentoUserByTipoAndEstadoTrue(String tipo);
 }

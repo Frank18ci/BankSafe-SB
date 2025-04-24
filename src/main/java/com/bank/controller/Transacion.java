@@ -52,4 +52,9 @@ public class Transacion {
 		 mapper.put("message", mensaje);
 		return ResponseEntity.status(200).body(mensaje);
 	}
+	@PostMapping("/transferenciaDineroConvertido")
+	public ResponseEntity<?> trasferenciaDineroConvertido(@RequestBody TransacionDTO transacion) {
+		
+		return ResponseEntity.status(201).body(transacion);
+	}
 }

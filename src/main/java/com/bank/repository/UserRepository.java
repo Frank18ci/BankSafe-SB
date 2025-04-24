@@ -11,6 +11,6 @@ import com.bank.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-	List<User> findUserByEstado(boolean estado);
-	Optional<User> findUserByIdAndEstado(int id, boolean estado);
+	List<User> findUserByEstadoTrue();
+	Optional<User> findUserByIdAndEstadoTrue(int id);
 }

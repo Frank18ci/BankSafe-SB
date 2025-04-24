@@ -19,19 +19,21 @@ public class TipoTransacionServiceImpl implements TipoTransacionService {
 	private TipoTransaccionRepository tipoTransaccionRepository;
 	@Override
 	public List<TipoTransacionDTO> listByAll() {
-		List<TipoTransacionDTO> tipoTransaciones = TipoTransacionDTO.listTipoTransacionToListTipoTransacionDTO(tipoTransaccionRepository.findAll());
+		List<TipoTransacionDTO> tipoTransaciones = TipoTransacionDTO
+				.listTipoTransacionToListTipoTransacionDTO(tipoTransaccionRepository.findAll());
 		return tipoTransaciones;
 	}
 
 	@Override
 	public List<TipoTransacionDTO> list() {
-		List<TipoTransacionDTO> tipoTransaciones = TipoTransacionDTO.listTipoTransacionToListTipoTransacionDTO(tipoTransaccionRepository.findTipoTransacionByEstado(true));
+		List<TipoTransacionDTO> tipoTransaciones = TipoTransacionDTO
+				.listTipoTransacionToListTipoTransacionDTO(tipoTransaccionRepository.findTipoTransacionByEstadoTrue());
 		return tipoTransaciones;
 	}
 
 	@Override
 	public TipoTransacionDTO find(int id) {
-		TipoTransacion result = tipoTransaccionRepository.findTipoTransacionByIdAndEstado(id, true)
+		TipoTransacion result = tipoTransaccionRepository.findTipoTransacionByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo Transacion no encontrado "  + id ));
 		return TipoTransacionDTO.tipoTransacionToTipoTransacionDTO(result);
 	}
@@ -63,7 +65,7 @@ public class TipoTransacionServiceImpl implements TipoTransacionService {
 
 	@Override
 	public String delete(int id) {
-		TipoTransacion u = tipoTransaccionRepository.findTipoTransacionByIdAndEstado(id, true)
+		TipoTransacion u = tipoTransaccionRepository.findTipoTransacionByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo Transaccion no encontrado "  + id ));
 		u.setEstado(false);
 		tipoTransaccionRepository.save(u);

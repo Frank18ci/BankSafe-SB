@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface TipoTransaccionRepository extends JpaRepository<TipoTransacion, Integer> {
-	List<TipoTransacion> findTipoTransacionByEstado(boolean estado);
-	Optional<TipoTransacion> findTipoTransacionByIdAndEstado(int id, boolean estado);
+	List<TipoTransacion> findTipoTransacionByEstadoTrue();
+	Optional<TipoTransacion> findTipoTransacionByIdAndEstadoTrue(int id);
 }

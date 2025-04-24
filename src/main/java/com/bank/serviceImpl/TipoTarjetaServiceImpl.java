@@ -22,7 +22,7 @@ public class TipoTarjetaServiceImpl implements TipoTarjetaService {
 	
 	@Override
 	public List<TipoTarjetaDTO> list() {
-		List<TipoTarjetaDTO> tarjeta = TipoTarjetaDTO.listTipoTarjetaToListTipoTarjetaDTO(tipoTarjetaRepository.findTipoTarjetaByEstado(true));
+		List<TipoTarjetaDTO> tarjeta = TipoTarjetaDTO.listTipoTarjetaToListTipoTarjetaDTO(tipoTarjetaRepository.findTipoTarjetaByEstadoTrue());
 		return tarjeta;
 	}
 	@Override
@@ -33,7 +33,7 @@ public class TipoTarjetaServiceImpl implements TipoTarjetaService {
 
 	@Override
 	public TipoTarjetaDTO find(int id) {
-		TipoTarjeta result = tipoTarjetaRepository.findTipoTarjetaByIdAndEstado(id, true)
+		TipoTarjeta result = tipoTarjetaRepository.findTipoTarjetaByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo tarjeta no encontrado "  + id ));
 		return TipoTarjetaDTO.tipoTarjetaToTipoTarjetaDTO(result);
 	}
@@ -66,7 +66,7 @@ public class TipoTarjetaServiceImpl implements TipoTarjetaService {
 
 	@Override
 	public String delete(int id) {
-		TipoTarjeta result = tipoTarjetaRepository.findTipoTarjetaByIdAndEstado(id, true)
+		TipoTarjeta result = tipoTarjetaRepository.findTipoTarjetaByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo tarjeta no encontrado "  + id ));
 		result.setEstado(false);
 		tipoTarjetaRepository.save(result);

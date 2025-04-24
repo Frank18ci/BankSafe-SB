@@ -19,19 +19,21 @@ public class TipoDocumentoUserServiceImpl implements TipoDocumentoUserService {
 
 	@Override
 	public List<TipoDocumentoUserDTO> listByAll() {
-		List<TipoDocumentoUserDTO> rpta = TipoDocumentoUserDTO.listTipoDocumentoUserToListTipoDocumentoUserDTO(tipoDocumentoUserRepository.findAll());		
+		List<TipoDocumentoUserDTO> rpta = TipoDocumentoUserDTO
+				.listTipoDocumentoUserToListTipoDocumentoUserDTO(tipoDocumentoUserRepository.findAll());		
 		return rpta;
 	}
 
 	@Override
 	public List<TipoDocumentoUserDTO> list() {
-		List<TipoDocumentoUserDTO> rpta = TipoDocumentoUserDTO.listTipoDocumentoUserToListTipoDocumentoUserDTO(tipoDocumentoUserRepository.findTipoDocumentoByEstado(true));		
+		List<TipoDocumentoUserDTO> rpta = TipoDocumentoUserDTO
+				.listTipoDocumentoUserToListTipoDocumentoUserDTO(tipoDocumentoUserRepository.findTipoDocumentoByEstadoTrue());		
 		return rpta;
 	}
 
 	@Override
 	public TipoDocumentoUserDTO find(int id) {
-		TipoDocumentoUser result = tipoDocumentoUserRepository.findTipoDocumentoByIdAndEstado(id, true)
+		TipoDocumentoUser result = tipoDocumentoUserRepository.findTipoDocumentoByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo Documento User no encontrado "  + id ));
 		return TipoDocumentoUserDTO.tipoDocumentoUserToTipoDocumentoUserDTO(result);
 	}
@@ -63,7 +65,7 @@ public class TipoDocumentoUserServiceImpl implements TipoDocumentoUserService {
 
 	@Override
 	public String delete(int id) {
-		TipoDocumentoUser u = tipoDocumentoUserRepository.findTipoDocumentoByIdAndEstado(id, true)
+		TipoDocumentoUser u = tipoDocumentoUserRepository.findTipoDocumentoByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Usuario no encontrado "  + id ));
 		u.setEstado(false);
 		tipoDocumentoUserRepository.save(u);

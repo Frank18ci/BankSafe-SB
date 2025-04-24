@@ -21,18 +21,20 @@ public class TipoMonedaTarjetaServiceImpl implements TipoMonedaTarjetaService {
 	
 	@Override
 	public List<TipoMonedaTarjetaDTO> list() {
-		List<TipoMonedaTarjetaDTO> tipoMonedas = TipoMonedaTarjetaDTO.listTipoMonedaTarjetaToListTipoMonedaTarjetaDTO(tipoMonedaTarjetaRepository.findTipoMonedaTarjetaByEstado(true));
+		List<TipoMonedaTarjetaDTO> tipoMonedas = TipoMonedaTarjetaDTO
+				.listTipoMonedaTarjetaToListTipoMonedaTarjetaDTO(tipoMonedaTarjetaRepository.findTipoMonedaTarjetaByEstadoTrue());
 		return tipoMonedas;
 	}
 	@Override
 	public List<TipoMonedaTarjetaDTO> listByAll() {
-		List<TipoMonedaTarjetaDTO> tipoMonedas = TipoMonedaTarjetaDTO.listTipoMonedaTarjetaToListTipoMonedaTarjetaDTO(tipoMonedaTarjetaRepository.findAll());
+		List<TipoMonedaTarjetaDTO> tipoMonedas = TipoMonedaTarjetaDTO
+				.listTipoMonedaTarjetaToListTipoMonedaTarjetaDTO(tipoMonedaTarjetaRepository.findAll());
 		return tipoMonedas;
 	}
 
 	@Override
 	public TipoMonedaTarjetaDTO find(int id) {
-		TipoMonedaTarjeta result = tipoMonedaTarjetaRepository.findTipoMonedaTarjetaByIdAndEstado(id, true)
+		TipoMonedaTarjeta result = tipoMonedaTarjetaRepository.findTipoMonedaTarjetaByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo Moneda Tarjeta no encontrado "  + id ));
 		return TipoMonedaTarjetaDTO.tipoMonedaTarjetaToTipoMonedaTarjetaDTO(result);
 	}
@@ -65,7 +67,7 @@ public class TipoMonedaTarjetaServiceImpl implements TipoMonedaTarjetaService {
 
 	@Override
 	public String delete(int id) {
-		TipoMonedaTarjeta result = tipoMonedaTarjetaRepository.findTipoMonedaTarjetaByIdAndEstado(id, true)
+		TipoMonedaTarjeta result = tipoMonedaTarjetaRepository.findTipoMonedaTarjetaByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tipo Moneda Tarjeta no encontrado "  + id ));
 		result.setEstado(false);
 		tipoMonedaTarjetaRepository.save(result);
