@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<UserDTO> list() {
-		List<UserDTO> users = UserDTO.listUserToUserDTO(userRepository.findUserByEstado(true));		
+		List<UserDTO> users = UserDTO.listUserToUserDTO(userRepository.findUserByEstadoTrue());		
 		return users;
 	}
 	@Override
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDTO find(int id) {
-		User result = userRepository.findUserByIdAndEstado(id, true)
+		User result = userRepository.findUserByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Usuario no encontrado "  + id ));
 		return UserDTO.userToUserDTO(result);
 		
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public UserIDTO findI(int id) {
-		User result = userRepository.findUserByIdAndEstado(id, true)
+		User result = userRepository.findUserByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Usuario no encontrado "  + id ));
 		return UserIDTO.userToUserIDTO(result);
 	}
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 		
 		//Agree the default value to role register for first time
 		userDTO.setRoleUser(RoleUserDTO.builder()
-				.id(roleUserRepository.findRoleUserByTipoAndEstado("USUARIO", true).get().getId())
+				.id(roleUserRepository.findRoleUserByTipoAndEstadoTrue("USUARIO").get().getId())
 				.build());
 		//
 		User userTransformado = UserDTO.userDTOToUser(userDTO);
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public String delete(int id) {
-		User u = userRepository.findUserByIdAndEstado(id, true)
+		User u = userRepository.findUserByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Usuario no encontrado "  + id ));
 		u.setEstado(false);
 		userRepository.save(u);

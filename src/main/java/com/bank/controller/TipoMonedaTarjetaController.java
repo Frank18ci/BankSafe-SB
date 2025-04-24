@@ -23,6 +23,8 @@ public class TipoMonedaTarjetaController {
 	@Autowired
 	private TipoMonedaTarjetaService tipoMonedaTarjetaService;
 	
+	
+	
 	@GetMapping
 	public ResponseEntity<?> getTipoTarjeta() {
 		return ResponseEntity.status(200).body(tipoMonedaTarjetaService.list());

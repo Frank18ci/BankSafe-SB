@@ -29,6 +29,7 @@ public class RoleUser {
 	@Column(unique = true)
 	private String tipo;
 	
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
 	@OneToMany(mappedBy = "roleUser", fetch = FetchType.LAZY, targetEntity = User.class)

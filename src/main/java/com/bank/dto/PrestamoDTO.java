@@ -24,10 +24,10 @@ public class PrestamoDTO {
 	private Integer plazoMeses;
     private Date fechaInicio;
     private Date fechaFin;
-    private String estadoPrestamo;
 	private Date FechaRegistro;
 	private Date FechaFinalizado;
 	
+	private EstadoPrestamoDTO estadoPrestamo;
 	private UserDTO user;
 	private TipoPrestamoDTO tipoPrestamo;
 	
@@ -38,7 +38,7 @@ public class PrestamoDTO {
 				.plazoMeses(prestamo.getPlazoMeses())
 				.fechaInicio(prestamo.getFechaInicio())
 				.fechaFin(prestamo.getFechaFin())
-				.estadoPrestamo(prestamo.getEstadoPrestamo())
+				.estadoPrestamo(EstadoPrestamoDTO.estadoPrestamoToEstadoPrestamoDTO(prestamo.getEstadoPrestamo()))
 				.FechaRegistro(prestamo.getFechaRegistro())
 				.FechaFinalizado(prestamo.getFechaFinalizado())
 				.user(UserDTO.userToUserDTO(prestamo.getUser()))
@@ -57,7 +57,7 @@ public class PrestamoDTO {
 				.plazoMeses(prestamoDTO.getPlazoMeses())
 				.fechaInicio(prestamoDTO.getFechaInicio())
 				.fechaFin(prestamoDTO.getFechaFin())
-				.estadoPrestamo(prestamoDTO.getEstadoPrestamo())
+				.estadoPrestamo(EstadoPrestamoDTO.estadoPrestamoDTOToEstadoPrestamo(prestamoDTO.getEstadoPrestamo()))
 				.FechaRegistro(prestamoDTO.getFechaRegistro())
 				.FechaFinalizado(prestamoDTO.getFechaFinalizado())
 				.user(UserDTO.userDTOToUser(prestamoDTO.getUser()))

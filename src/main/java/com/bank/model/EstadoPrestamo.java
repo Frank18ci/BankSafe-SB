@@ -1,5 +1,6 @@
 package com.bank.model;
 
+
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -15,23 +16,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tipo_prestamo")
+@Table(name = "estado_prestamo")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoPrestamo {
+public class EstadoPrestamo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
 	@Column(unique = true)
-	private String tipo;
-
+	private String estadoPrestamo;
+	
 	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
-	@OneToMany(mappedBy = "tipoPrestamo")
-	private List<Prestamo> prestamos; 
-	
+	@OneToMany(mappedBy = "estadoPrestamo")
+	private List<Prestamo> prestamos;
 }

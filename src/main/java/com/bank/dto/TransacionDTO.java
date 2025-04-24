@@ -22,10 +22,9 @@ public class TransacionDTO {
 	private Date fecha;
 	
 	private TipoTransacionDTO tipoTransacion;
+	
 	private TarjetaDTO tarjetaOrigen;
 	private TarjetaDTO tarjetaDestino;
-	private UserDTO user;
-	
 	public static TransacionDTO transacionToTransacionDTO(Transacion transacion) {
 		return TransacionDTO
 				.builder()

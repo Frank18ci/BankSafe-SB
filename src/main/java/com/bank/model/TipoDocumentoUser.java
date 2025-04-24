@@ -27,6 +27,7 @@ public class TipoDocumentoUser {
 	@Column(unique = true)
 	private String tipo;
 	
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
 	@OneToMany(mappedBy = "tipoDocumentoUser", fetch = FetchType.LAZY, targetEntity = User.class)

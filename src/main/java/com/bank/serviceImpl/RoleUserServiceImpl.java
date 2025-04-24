@@ -25,13 +25,13 @@ public class RoleUserServiceImpl implements RoleUserService{
 
 	@Override
 	public List<RoleUserDTO> list() {
-		List<RoleUserDTO> roleUsers = RoleUserDTO.listRoleUserToListUserDTO(roleUserRepository.findRolUserByEstado(true));
+		List<RoleUserDTO> roleUsers = RoleUserDTO.listRoleUserToListUserDTO(roleUserRepository.findRolUserByEstadoTrue());
 		return roleUsers;
 	}
 
 	@Override
 	public RoleUserDTO find(int id) {
-		RoleUser roleUser = roleUserRepository.findRolUserByIdAndEstado(id, true)
+		RoleUser roleUser = roleUserRepository.findRolUserByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("RolUsuario no encontrado "  + id ));
 		return RoleUserDTO.rolUserToRolUserDTO(roleUser);
 	}
@@ -63,7 +63,7 @@ public class RoleUserServiceImpl implements RoleUserService{
 
 	@Override
 	public String delete(int id) {
-		RoleUser u = roleUserRepository.findRolUserByIdAndEstado(id, true)
+		RoleUser u = roleUserRepository.findRolUserByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Rol Usuario no encontrado "  + id ));
 		u.setEstado(false);
 		roleUserRepository.save(u);

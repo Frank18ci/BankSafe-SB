@@ -24,13 +24,13 @@ public class TransaccionServiceimpl implements TransaccionService {
 
 	@Override
 	public List<TransacionDTO> list() {
-		List<TransacionDTO> transaciones = TransacionDTO.listTransacionToListTransacionDTO(transaccionRepository.findTransacionByEstado(true));		
+		List<TransacionDTO> transaciones = TransacionDTO.listTransacionToListTransacionDTO(transaccionRepository.findTransacionByEstadoTrue());		
 		return transaciones;
 	}
 
 	@Override
 	public TransacionDTO find(int id) {
-		Transacion result = transaccionRepository.findTransacByIdAndEstado(id, true)
+		Transacion result = transaccionRepository.findTransacByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Transacion no encontrado "  + id ));
 		return TransacionDTO.transacionToTransacionDTO(result);
 		
@@ -63,7 +63,7 @@ public class TransaccionServiceimpl implements TransaccionService {
 
 	@Override
 	public String delete(int id) {
-		Transacion u = transaccionRepository.findTransacByIdAndEstado(id, true)
+		Transacion u = transaccionRepository.findTransacByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Transacion no encontrado "  + id ));
 		u.setEstado(false);
 		transaccionRepository.save(u);

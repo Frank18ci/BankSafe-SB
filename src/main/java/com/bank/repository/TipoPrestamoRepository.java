@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 public interface TipoPrestamoRepository extends JpaRepository<TipoPrestamo, Integer> {
-	List<TipoPrestamo> findTipoPrestamoByEstado(boolean estado);
-	Optional<TipoPrestamo> findTipoPrestamoByIdAndEstado(int id, boolean estado);
-	Optional<TipoPrestamo> findTipoPrestamoByTipoAndEstado(String tipo, boolean estado);
+	List<TipoPrestamo> findTipoPrestamoByEstadoTrue();
+	Optional<TipoPrestamo> findTipoPrestamoByIdAndEstadoTrue(int id);
+	Optional<TipoPrestamo> findTipoPrestamoByTipoAndEstadoTrue(String tipo);
 }
