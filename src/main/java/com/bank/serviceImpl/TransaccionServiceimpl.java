@@ -1,21 +1,32 @@
 package com.bank.serviceImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bank.dto.TarjetaDTO;
+import com.bank.dto.TransaccionConversionMonedaDTO;
 import com.bank.dto.TransacionDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
+import com.bank.model.Tarjeta;
+import com.bank.model.TipoTransacion;
 import com.bank.model.Transacion;
 import com.bank.repository.TransacionRepository;
+import com.bank.service.TarjetaService;
 import com.bank.service.TransaccionService;
+
+import lombok.RequiredArgsConstructor;
 @Service
+@RequiredArgsConstructor
 public class TransaccionServiceimpl implements TransaccionService {
-	@Autowired
-	private TransacionRepository transaccionRepository;
+	
+	private final TransacionRepository transaccionRepository;
+	
+	private final TarjetaService tarjetaService;
 	@Override
 	public List<TransacionDTO> listByAll() {
 		List<TransacionDTO> transaciones = TransacionDTO.listTransacionToListTransacionDTO(transaccionRepository.findAll());		
@@ -69,7 +80,26 @@ public class TransaccionServiceimpl implements TransaccionService {
 		transaccionRepository.save(u);
 		return "Transacion eliminada correctamente";
 	}
-
+	@Override
+	public TransacionDTO realizarConversionyTransferencia(TransaccionConversionMonedaDTO transaccionConversionMonedaDTO) {
+		TarjetaDTO tarjetaO = tarjetaService.find(transaccionConversionMonedaDTO.getTarjetaOrigen().getId());
+		tarjetaO.setMonto(tarjetaO.getMonto() - Double.parseDouble(transaccionConversionMonedaDTO.getMontoTarjetaOrigen().toString()));
+		tarjetaService.save(tarjetaO);
+		TarjetaDTO tarjetaD = tarjetaService.find(transaccionConversionMonedaDTO.getTarjetaDestino().getId());
+		tarjetaD.setMonto(tarjetaD.getMonto() + Double.parseDouble(transaccionConversionMonedaDTO.getMontoTarjetaDestino().toString()));
+		tarjetaService.save(tarjetaD);
+		
+		Transacion t = Transacion.builder()
+				.monto(transaccionConversionMonedaDTO.getMontoTarjetaDestino())
+				.fecha(new Date())
+				.estado(true)
+				.tipoTransacion(TipoTransacion.builder().id(1).build())
+				.tarjetaOrigen(TarjetaDTO.tarjetaDTOTotarjeta(tarjetaO))
+				.tarjetaDestino(TarjetaDTO.tarjetaDTOTotarjeta(tarjetaD))
+				.build();
+		Transacion ts = transaccionRepository.save(t);
+		return TransacionDTO.transacionToTransacionDTO(ts);
+	}
 	
 
 }

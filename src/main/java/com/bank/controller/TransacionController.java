@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bank.dto.TransaccionConversionMonedaDTO;
 import com.bank.dto.TransacionDTO;
 import com.bank.service.TransaccionService;
 
 @RestController
 @RequestMapping("transacion")
-public class Transacion {
+public class TransacionController {
 	@Autowired
 	private TransaccionService transaccionService;
 	
@@ -53,8 +54,8 @@ public class Transacion {
 		return ResponseEntity.status(200).body(mensaje);
 	}
 	@PostMapping("/transferenciaDineroConvertido")
-	public ResponseEntity<?> trasferenciaDineroConvertido(@RequestBody TransacionDTO transacion) {
+	public ResponseEntity<?> trasferenciaDineroConvertido(@RequestBody TransaccionConversionMonedaDTO transaccionConversionMoneda) {
 		
-		return ResponseEntity.status(201).body(transacion);
+		return ResponseEntity.status(201).body(transaccionService.realizarConversionyTransferencia(transaccionConversionMoneda));
 	}
 }
