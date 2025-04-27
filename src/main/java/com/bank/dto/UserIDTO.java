@@ -22,6 +22,7 @@ public class UserIDTO {
 	private String apellidos;
 	private Date fechaNacimiento;
 	private String imagePath;
+	private String correo;
 	private RoleUserDTO roleUser;
 	private TipoDocumentoUserDTO tipoDocumentoUser;
 	private List<TarjetaIDTO> tarjetas;
@@ -33,6 +34,7 @@ public class UserIDTO {
 				.apellidos(user.getApellidos())
 				.fechaNacimiento(user.getFechaNacimiento())
 				.imagePath(user.getImagePath())
+				.correo(user.getCorreo())
 				.roleUser(RoleUserDTO.rolUserToRolUserDTO(user.getRoleUser()))
 				.tipoDocumentoUser(TipoDocumentoUserDTO.tipoDocumentoUserToTipoDocumentoUserDTO(user.getTipoDocumentoUser()))
 				.tarjetas(TarjetaIDTO.listTarjetaToListTarjetaIDTO(user.getTarjetas()))

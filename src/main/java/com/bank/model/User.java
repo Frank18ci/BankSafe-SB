@@ -40,6 +40,9 @@ public class User {
 	
 	private String imagePath;
 	
+	@Column(unique = true)
+	private String correo;
+	
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
