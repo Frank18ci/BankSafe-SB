@@ -1,5 +1,8 @@
 package com.bank.serviceImpl;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.bank.dto.RoleUserDTO;
 import com.bank.dto.UserDTO;
 import com.bank.dto.UserIDTO;
+import com.bank.dto.UserWithImg;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
 import com.bank.model.User;
@@ -91,6 +95,37 @@ public class UserServiceImpl implements UserService {
 		return "Usuario eliminado correctamente";
 	}
 	
+	@Override
+	public UserDTO actualizarUser(UserWithImg userWithImg) {
+		if(userWithImg.getImagen().isEmpty())
+			throw new BadRequestParam("No hay imagen");
+		User user = userRepository.findUserByIdAndEstadoTrue(userWithImg.getId())
+				.orElseThrow(() -> new ResourceNotFound("Usuario no encontrado "  + userWithImg.getId()));
+		try {
+			
+			//Asigna datos recibidos
+			user.setNombres(userWithImg.getNombres());
+			user.setApellidos(userWithImg.getApellidos());
+			user.setFechaNacimiento(userWithImg.getFechaNacimiento());
+			user.setCorreo(userWithImg.getCorreo());
+			user.setNumeroDocumento(userWithImg.getNumeroDocumento());
+			
+			//Realiza el guardado de la imagen
+			Path directorioImagen = Paths.get("src","main","resources","static","uploads");
+			String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
+			byte[] byteImg = userWithImg.getImagen().getBytes();
+			String pathnuevo = String.valueOf(user.getId()) + userWithImg.getImagen().getOriginalFilename().substring(userWithImg.getImagen().getOriginalFilename().lastIndexOf("."));
+			Path rutaCompleta = Paths.get(rutaAbsoluta, pathnuevo);
+			Files.write(rutaCompleta, byteImg);
+			//Asigna el path del id
+			user.setImagePath(pathnuevo);
+			//Realiza el guardado
+			User usuarioSaved = userRepository.save(user);
+			return UserDTO.userToUserDTO(usuarioSaved);
+		} catch (Exception e) {
+			throw new BadRequestParam("Error al guardar");
+		}
+	}
 	
 	
 }
