@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.TarjetaDTO;
+import com.bank.dto.TipoTransacionDTO;
 import com.bank.dto.TransaccionConversionMonedaDTO;
 import com.bank.dto.TransacionDTO;
 import com.bank.exception.BadRequestParam;
@@ -17,6 +18,7 @@ import com.bank.model.TipoTransacion;
 import com.bank.model.Transacion;
 import com.bank.repository.TransacionRepository;
 import com.bank.service.TarjetaService;
+import com.bank.service.TipoTransacionService;
 import com.bank.service.TransaccionService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class TransaccionServiceimpl implements TransaccionService {
 	private final TransacionRepository transaccionRepository;
 	
 	private final TarjetaService tarjetaService;
+	private final TipoTransacionService tipoTransacionService;
 	@Override
 	public List<TransacionDTO> listByAll() {
 		List<TransacionDTO> transaciones = TransacionDTO.listTransacionToListTransacionDTO(transaccionRepository.findAll());		
@@ -56,7 +59,19 @@ public class TransaccionServiceimpl implements TransaccionService {
 
 	@Override
 	public TransacionDTO save(TransacionDTO transacionDTO) {
-		Transacion transacionTransformado = TransacionDTO.transacionDTOToTransacion(transacionDTO);
+		Tarjeta tarjetaE = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaService.find(transacionDTO.getTarjetaOrigen().getId()));
+		Tarjeta tarjetaD = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaService.find(transacionDTO.getTarjetaDestino().getId()));
+		tarjetaE.setMonto(tarjetaE.getMonto() - Double.parseDouble(transacionDTO.getMonto().toString()));
+		tarjetaD.setMonto(tarjetaD.getMonto() + Double.parseDouble(transacionDTO.getMonto().toString()));
+		tarjetaService.update(TarjetaDTO.tarjetaToTarjetaDTO(tarjetaE));
+		tarjetaService.update(TarjetaDTO.tarjetaToTarjetaDTO(tarjetaD));
+		Transacion transacionTransformado = Transacion.builder()
+				.monto(transacionDTO.getMonto())
+				.tarjetaOrigen(tarjetaE)
+				.tarjetaDestino(tarjetaD)
+				.fecha(new Date())
+				.build();
+		transacionTransformado.setTipoTransacion(TipoTransacionDTO.tipoTransacionDTOToTipoTransacion(tipoTransacionService.find(1)));
 		transacionTransformado.setEstado(true);
 		Transacion result = transaccionRepository.save(Objects.requireNonNull(transacionTransformado));
 		return TransacionDTO.transacionToTransacionDTO(result);

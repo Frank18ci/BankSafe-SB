@@ -128,6 +128,7 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 			throw new BadRequestParam("Faltan paramentros tarjeta");
 		}
 		Tarjeta tarjetaTransformado = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaDTO);
+		tarjetaTransformado.setEstado(true);
 		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(tarjetaTransformado));
 		return TarjetaDTO.tarjetaToTarjetaDTO(result);
 	}
