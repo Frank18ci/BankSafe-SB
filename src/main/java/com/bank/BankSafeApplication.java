@@ -148,7 +148,7 @@ public class BankSafeApplication {
             tarjetaService.save(tarjeta);
             tarjeta = TarjetaDTO.builder()
                 	.cvv("123")
-                	.monto(1000.0)
+                	.monto(69000.0)
                 	.numeroTarjeta("123456")
                 	.claveInternet(passwordEncoder.encode("123456"))
                 	.tipoTarjeta(TipoTarjetaDTO.builder()

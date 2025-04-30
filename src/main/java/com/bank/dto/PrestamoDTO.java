@@ -30,6 +30,7 @@ public class PrestamoDTO {
 	private EstadoPrestamoDTO estadoPrestamo;
 	private UserDTO user;
 	private TipoPrestamoDTO tipoPrestamo;
+	private TarjetaDTO tarjetaRecepcion;
 	
 	public static PrestamoDTO prestamoToPrestamoDTO(Prestamo prestamo) {
 		return PrestamoDTO.builder()
@@ -43,6 +44,7 @@ public class PrestamoDTO {
 				.FechaFinalizado(prestamo.getFechaFinalizado())
 				.user(UserDTO.userToUserDTO(prestamo.getUser()))
 				.tipoPrestamo(TipoPrestamoDTO.tipoPrestamoToTipoPrestamoDTO(prestamo.getTipoPrestamo()))
+				.tarjetaRecepcion(TarjetaDTO.tarjetaToTarjetaDTO(prestamo.getTarjetaRecepcion()))
 				.build();
 	}
 	public static List<PrestamoDTO> listPrestamoToListPrestamoDTO(List<Prestamo> prestamos){
@@ -62,6 +64,7 @@ public class PrestamoDTO {
 				.FechaFinalizado(prestamoDTO.getFechaFinalizado())
 				.user(UserDTO.userDTOToUser(prestamoDTO.getUser()))
 				.tipoPrestamo(TipoPrestamoDTO.tipoPrestamoDTOToTipoPrestamo(prestamoDTO.getTipoPrestamo()))
+				.tarjetaRecepcion(TarjetaDTO.tarjetaDTOTotarjeta(prestamoDTO.getTarjetaRecepcion()))
 				.build();
 	}
 	

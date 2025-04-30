@@ -53,6 +53,8 @@ public class Prestamo {
 	@ManyToOne
 	private User user;
 	@ManyToOne
+	private Tarjeta tarjetaRecepcion;
+	@ManyToOne
 	private TipoPrestamo tipoPrestamo;
 
 }

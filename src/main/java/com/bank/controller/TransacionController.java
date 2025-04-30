@@ -1,10 +1,15 @@
 package com.bank.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.dto.TransaccionConversionMonedaDTO;
@@ -35,6 +41,16 @@ public class TransacionController {
 	public ResponseEntity<?> getById(@PathVariable int id) {
 		TransacionDTO transacion = transaccionService.find(id);
 		return ResponseEntity.status(200).body(transacion);
+	}
+	@GetMapping("/busquedaFechaNumeroTarjeta")
+	public ResponseEntity<?> getByFechaBAndTarjetaOrigenNumero(
+			@RequestParam @DateTimeFormat(iso = ISO.DATE) LocalDate fechaInicio,
+			@RequestParam @DateTimeFormat(iso = ISO.DATE)LocalDate fechaFin,
+			@RequestParam String numeroTarjeta) {
+		Date fechaI = Date.from(fechaInicio.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date fechaF = Date.from(fechaFin.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		List<TransacionDTO> transacions = transaccionService.listByFechaBetweenAndTarjetaOrigen_numeroTarjeta(fechaI, fechaF, numeroTarjeta);
+		return ResponseEntity.status(200).body(transacions);
 	}
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody TransacionDTO transacion) {

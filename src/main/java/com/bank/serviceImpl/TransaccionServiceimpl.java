@@ -116,5 +116,12 @@ public class TransaccionServiceimpl implements TransaccionService {
 		return TransacionDTO.transacionToTransacionDTO(ts);
 	}
 	
+	@Override
+	public List<TransacionDTO> listByFechaBetweenAndTarjetaOrigen_numeroTarjeta(Date fechaI, Date fechaF,
+			String numeroTarjeta) {
+		return TransacionDTO.listTransacionToListTransacionDTO(
+				transaccionRepository.findTransacionByFechaBetweenAndTarjetaOrigen_numeroTarjeta(fechaI, fechaF, numeroTarjeta));
+	}
+	
 
 }
