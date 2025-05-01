@@ -17,4 +17,6 @@ public interface TransaccionService {
 	public String delete(int id);
 	public TransacionDTO realizarConversionyTransferencia(TransaccionConversionMonedaDTO transacion);
 	public List<TransacionDTO> listByFechaBetweenAndTarjetaOrigen_numeroTarjeta(Date fechaI, Date fechaF, String numeroTarjeta);
+	public List<TransacionDTO> listByTarjetaOrigen_numeroTarjetaUltimoMes(String numeroTarjeta);
+	public List<TransacionDTO> listByTarjetaOrigen_numeroTarjetaActualMes(String numeroTarjeta);
 }

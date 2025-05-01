@@ -52,6 +52,18 @@ public class TransacionController {
 		List<TransacionDTO> transacions = transaccionService.listByFechaBetweenAndTarjetaOrigen_numeroTarjeta(fechaI, fechaF, numeroTarjeta);
 		return ResponseEntity.status(200).body(transacions);
 	}
+	@GetMapping("/busquedaFechaNumeroTarjetaMesActual")
+	public ResponseEntity<?> getByTarjetaOrigenNumeroMesActual(
+			@RequestParam String numeroTarjeta) {
+		List<TransacionDTO> transacions = transaccionService.listByTarjetaOrigen_numeroTarjetaActualMes(numeroTarjeta);
+		return ResponseEntity.status(200).body(transacions);
+	}
+	@GetMapping("/busquedaFechaNumeroTarjetaMesAnterior")
+	public ResponseEntity<?> getByTarjetaOrigenNumeroMesAnterior(
+			@RequestParam String numeroTarjeta) {
+		List<TransacionDTO> transacions = transaccionService.listByTarjetaOrigen_numeroTarjetaUltimoMes(numeroTarjeta);
+		return ResponseEntity.status(200).body(transacions);
+	}
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody TransacionDTO transacion) {
 		TransacionDTO transacionS = transaccionService.save(transacion);

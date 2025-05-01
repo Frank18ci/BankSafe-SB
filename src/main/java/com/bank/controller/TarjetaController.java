@@ -38,9 +38,11 @@ public class TarjetaController {
 			@RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "numeroTarjeta") String sortBy,
 			@RequestParam(defaultValue = "asc") String direction,
-			@RequestParam(defaultValue = "") String numeroTarjeta
+			@RequestParam(defaultValue = "") String tipoMonedaTarjeta,
+			@RequestParam(defaultValue = "") String numeroTarjeta,
+			@RequestParam String numeroTarjetaExcluida
 			) {
-		return ResponseEntity.status(200).body(tarjetaService.listPage(page, size, sortBy, direction, numeroTarjeta));
+		return ResponseEntity.status(200).body(tarjetaService.listPage(page, size, sortBy, direction, numeroTarjeta, tipoMonedaTarjeta, numeroTarjetaExcluida));
 	}
 	
 	

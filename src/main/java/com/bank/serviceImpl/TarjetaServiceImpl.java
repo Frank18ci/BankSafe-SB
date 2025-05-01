@@ -67,7 +67,7 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 		return users;
 	}
 	@Override
-	public Page<TarjetaDTO> listPage(int page, int size, String sortBy, String direction, String numeroTarjeta) {
+	public Page<TarjetaDTO> listPage(int page, int size, String sortBy, String direction, String numeroTarjeta, String tipoMonedaTarjeta, String numeroTarjetaExcluida) {
 		Direction sortDirection = Direction.ASC;
 		if(direction != null && "desc".equalsIgnoreCase(direction.trim())) {
 			sortDirection = Direction.DESC;
@@ -75,9 +75,10 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 		Sort sort = Sort.by(sortDirection, sortBy);
 		Pageable pageable = PageRequest.of(page, size, sort);
 		
-		Page<Tarjeta> tarjetasPage = tarjetaRepository.findTarjetaByNumeroTarjetaIgnoreCaseContainingAndEstadoTrue(numeroTarjeta, pageable);
+		Page<Tarjeta> tarjetasPage = tarjetaRepository.findTarjetaByNumeroTarjetaIgnoreCaseContainingAndTipoMonedaTarjeta_tipoAndEstadoTrue(numeroTarjeta, tipoMonedaTarjeta, pageable);
 		List<TarjetaDTO> tarjetas = tarjetasPage.stream()
 				.map(TarjetaDTO::tarjetaToTarjetaDTO)
+				.filter(t -> !Objects.equals(t.getNumeroTarjeta(), numeroTarjetaExcluida))
 				.collect(Collectors.toList());
 		
 		return new PageImpl<>(tarjetas, pageable, tarjetasPage.getNumberOfElements());

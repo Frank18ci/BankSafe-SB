@@ -16,7 +16,7 @@ import com.bank.model.User;
 @Repository
 public interface TarjetaRepository extends JpaRepository<Tarjeta, Integer> {
 	List<Tarjeta> findTarjetaByEstadoTrue();
-	Page<Tarjeta> findTarjetaByNumeroTarjetaIgnoreCaseContainingAndEstadoTrue(String numeroTarjeta, Pageable pageable);
+	Page<Tarjeta> findTarjetaByNumeroTarjetaIgnoreCaseContainingAndTipoMonedaTarjeta_tipoAndEstadoTrue(String numeroTarjeta, String tipoMonedaTarjeta, Pageable pageable);
 	Optional<Tarjeta> findTarjetaByIdAndEstadoTrue(int id);
 	Optional<Tarjeta> findTarjetaByNumeroTarjetaAndEstadoTrue(String numeroTarjeta);
 	Optional<Tarjeta> findTarjetaByTipoMonedaTarjetaAndEstadoTrue(TipoMonedaTarjeta tipoMonedaTarjeta);

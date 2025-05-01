@@ -1,5 +1,6 @@
 package com.bank.serviceImpl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -120,7 +121,52 @@ public class TransaccionServiceimpl implements TransaccionService {
 	public List<TransacionDTO> listByFechaBetweenAndTarjetaOrigen_numeroTarjeta(Date fechaI, Date fechaF,
 			String numeroTarjeta) {
 		return TransacionDTO.listTransacionToListTransacionDTO(
-				transaccionRepository.findTransacionByFechaBetweenAndTarjetaOrigen_numeroTarjeta(fechaI, fechaF, numeroTarjeta));
+				transaccionRepository.findTransacionByFechaBetweenAndTarjetaOrigen_numeroTarjetaAndEstadoTrue(fechaI, fechaF, numeroTarjeta));
+	}
+	@Override
+	public List<TransacionDTO> listByTarjetaOrigen_numeroTarjetaActualMes(String numeroTarjeta) {
+		Calendar calInicio = Calendar.getInstance();
+		calInicio.set(Calendar.DAY_OF_MONTH, 1);
+		calInicio.set(Calendar.HOUR_OF_DAY, 0);
+		calInicio.set(Calendar.MINUTE, 0);
+		calInicio.set(Calendar.SECOND, 0);
+		calInicio.set(Calendar.MILLISECOND, 0);
+		Date fechaMesInicio = calInicio.getTime();
+		
+		Calendar calFin = Calendar.getInstance();
+		calFin.set(Calendar.DAY_OF_MONTH, calFin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		calFin.set(Calendar.HOUR_OF_DAY, 23);
+		calFin.set(Calendar.MINUTE, 59);
+		calFin.set(Calendar.SECOND, 59);
+		calFin.set(Calendar.MILLISECOND, 999);
+		Date fechaMesFin = calFin.getTime();
+		
+		
+		return TransacionDTO.listTransacionToListTransacionDTO(
+				transaccionRepository.findTransacionByFechaBetweenAndTarjetaOrigen_numeroTarjetaAndEstadoTrue(fechaMesInicio, fechaMesFin, numeroTarjeta));
+	}
+	@Override
+	public List<TransacionDTO> listByTarjetaOrigen_numeroTarjetaUltimoMes(String numeroTarjeta) {
+		Calendar calInicio = Calendar.getInstance();
+		calInicio.set(Calendar.MONTH, - 1);
+		calInicio.set(Calendar.DAY_OF_MONTH, 1);
+		calInicio.set(Calendar.HOUR_OF_DAY, 0);
+		calInicio.set(Calendar.MINUTE, 0);
+		calInicio.set(Calendar.SECOND, 0);
+		calInicio.set(Calendar.MILLISECOND, 0);
+		Date fechaMesInicio = calInicio.getTime();
+		
+		Calendar calFin = Calendar.getInstance();
+		calFin.set(Calendar.DAY_OF_MONTH, calFin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		calInicio.set(Calendar.MONTH, - 1);
+		calFin.set(Calendar.HOUR_OF_DAY, 23);
+		calFin.set(Calendar.MINUTE, 59);
+		calFin.set(Calendar.SECOND, 59);
+		calFin.set(Calendar.MILLISECOND, 999);
+		Date fechaMesFin = calFin.getTime();
+		
+		return TransacionDTO.listTransacionToListTransacionDTO(
+				transaccionRepository.findTransacionByFechaBetweenAndTarjetaOrigen_numeroTarjetaAndEstadoTrue(fechaMesInicio, fechaMesFin, numeroTarjeta));
 	}
 	
 
