@@ -10,7 +10,7 @@ import com.bank.dto.RoleUserDTO;
 import com.bank.dto.TarjetaDTO;
 import com.bank.dto.TipoDocumentoUserDTO;
 import com.bank.dto.TipoMonedaTarjetaDTO;
-import com.bank.dto.TipoPrestamoDTO;
+import com.bank.dto.TipoPlazoDTO;
 import com.bank.dto.TipoTarjetaDTO;
 import com.bank.dto.TipoTransacionDTO;
 import com.bank.dto.UserDTO;
@@ -18,7 +18,7 @@ import com.bank.service.RoleUserService;
 import com.bank.service.TarjetaService;
 import com.bank.service.TipoDocumentoUserService;
 import com.bank.service.TipoMonedaTarjetaService;
-import com.bank.service.TipoPrestamoService;
+import com.bank.service.TipoPlazoService;
 import com.bank.service.TipoTarjetaService;
 import com.bank.service.TipoTransacionService;
 
@@ -35,7 +35,7 @@ public class BankSafeApplication {
     		RoleUserService roleUserService,
     		TipoTarjetaService tipoTarjetaService,
     		TipoMonedaTarjetaService tipoMonedaTarjetaService,
-    		TipoPrestamoService tipoPrestamoService,
+    		TipoPlazoService tipoPrestamoService,
     		TipoTransacionService tipoTransacionService,
     		TarjetaService tarjetaService,
     		PasswordEncoder passwordEncoder
@@ -86,15 +86,15 @@ public class BankSafeApplication {
             		.build();
             tipoTarjetaService.save(tipoTarjetaDTO);
             
-            TipoPrestamoDTO tipoPrestamoDTO = TipoPrestamoDTO.builder()
+            TipoPlazoDTO tipoPrestamoDTO = TipoPlazoDTO.builder()
             		.tipo("TRIMESTRAL")
             		.build();
             tipoPrestamoService.save(tipoPrestamoDTO);
-            tipoPrestamoDTO = TipoPrestamoDTO.builder()
+            tipoPrestamoDTO = TipoPlazoDTO.builder()
                     .tipo("SEMESTRAL")
                     .build();
             tipoPrestamoService.save(tipoPrestamoDTO);
-            tipoPrestamoDTO = TipoPrestamoDTO.builder()
+            tipoPrestamoDTO = TipoPlazoDTO.builder()
                     .tipo("MENSUAL")
                     .build();
             tipoPrestamoService.save(tipoPrestamoDTO);
