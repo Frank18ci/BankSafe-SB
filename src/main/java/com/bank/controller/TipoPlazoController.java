@@ -15,38 +15,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bank.dto.TipoPrestamoDTO;
-import com.bank.service.TipoPrestamoService;
+import com.bank.dto.TipoPlazoDTO;
+import com.bank.service.TipoPlazoService;
 
 @RestController
-@RequestMapping("/tipoPrestamo")
-public class TipoPrestamoController {
+@RequestMapping("/tipoPlazo")
+public class TipoPlazoController {
 	@Autowired
-	private TipoPrestamoService tipoPrestamoService;
+	private TipoPlazoService tipoPlazoService;
 	
 	@GetMapping
 	private ResponseEntity<?> getAll(){
-		List<TipoPrestamoDTO> tipoPrestamos = tipoPrestamoService.list();
+		List<TipoPlazoDTO> tipoPrestamos = tipoPlazoService.list();
 		return ResponseEntity.status(200).body(tipoPrestamos);
 	}
 	@GetMapping("/{id}")
 	private ResponseEntity<?> getById(@PathVariable int id){
-		TipoPrestamoDTO tipoPrestamo = tipoPrestamoService.find(id);
+		TipoPlazoDTO tipoPrestamo = tipoPlazoService.find(id);
 		return ResponseEntity.status(200).body(tipoPrestamo);
 	}
 	@PostMapping
-	private ResponseEntity<?> save(@RequestBody TipoPrestamoDTO tipoPrestamo){
-		TipoPrestamoDTO tipoPrestamoS = tipoPrestamoService.save(tipoPrestamo);
+	private ResponseEntity<?> save(@RequestBody TipoPlazoDTO tipoPrestamo){
+		TipoPlazoDTO tipoPrestamoS = tipoPlazoService.save(tipoPrestamo);
 		return ResponseEntity.status(201).body(tipoPrestamoS);
 	}
 	@PutMapping
-	private ResponseEntity<?> update(@RequestBody TipoPrestamoDTO tipoPrestamo){
-		TipoPrestamoDTO tipoPrestamoS = tipoPrestamoService.update(tipoPrestamo);
+	private ResponseEntity<?> update(@RequestBody TipoPlazoDTO tipoPrestamo){
+		TipoPlazoDTO tipoPrestamoS = tipoPlazoService.update(tipoPrestamo);
 		return ResponseEntity.status(200).body(tipoPrestamoS);
 	}
 	@DeleteMapping("/{id}")
 	private ResponseEntity<?> deleteById(@PathVariable int id){
-		String mensaje = tipoPrestamoService.delete(id);
+		String mensaje = tipoPlazoService.delete(id);
 		Map<String, Object> mapper = new HashMap<String, Object>();
 		 mapper.put("message", mensaje);
 		return ResponseEntity.status(200).body(mapper);

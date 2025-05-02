@@ -1,7 +1,6 @@
 package com.bank.model;
 
 
-import java.math.BigDecimal;
 
 import java.util.Date;
 
@@ -30,17 +29,22 @@ public class Prestamo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(nullable = false)
-	private BigDecimal montoPrestamo;
-
-	private BigDecimal interes;
-    private Integer plazoMeses;
+	
+	private double montoPrestamo;
+	private double montoPagado;
+	private double montoPorPlazo;
+	private double interesAnual;
+    private Integer plazos;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicio;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFin;
+    
     @Temporal(TemporalType.TIMESTAMP)
 	private Date FechaRegistro;
+    
     @Temporal(TemporalType.TIMESTAMP)
 	private Date FechaFinalizado;
 	
@@ -55,6 +59,6 @@ public class Prestamo {
 	@ManyToOne
 	private Tarjeta tarjetaRecepcion;
 	@ManyToOne
-	private TipoPrestamo tipoPrestamo;
+	private TipoPlazo tipoPlazo;
 
 }
