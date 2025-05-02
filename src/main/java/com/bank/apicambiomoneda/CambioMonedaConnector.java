@@ -15,10 +15,13 @@ import com.bank.apicambiomoneda.response.ConversionBaseToTargetDTO;
 import com.bank.apicambiomoneda.response.ConversionRatesDTO;
 import com.bank.apicambiomoneda.response.ConversionTipoMonedaDTO;
 import com.bank.service.TipoMonedaTarjetaService;
+
+import lombok.RequiredArgsConstructor;
 @Component
+@RequiredArgsConstructor
 public class CambioMonedaConnector {
-	@Autowired
-	private TipoMonedaTarjetaService tipoMonedaTarjetaService;
+	
+	private final TipoMonedaTarjetaService tipoMonedaTarjetaService;
 	
 	private final String keySecurity = "859e55d584c30c46ecad0338/";
 	private final String url = "https://v6.exchangerate-api.com/v6/";

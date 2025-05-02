@@ -19,7 +19,7 @@ public class PrestamoServiseImpl implements PrestamoService {
 	
 	@Override
 	public List<PrestamoDTO> list() {
-		List<PrestamoDTO> prestamos = PrestamoDTO.listPrestamoToListPrestamoDTO(prestamoRepository.findPrestamoByEstado(true));
+		List<PrestamoDTO> prestamos = PrestamoDTO.listPrestamoToListPrestamoDTO(prestamoRepository.findPrestamoByEstadoTrue());
 		return prestamos;
 	}
 	
@@ -31,7 +31,7 @@ public class PrestamoServiseImpl implements PrestamoService {
 
 	@Override
 	public PrestamoDTO find(int id) {
-		Prestamo result = prestamoRepository.findPrestamoByIdAndEstado(id, true)
+		Prestamo result = prestamoRepository.findPrestamoByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Prestamo no encontrado "  + id ));
 		return PrestamoDTO.prestamoToPrestamoDTO(result);
 	}
@@ -62,7 +62,7 @@ public class PrestamoServiseImpl implements PrestamoService {
 
 	@Override
 	public String delete(int id) {
-		Prestamo result = prestamoRepository.findPrestamoByIdAndEstado(id, true)
+		Prestamo result = prestamoRepository.findPrestamoByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Prestamo no encontrado "  + id ));
 		result.setEstado(false);
 		prestamoRepository.save(result);

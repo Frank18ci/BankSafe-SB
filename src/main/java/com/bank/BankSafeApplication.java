@@ -10,7 +10,7 @@ import com.bank.dto.RoleUserDTO;
 import com.bank.dto.TarjetaDTO;
 import com.bank.dto.TipoDocumentoUserDTO;
 import com.bank.dto.TipoMonedaTarjetaDTO;
-import com.bank.dto.TipoPrestamoDTO;
+import com.bank.dto.TipoPlazoDTO;
 import com.bank.dto.TipoTarjetaDTO;
 import com.bank.dto.TipoTransacionDTO;
 import com.bank.dto.UserDTO;
@@ -18,7 +18,7 @@ import com.bank.service.RoleUserService;
 import com.bank.service.TarjetaService;
 import com.bank.service.TipoDocumentoUserService;
 import com.bank.service.TipoMonedaTarjetaService;
-import com.bank.service.TipoPrestamoService;
+import com.bank.service.TipoPlazoService;
 import com.bank.service.TipoTarjetaService;
 import com.bank.service.TipoTransacionService;
 
@@ -35,7 +35,7 @@ public class BankSafeApplication {
     		RoleUserService roleUserService,
     		TipoTarjetaService tipoTarjetaService,
     		TipoMonedaTarjetaService tipoMonedaTarjetaService,
-    		TipoPrestamoService tipoPrestamoService,
+    		TipoPlazoService tipoPrestamoService,
     		TipoTransacionService tipoTransacionService,
     		TarjetaService tarjetaService,
     		PasswordEncoder passwordEncoder
@@ -86,15 +86,15 @@ public class BankSafeApplication {
             		.build();
             tipoTarjetaService.save(tipoTarjetaDTO);
             
-            TipoPrestamoDTO tipoPrestamoDTO = TipoPrestamoDTO.builder()
+            TipoPlazoDTO tipoPrestamoDTO = TipoPlazoDTO.builder()
             		.tipo("TRIMESTRAL")
             		.build();
             tipoPrestamoService.save(tipoPrestamoDTO);
-            tipoPrestamoDTO = TipoPrestamoDTO.builder()
+            tipoPrestamoDTO = TipoPlazoDTO.builder()
                     .tipo("SEMESTRAL")
                     .build();
             tipoPrestamoService.save(tipoPrestamoDTO);
-            tipoPrestamoDTO = TipoPrestamoDTO.builder()
+            tipoPrestamoDTO = TipoPlazoDTO.builder()
                     .tipo("MENSUAL")
                     .build();
             tipoPrestamoService.save(tipoPrestamoDTO);
@@ -109,7 +109,7 @@ public class BankSafeApplication {
             
             TarjetaDTO tarjeta = TarjetaDTO.builder()
             	.cvv("123")
-            	.monto(10020.0)
+            	.monto(5640.0)
             	.numeroTarjeta("1234")
             	.claveInternet(passwordEncoder.encode("1234"))
             	.tipoTarjeta(TipoTarjetaDTO.builder()
@@ -129,7 +129,7 @@ public class BankSafeApplication {
             tarjetaService.save(tarjeta);
             tarjeta = TarjetaDTO.builder()
                 	.cvv("123")
-                	.monto(100200.0)
+                	.monto(10200.0)
                 	.numeroTarjeta("12345")
                 	.claveInternet(passwordEncoder.encode("12345"))
                 	.tipoTarjeta(TipoTarjetaDTO.builder()
@@ -148,9 +148,28 @@ public class BankSafeApplication {
             tarjetaService.save(tarjeta);
             tarjeta = TarjetaDTO.builder()
                 	.cvv("123")
-                	.monto(1000.0)
+                	.monto(10200.0)
                 	.numeroTarjeta("123456")
                 	.claveInternet(passwordEncoder.encode("123456"))
+                	.tipoTarjeta(TipoTarjetaDTO.builder()
+                			.id(2)
+                			.build())
+                	.tipoMonedaTarjeta(TipoMonedaTarjetaDTO.builder()
+                			.id(3)
+                			.build())
+                	.user(UserDTO.builder()
+                			.id(1)
+                			.tipoDocumentoUser(TipoDocumentoUserDTO.builder()
+                					.id(1)
+                					.build())
+                			.build())
+                .build();
+            tarjetaService.save(tarjeta);
+            tarjeta = TarjetaDTO.builder()
+                	.cvv("123")
+                	.monto(6900.0)
+                	.numeroTarjeta("1234567")
+                	.claveInternet(passwordEncoder.encode("1234567"))
                 	.tipoTarjeta(TipoTarjetaDTO.builder()
                 			.id(1)
                 			.build())
@@ -166,6 +185,102 @@ public class BankSafeApplication {
                 			.build())
                 .build();
             tarjetaService.save(tarjeta);
+            tarjeta = TarjetaDTO.builder()
+                	.cvv("123")
+                	.monto(10020.0)
+                	.numeroTarjeta("12345678")
+                	.claveInternet(passwordEncoder.encode("12345678"))
+                	.tipoTarjeta(TipoTarjetaDTO.builder()
+                			.id(2)
+                			.build())
+                	.tipoMonedaTarjeta(TipoMonedaTarjetaDTO.builder()
+                			.id(2)
+                			.build())
+                	.user(UserDTO.builder()
+                			.id(2)
+                			.tipoDocumentoUser(TipoDocumentoUserDTO.builder()
+                					.id(1)
+                					.build())
+                			.build())
+                .build();
+            tarjetaService.save(tarjeta);
+            tarjeta = TarjetaDTO.builder()
+                	.cvv("123")
+                	.monto(10200.0)
+                	.numeroTarjeta("123456789")
+                	.claveInternet(passwordEncoder.encode("123456789"))
+                	.tipoTarjeta(TipoTarjetaDTO.builder()
+                			.id(2)
+                			.build())
+                	.tipoMonedaTarjeta(TipoMonedaTarjetaDTO.builder()
+                			.id(1)
+                			.build())
+                	.user(UserDTO.builder()
+                			.id(2)
+                			.tipoDocumentoUser(TipoDocumentoUserDTO.builder()
+                					.id(1)
+                					.build())
+                			.build())
+                .build();
+            tarjetaService.save(tarjeta);
+            tarjeta = TarjetaDTO.builder()
+                	.cvv("123")
+                	.monto(5000.0)
+                	.numeroTarjeta("12")
+                	.claveInternet(passwordEncoder.encode("12"))
+                	.tipoTarjeta(TipoTarjetaDTO.builder()
+                			.id(2)
+                			.build())
+                	.tipoMonedaTarjeta(TipoMonedaTarjetaDTO.builder()
+                			.id(2)
+                			.build())
+                	.user(UserDTO.builder()
+                			.nombres("Jose")
+                			.apellidos("Chuma")
+                			.tipoDocumentoUser(TipoDocumentoUserDTO.builder()
+                					.id(1)
+                					.build())
+                			.build())
+                .build();
+                tarjetaService.save(tarjeta);
+                tarjeta = TarjetaDTO.builder()
+                    	.cvv("123")
+                    	.monto(10000.0)
+                    	.numeroTarjeta("123")
+                    	.claveInternet(passwordEncoder.encode("123"))
+                    	.tipoTarjeta(TipoTarjetaDTO.builder()
+                    			.id(2)
+                    			.build())
+                    	.tipoMonedaTarjeta(TipoMonedaTarjetaDTO.builder()
+                    			.id(3)
+                    			.build())
+                    	.user(UserDTO.builder()
+                    			.id(3)
+                    			.tipoDocumentoUser(TipoDocumentoUserDTO.builder()
+                    					.id(1)
+                    					.build())
+                    			.build())
+                    .build();
+                tarjetaService.save(tarjeta);
+                tarjeta = TarjetaDTO.builder()
+                    	.cvv("123")
+                    	.monto(1000.0)
+                    	.numeroTarjeta("1")
+                    	.claveInternet(passwordEncoder.encode("1"))
+                    	.tipoTarjeta(TipoTarjetaDTO.builder()
+                    			.id(1)
+                    			.build())
+                    	.tipoMonedaTarjeta(TipoMonedaTarjetaDTO.builder()
+                    			.id(1)
+                    			.build())
+                    	.user(UserDTO.builder()
+                    			.id(3)
+                    			.tipoDocumentoUser(TipoDocumentoUserDTO.builder()
+                    					.id(1)
+                    					.build())
+                    			.build())
+                    .build();
+                tarjetaService.save(tarjeta);
         };
     }
 }

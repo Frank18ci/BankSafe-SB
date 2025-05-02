@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.dto.TarjetaDTO;
@@ -31,6 +32,19 @@ public class TarjetaController {
 	public ResponseEntity<?> getUsers() {
 		return ResponseEntity.status(200).body(tarjetaService.list());
 	}
+	@GetMapping("/page")
+	public ResponseEntity<?> getUsersPage(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "numeroTarjeta") String sortBy,
+			@RequestParam(defaultValue = "asc") String direction,
+			@RequestParam(defaultValue = "") String tipoMonedaTarjeta,
+			@RequestParam(defaultValue = "") String numeroTarjeta,
+			@RequestParam String numeroTarjetaExcluida
+			) {
+		return ResponseEntity.status(200).body(tarjetaService.listPage(page, size, sortBy, direction, numeroTarjeta, tipoMonedaTarjeta, numeroTarjetaExcluida));
+	}
+	
 	
 	@GetMapping("/buscar/{numeroTarjeta}")
 	public ResponseEntity<?> getTarjetaByNumero(@PathVariable String numeroTarjeta) {

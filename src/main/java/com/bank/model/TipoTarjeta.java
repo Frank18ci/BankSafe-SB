@@ -27,6 +27,7 @@ public class TipoTarjeta {
 	@Column(unique = true)
 	private String tipo;
 	
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
 	@OneToMany(mappedBy = "tipoTarjeta")

@@ -5,7 +5,6 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,21 +16,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "role_user")
+@Table(name = "estado_prestamo")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleUser {
+public class EstadoPrestamo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(unique = true)
-	private String tipo;
+	private String estadoPrestamo;
 	
 	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
-	@OneToMany(mappedBy = "roleUser", fetch = FetchType.LAZY, targetEntity = User.class)
-	private List<User> users;
+	@OneToMany(mappedBy = "estadoPrestamo")
+	private List<Prestamo> prestamos;
 }

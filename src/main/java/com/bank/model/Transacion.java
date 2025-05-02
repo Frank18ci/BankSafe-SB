@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +29,7 @@ public class Transacion {
 	private BigDecimal monto;
 	private Date fecha;
 	
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
 	@ManyToOne

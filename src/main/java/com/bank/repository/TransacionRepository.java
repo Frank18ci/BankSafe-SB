@@ -13,7 +13,8 @@ import java.util.List;
 
 @Repository
 public interface TransacionRepository extends JpaRepository<Transacion, Integer> {
-	List<Transacion> findTransacionByEstado(boolean estado);
-	Optional<Transacion> findTransacByIdAndEstado(int id, boolean estado);
-	Optional<Transacion> findTransacionByFechaAndEstado(Date fecham, boolean estado);
+	List<Transacion> findTransacionByEstadoTrue();
+	Optional<Transacion> findTransacByIdAndEstadoTrue(int id);
+	Optional<Transacion> findTransacionByFechaAndEstadoTrue(Date fecham);
+	List<Transacion> findTransacionByFechaBetweenAndTarjetaOrigen_numeroTarjetaAndEstadoTrue(Date fechaI, Date fechaF, String numeroTarjeta);
 }

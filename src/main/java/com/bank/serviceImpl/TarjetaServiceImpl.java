@@ -2,8 +2,14 @@ package com.bank.serviceImpl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,22 +30,24 @@ import com.bank.repository.TarjetaRepository;
 import com.bank.repository.UserRepository;
 import com.bank.service.TarjetaService;
 
+import lombok.RequiredArgsConstructor;
+
+
 @Service
+@RequiredArgsConstructor
 public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
-	@Autowired
-	private TarjetaRepository tarjetaRepository;
-	@Autowired
-	private RoleUserRepository roleUserRepository;
-	@Autowired
-	private UserRepository userRepository;
+	
+	private final TarjetaRepository tarjetaRepository;
+	private final RoleUserRepository roleUserRepository;
+	private final UserRepository userRepository;
 	
 	@Override
 	public TarjetaDTO findByNumeroTarjeta(String numeroTarjeta) {
-		return TarjetaDTO.tarjetaToTarjetaDTO(tarjetaRepository.findTarjetaByNumeroTarjetaAndEstado(numeroTarjeta, true).get());
+		return TarjetaDTO.tarjetaToTarjetaDTO(tarjetaRepository.findTarjetaByNumeroTarjetaAndEstadoTrue(numeroTarjeta).get());
 	}
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Tarjeta tarjeta = tarjetaRepository.findTarjetaByNumeroTarjetaAndEstado(username, true)
+		Tarjeta tarjeta = tarjetaRepository.findTarjetaByNumeroTarjetaAndEstadoTrue(username)
 		.orElseThrow(() -> new UsernameNotFoundException("Tarjeta no encontrado " + username));
 		return User.builder()
 				.username(tarjeta.getNumeroTarjeta())
@@ -50,7 +58,7 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 	
 	@Override
 	public List<TarjetaDTO> list() {
-		List<TarjetaDTO> users = TarjetaDTO.listTarjetaToTarjetaDTO(tarjetaRepository.findTarjetaByEstado(true));
+		List<TarjetaDTO> users = TarjetaDTO.listTarjetaToTarjetaDTO(tarjetaRepository.findTarjetaByEstadoTrue());
 		return users;
 	}
 	@Override
@@ -59,8 +67,25 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 		return users;
 	}
 	@Override
+	public Page<TarjetaDTO> listPage(int page, int size, String sortBy, String direction, String numeroTarjeta, String tipoMonedaTarjeta, String numeroTarjetaExcluida) {
+		Direction sortDirection = Direction.ASC;
+		if(direction != null && "desc".equalsIgnoreCase(direction.trim())) {
+			sortDirection = Direction.DESC;
+		}
+		Sort sort = Sort.by(sortDirection, sortBy);
+		Pageable pageable = PageRequest.of(page, size, sort);
+		
+		Page<Tarjeta> tarjetasPage = tarjetaRepository.findTarjetaByNumeroTarjetaIgnoreCaseContainingAndTipoMonedaTarjeta_tipoAndEstadoTrue(numeroTarjeta, tipoMonedaTarjeta, pageable);
+		List<TarjetaDTO> tarjetas = tarjetasPage.stream()
+				.map(TarjetaDTO::tarjetaToTarjetaDTO)
+				.filter(t -> !Objects.equals(t.getNumeroTarjeta(), numeroTarjetaExcluida))
+				.collect(Collectors.toList());
+		
+		return new PageImpl<>(tarjetas, pageable, tarjetasPage.getNumberOfElements());
+	}
+	@Override
 	public TarjetaDTO find(int id) {
-		Tarjeta t = tarjetaRepository.findTarjetaByIdAndEstado(id, true)
+		Tarjeta t = tarjetaRepository.findTarjetaByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tarjeta no encontrado"));
 		return TarjetaDTO.tarjetaToTarjetaDTO(t);
 	}
@@ -75,7 +100,7 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 	public TarjetaDTO save(TarjetaDTO tarjetaDTO) {
 		UserDTO userDTO = tarjetaDTO.getUser();
 		 RoleUser role = roleUserRepository
-			        .findRoleUserByTipoAndEstado("USUARIO", true)
+			        .findRoleUserByTipoAndEstadoTrue("USUARIO")
 			        .orElseThrow(() -> new ResourceNotFound("Rol USUARIO no encontrado"));
 		 RoleUserDTO roleDTO = RoleUserDTO.rolUserToRolUserDTO(role);
 		userDTO.setRoleUser(roleDTO); 
@@ -92,7 +117,7 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 		      user.setEstado(true);
 		      userRepository.save(user);
 		} else {
-			user = userRepository.findUserByIdAndEstado(userDTO.getId(), true)
+			user = userRepository.findUserByIdAndEstadoTrue(userDTO.getId())
 				    .orElseThrow(() -> new ResourceNotFound("Usuario no encontrado con id: " + userDTO.getId()));
 		}
 		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(tarjetaTransformado));
@@ -104,12 +129,13 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 			throw new BadRequestParam("Faltan paramentros tarjeta");
 		}
 		Tarjeta tarjetaTransformado = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaDTO);
+		tarjetaTransformado.setEstado(true);
 		Tarjeta result = tarjetaRepository.save(Objects.requireNonNull(tarjetaTransformado));
 		return TarjetaDTO.tarjetaToTarjetaDTO(result);
 	}
 	@Override
 	public String delete(int id) {
-		Tarjeta t = tarjetaRepository.findTarjetaByIdAndEstado(id, true)
+		Tarjeta t = tarjetaRepository.findTarjetaByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Tarjeta no encontrado"));
 		t.setEstado(false);
 		tarjetaRepository.save(t);

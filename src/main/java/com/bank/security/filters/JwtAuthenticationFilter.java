@@ -30,6 +30,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	public JwtAuthenticationFilter(JwtUtils jwtUtils) {
 		this.jwtUtils = jwtUtils;
 	}
+	
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request,
 	        HttpServletResponse response) throws AuthenticationException {

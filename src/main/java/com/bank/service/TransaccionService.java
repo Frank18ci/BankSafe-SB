@@ -1,7 +1,9 @@
 package com.bank.service;
 
+import java.util.Date;
 import java.util.List;
 
+import com.bank.dto.TransaccionConversionMonedaDTO;
 import com.bank.dto.TransacionDTO;
 
 
@@ -13,4 +15,8 @@ public interface TransaccionService {
 	public TransacionDTO save(TransacionDTO transacionDTO);
 	public TransacionDTO update(TransacionDTO transacionDTO);
 	public String delete(int id);
+	public TransacionDTO realizarConversionyTransferencia(TransaccionConversionMonedaDTO transacion);
+	public List<TransacionDTO> listByFechaBetweenAndTarjetaOrigen_numeroTarjeta(Date fechaI, Date fechaF, String numeroTarjeta);
+	public List<TransacionDTO> listByTarjetaOrigen_numeroTarjetaUltimoMes(String numeroTarjeta);
+	public List<TransacionDTO> listByTarjetaOrigen_numeroTarjetaActualMes(String numeroTarjeta);
 }

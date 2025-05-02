@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bank.dto.UserDTO;
 import com.bank.dto.UserIDTO;
+import com.bank.dto.UserWithImg;
 
 
 public interface UserService {
@@ -16,4 +17,5 @@ public interface UserService {
 	public UserDTO save(UserDTO userDTO);
 	public UserDTO update(UserDTO userDTO);
 	public String delete(int id);
+	public UserDTO actualizarUser(UserWithImg userWithImg);
 }

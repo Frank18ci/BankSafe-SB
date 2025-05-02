@@ -21,6 +21,7 @@ public class UserDTO {
 	private String nombres;
 	private String apellidos;
 	private Date fechaNacimiento;
+	private String correo;
 	private String imagePath;
 	
 	private RoleUserDTO roleUser;
@@ -35,6 +36,7 @@ public class UserDTO {
 				.apellidos(user.getApellidos())
 				.fechaNacimiento(user.getFechaNacimiento())
 				.imagePath(user.getImagePath())
+				.correo(user.getCorreo())
 				.roleUser(RoleUserDTO.rolUserToRolUserDTO(user.getRoleUser()))
 				.tipoDocumentoUser(TipoDocumentoUserDTO.tipoDocumentoUserToTipoDocumentoUserDTO(user.getTipoDocumentoUser()))
 				.build();
@@ -54,6 +56,7 @@ public class UserDTO {
 				.apellidos(userDTO.getApellidos())
 				.fechaNacimiento(userDTO.getFechaNacimiento())
 				.imagePath(userDTO.getImagePath())
+				.correo(userDTO.getCorreo())
 				.roleUser(RoleUserDTO.rolUserDTOToRolUser(userDTO.getRoleUser()))
 				.tipoDocumentoUser(TipoDocumentoUserDTO.tipoDocumentoUserDTOToTipoDocumentoUser(userDTO.getTipoDocumentoUser()))
 				.build();

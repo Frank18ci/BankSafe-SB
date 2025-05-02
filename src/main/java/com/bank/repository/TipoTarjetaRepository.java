@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface TipoTarjetaRepository extends JpaRepository<TipoTarjeta, Integer> {
-	List<TipoTarjeta> findTipoTarjetaByEstado(boolean estado);
-	Optional<TipoTarjeta> findTipoTarjetaByIdAndEstado(int id, boolean estado);
-	Optional<TipoTarjeta> findTipoTarjetaByTipoAndEstado(String tipo, boolean estado);
+	List<TipoTarjeta> findTipoTarjetaByEstadoTrue();
+	Optional<TipoTarjeta> findTipoTarjetaByIdAndEstadoTrue(int id);
+	Optional<TipoTarjeta> findTipoTarjetaByTipoAndEstadoTrue(String tipo);
 }

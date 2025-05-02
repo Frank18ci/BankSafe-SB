@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -39,9 +40,13 @@ public class User {
 	
 	private String imagePath;
 	
+	@Column(unique = true)
+	private String correo;
+	
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
 	@ManyToOne(targetEntity = RoleUser.class)

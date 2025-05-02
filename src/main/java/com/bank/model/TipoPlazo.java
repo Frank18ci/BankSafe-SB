@@ -15,12 +15,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tipo_prestamo")
+@Table(name = "tipo_plazo")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TipoPrestamo {
+public class TipoPlazo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -28,9 +28,10 @@ public class TipoPrestamo {
 	@Column(unique = true)
 	private String tipo;
 
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;
 	
-	@OneToMany(mappedBy = "tipoPrestamo")
+	@OneToMany(mappedBy = "tipoPlazo")
 	private List<Prestamo> prestamos; 
 	
 }
