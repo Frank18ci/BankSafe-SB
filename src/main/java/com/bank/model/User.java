@@ -1,8 +1,10 @@
 package com.bank.model;
 
 import java.util.Date;
+
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,22 +30,30 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
-	private TipoDocumentoUser tipoDocumento;
-	private String documento;
-	private String nombres;
-	private String apellidos;
-	private int edad;
-	// validar spring security 
-	private String username;
-	private String password;
 	
-	//
+	private String numeroDocumento;
+	
+	private String nombres;
+	
+	private String apellidos;
+	
+	private String imagePath;
+	
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = RoleUser.class)
-	private RoleUser typeUser;
 	
+	private boolean estado;
 	
+	@ManyToOne(targetEntity = RoleUser.class)
+	private RoleUser roleUser;
+	
+	@ManyToOne(fetch = FetchType.LAZY,targetEntity = TipoDocumentoUser.class)
+	private TipoDocumentoUser tipoDocumentoUser;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+	private List<Tarjeta> tarjetas;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Prestamo> prestamos;
 	
 }

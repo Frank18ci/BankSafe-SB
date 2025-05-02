@@ -2,6 +2,7 @@ package com.bank.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,8 +24,11 @@ public class TipoDocumentoUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(unique = true)
 	private String tipo;
 	
-	@OneToMany(mappedBy = "tipoDocumento", fetch = FetchType.LAZY, targetEntity = User.class)
+	private boolean estado;
+	
+	@OneToMany(mappedBy = "tipoDocumentoUser", fetch = FetchType.LAZY, targetEntity = User.class)
 	private List<User> users;
 }
