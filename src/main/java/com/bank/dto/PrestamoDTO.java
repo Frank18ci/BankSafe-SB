@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 public class PrestamoDTO {
 	
 	private int id;
+	private double monto;
 	private double montoPrestamo;
 	private double montoPagado;
 	private double montoPorPlazo;
@@ -41,6 +42,7 @@ public class PrestamoDTO {
 	
 	public static PrestamoDTO prestamoToPrestamoDTO(Prestamo prestamo) {
 		return PrestamoDTO.builder()
+				.monto(prestamo.getMonto())
 				.montoPrestamo(prestamo.getMontoPrestamo())
 				.montoPagado(prestamo.getMontoPagado())
 				.montoPorPlazo(prestamo.getMontoPorPlazo())
@@ -70,6 +72,7 @@ public class PrestamoDTO {
 	}
 	public static Prestamo prestamoDTOToPrestamo(PrestamoDTO prestamoDTO) {
 		return Prestamo.builder()
+				.monto(prestamoDTO.getMonto())
 				.montoPrestamo(prestamoDTO.getMontoPrestamo())
 				.montoPagado(prestamoDTO.getMontoPagado())
 				.montoPorPlazo(prestamoDTO.getMontoPorPlazo())

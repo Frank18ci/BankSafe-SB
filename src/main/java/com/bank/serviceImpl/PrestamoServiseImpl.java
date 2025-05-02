@@ -36,6 +36,10 @@ public class PrestamoServiseImpl implements PrestamoService {
 		return PrestamoDTO.prestamoToPrestamoDTO(result);
 	}
 	@Override
+	public List<PrestamoDTO> findByUsuarioId(int idUsuario) {
+		return PrestamoDTO.listPrestamoToListPrestamoDTO(prestamoRepository.findPrestamoByUser_IdAndEstadoTrue(idUsuario));
+	}
+	@Override
 	public PrestamoDTO findByAll(int id) {
 		Prestamo result = prestamoRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFound("Prestamo no encontrado "  + id ));
@@ -56,6 +60,7 @@ public class PrestamoServiseImpl implements PrestamoService {
 			throw new BadRequestParam("Falta el paremetro id");
 		}
 		Prestamo prestamoTransformado = PrestamoDTO.prestamoDTOToPrestamo(prestamoDTO);
+		prestamoTransformado.setEstado(true);
 		Prestamo result = prestamoRepository.save(Objects.requireNonNull(prestamoTransformado));
 		return PrestamoDTO.prestamoToPrestamoDTO(result);
 	}

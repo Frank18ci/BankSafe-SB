@@ -29,7 +29,7 @@ public class Prestamo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	
+	private double monto;
 	private double montoPrestamo;
 	private double montoPagado;
 	private double montoPorPlazo;

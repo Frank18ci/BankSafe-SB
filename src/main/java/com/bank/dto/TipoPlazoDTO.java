@@ -18,11 +18,13 @@ public class TipoPlazoDTO {
 
 	private int id;
 	private String tipo;
+	private int valorAnual;
 	
 	public static TipoPlazoDTO tipoPlazoToTipoPlazoDTO(TipoPlazo tipoPlazo) {
 		return TipoPlazoDTO.builder()
 				.id(tipoPlazo.getId())
 				.tipo(tipoPlazo.getTipo())
+				.valorAnual(tipoPlazo.getValorAnual())
 				.build();
 	}
 	public static List<TipoPlazoDTO> listTipoPretamoToListTipoPrestamoDTO(List<TipoPlazo> tipoPlazos){
@@ -34,6 +36,7 @@ public class TipoPlazoDTO {
 		return TipoPlazo.builder()
 				.id(tipoPlazoDTO.getId())
 				.tipo(tipoPlazoDTO.getTipo())
+				.valorAnual(tipoPlazoDTO.getValorAnual())
 				.build();
 	}
 }

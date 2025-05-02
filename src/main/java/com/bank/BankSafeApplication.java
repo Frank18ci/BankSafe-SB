@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.bank.dto.EstadoPrestamoDTO;
 import com.bank.dto.RoleUserDTO;
 import com.bank.dto.TarjetaDTO;
 import com.bank.dto.TipoDocumentoUserDTO;
@@ -14,6 +15,8 @@ import com.bank.dto.TipoPlazoDTO;
 import com.bank.dto.TipoTarjetaDTO;
 import com.bank.dto.TipoTransacionDTO;
 import com.bank.dto.UserDTO;
+import com.bank.model.EstadoPrestamo;
+import com.bank.service.EstadoPrestamoService;
 import com.bank.service.RoleUserService;
 import com.bank.service.TarjetaService;
 import com.bank.service.TipoDocumentoUserService;
@@ -37,6 +40,7 @@ public class BankSafeApplication {
     		TipoMonedaTarjetaService tipoMonedaTarjetaService,
     		TipoPlazoService tipoPrestamoService,
     		TipoTransacionService tipoTransacionService,
+    		EstadoPrestamoService estadoPrestamoService,
     		TarjetaService tarjetaService,
     		PasswordEncoder passwordEncoder
     		) {
@@ -64,17 +68,20 @@ public class BankSafeApplication {
         	TipoMonedaTarjetaDTO tipoMonedaTarjetaDTO= TipoMonedaTarjetaDTO.builder()
         		.tipo("SOLES")
         		.simbolo("PEN")
+        		.simboloSecundario("S/.")
         		.build();
         	tipoMonedaTarjetaService.save(tipoMonedaTarjetaDTO);
         	
         	tipoMonedaTarjetaDTO= TipoMonedaTarjetaDTO.builder()
             		.tipo("DOLARES")
             		.simbolo("USD")
+            		.simboloSecundario("$")
             		.build();
             tipoMonedaTarjetaService.save(tipoMonedaTarjetaDTO);
             tipoMonedaTarjetaDTO= TipoMonedaTarjetaDTO.builder()
             		.tipo("EUROS")
             		.simbolo("EUR")
+            		.simboloSecundario("€")
             		.build();
             tipoMonedaTarjetaService.save(tipoMonedaTarjetaDTO);
             TipoTarjetaDTO tipoTarjetaDTO = TipoTarjetaDTO.builder()
@@ -88,16 +95,40 @@ public class BankSafeApplication {
             
             TipoPlazoDTO tipoPrestamoDTO = TipoPlazoDTO.builder()
             		.tipo("TRIMESTRAL")
+            		.valorAnual(4)
+            		.build();
+            tipoPrestamoService.save(tipoPrestamoDTO);
+            tipoPrestamoDTO = TipoPlazoDTO.builder()
+            		.tipo("CUATRIMESTRAL")
+            		.valorAnual(3)
+            		.build();
+            tipoPrestamoDTO = TipoPlazoDTO.builder()
+            		.tipo("ANUAL")
+            		.valorAnual(1)
             		.build();
             tipoPrestamoService.save(tipoPrestamoDTO);
             tipoPrestamoDTO = TipoPlazoDTO.builder()
                     .tipo("SEMESTRAL")
+                    .valorAnual(2)
                     .build();
             tipoPrestamoService.save(tipoPrestamoDTO);
             tipoPrestamoDTO = TipoPlazoDTO.builder()
                     .tipo("MENSUAL")
+                    .valorAnual(12)
                     .build();
             tipoPrestamoService.save(tipoPrestamoDTO);
+            EstadoPrestamoDTO estadoPrestamoDTO = EstadoPrestamoDTO.builder()
+            		.estadoPrestamo("Activo")
+            		.build();
+            estadoPrestamoService.save(estadoPrestamoDTO);
+            estadoPrestamoDTO = EstadoPrestamoDTO.builder()
+            		.estadoPrestamo("Pagado")
+            		.build();
+            estadoPrestamoService.save(estadoPrestamoDTO);
+            estadoPrestamoDTO = EstadoPrestamoDTO.builder()
+            		.estadoPrestamo("Vencido")
+            		.build();
+            estadoPrestamoService.save(estadoPrestamoDTO);
             TipoTransacionDTO tipoTransacionDTO = TipoTransacionDTO.builder()
             		.tipo("TRANSFERENCIA")
             		.build();

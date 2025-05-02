@@ -15,4 +15,5 @@ public interface PrestamoRepository extends JpaRepository<Prestamo, Integer>{
 	List<Prestamo> findPrestamoByEstadoTrue();
 	Optional<Prestamo> findPrestamoByIdAndEstadoTrue(int id); 
 	Optional<Prestamo> findPrestamoByTipoPlazoAndEstadoTrue(TipoPlazo tipoPlazo);
+	List<Prestamo> findPrestamoByUser_IdAndEstadoTrue(int idUsuario);
 }

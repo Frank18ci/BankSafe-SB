@@ -36,6 +36,12 @@ public class PrestamoController {
 		return ResponseEntity.status(200).body(prestamo);
 	}
 	
+	@GetMapping("/buscarUsuario/{idUsuario}")
+	public ResponseEntity<?> getByUsuarioId(@PathVariable int idUsuario) {
+		List<PrestamoDTO> prestamo = prestamoService.findByUsuarioId(idUsuario);
+		return ResponseEntity.status(200).body(prestamo);
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody PrestamoDTO prestamo) {
 		PrestamoDTO prestamoS = prestamoService.save(prestamo);
