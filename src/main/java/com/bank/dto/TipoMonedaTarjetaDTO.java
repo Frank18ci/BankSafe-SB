@@ -17,14 +17,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TipoMonedaTarjetaDTO {
 	private int id;
-	private String nombre;
+	private String simboloSecundario;
 	private String simbolo;
 	private String tipo;
 	
 	public static TipoMonedaTarjetaDTO tipoMonedaTarjetaToTipoMonedaTarjetaDTO(TipoMonedaTarjeta tipoMonedaTarjeta) {
 		return TipoMonedaTarjetaDTO.builder()
 				.id(tipoMonedaTarjeta.getId())
-				.nombre(tipoMonedaTarjeta.getNombre())
+				.simboloSecundario(tipoMonedaTarjeta.getSimboloSecundario())
 				.simbolo(tipoMonedaTarjeta.getSimbolo())
 				.tipo(tipoMonedaTarjeta.getTipo())
 				.build();
@@ -37,7 +37,7 @@ public class TipoMonedaTarjetaDTO {
 	public static TipoMonedaTarjeta tipoMonedaTarjetaDTOToTipoMonedaTarjeta(TipoMonedaTarjetaDTO tipoMonedaTarjetaDTO) {
 		return TipoMonedaTarjeta.builder()
 				.id(tipoMonedaTarjetaDTO.getId())
-				.nombre(tipoMonedaTarjetaDTO.getNombre())
+				.simboloSecundario(tipoMonedaTarjetaDTO.getSimboloSecundario())
 				.simbolo(tipoMonedaTarjetaDTO.getSimbolo())
 				.tipo(tipoMonedaTarjetaDTO.getTipo())
 				.build();

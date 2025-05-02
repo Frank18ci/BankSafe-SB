@@ -27,6 +27,7 @@ public class TipoPlazo {
 
 	@Column(unique = true)
 	private String tipo;
+	private int valorAnual;
 
 	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean estado;

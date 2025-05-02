@@ -28,7 +28,7 @@ public class TipoMonedaTarjeta {
 	private int id;
 
 	
-	private String nombre;
+	private String simboloSecundario;
 	
 	private String simbolo;
 

@@ -14,6 +14,5 @@ import com.bank.model.TipoMonedaTarjeta;
 public interface TipoMonedaTarjetaRepository extends JpaRepository<TipoMonedaTarjeta, Integer> {
 	List<TipoMonedaTarjeta> findTipoMonedaTarjetaByEstadoTrue();
 	Optional<TipoMonedaTarjeta> findTipoMonedaTarjetaByIdAndEstadoTrue(int id);
-	Optional<TipoMonedaTarjeta> findTipoMonedaTarjetaByNombreAndEstadoTrue(String nombre);
 	Optional<TipoMonedaTarjeta> findTipoMonedaTarjetaBySimboloAndEstadoTrue(String simbolo);
 }
