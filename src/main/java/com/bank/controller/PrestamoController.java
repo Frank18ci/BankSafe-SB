@@ -47,6 +47,12 @@ public class PrestamoController {
 		PrestamoDTO prestamoS = prestamoService.save(prestamo);
 		return ResponseEntity.status(201).body(prestamoS);
 	}
+	@PostMapping("/precalculoprestamo")
+	public ResponseEntity<?> realizarPreCalculo(@RequestBody PrestamoDTO prestamo) {
+		PrestamoDTO prestamoS = prestamoService.calcularPrestamo(prestamo);
+		return ResponseEntity.status(200).body(prestamoS);
+	}
+	
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody PrestamoDTO prestamo) {
 		PrestamoDTO prestamoS = prestamoService.update(prestamo);
