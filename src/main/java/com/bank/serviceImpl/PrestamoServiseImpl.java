@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.PrestamoDTO;
+import com.bank.dto.TarjetaDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
+import com.bank.model.EstadoPrestamo;
 import com.bank.model.Prestamo;
 import com.bank.repository.PrestamoRepository;
 import com.bank.service.PrestamoService;
+import com.bank.service.TarjetaService;
 import com.bank.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,7 @@ public class PrestamoServiseImpl implements PrestamoService {
 	@Autowired
 	private PrestamoRepository prestamoRepository;
 	private final UserService userService;
+	private final TarjetaService tarjetaService;
 
 	@Override
 	public PrestamoDTO calcularPrestamo(PrestamoDTO prestamoDTO) {
@@ -89,11 +93,18 @@ public class PrestamoServiseImpl implements PrestamoService {
 
 	@Override
 	public PrestamoDTO save(PrestamoDTO prestamoDTO) {
+		prestamoDTO.setUser(userService.find(prestamoDTO.getUser().getId()));
 		prestamoDTO = calcularPrestamo(prestamoDTO);
-		prestamoDTO.setUser(userService.find(prestamoDTO.getId()));
 		Prestamo prestamoTransformado = PrestamoDTO.prestamoDTOToPrestamo(prestamoDTO);
 		prestamoTransformado.setEstado(true);
+		prestamoTransformado.setEstadoPrestamo(EstadoPrestamo.builder().id(1).build());
 		Prestamo result = prestamoRepository.save(Objects.requireNonNull(prestamoTransformado));
+		
+		//Actualizacion de tarjeta
+		TarjetaDTO tarjeta = tarjetaService.find(result.getTarjetaRecepcion().getId());
+		tarjeta.setMonto(tarjeta.getMonto() + result.getMonto());
+		tarjetaService.update(tarjeta);
+		
 		return PrestamoDTO.prestamoToPrestamoDTO(result);
 	}
 
@@ -115,6 +126,25 @@ public class PrestamoServiseImpl implements PrestamoService {
 		result.setEstado(false);
 		prestamoRepository.save(result);
 		return "Prestamo eliminado correctamente";
+	}
+	@Override
+	public PrestamoDTO realizarPago(int id) {
+		Prestamo result = prestamoRepository.findPrestamoByIdAndEstadoTrue(id)
+				.orElseThrow(() -> new ResourceNotFound("Prestamo no encontrado " + id));
+		
+		TarjetaDTO tarjeta = tarjetaService.find(result.getTarjetaRecepcion().getId());
+		tarjeta.setMonto(tarjeta.getMonto() - result.getMontoPorPlazo());
+		tarjetaService.update(tarjeta);
+		
+		result.setMontoPagado(result.getMontoPagado()+ result.getMontoPorPlazo());
+		if(result.getMontoPagado() == result.getMontoPrestamo()) {
+			result.setEstadoPrestamo(EstadoPrestamo.builder().id(2).build());
+		}
+		Prestamo resultS = prestamoRepository.save(result);
+		
+		
+		
+		return PrestamoDTO.prestamoToPrestamoDTO(resultS);
 	}
 
 }

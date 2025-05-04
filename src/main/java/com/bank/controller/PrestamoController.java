@@ -35,6 +35,11 @@ public class PrestamoController {
 		PrestamoDTO prestamo = prestamoService.find(id);
 		return ResponseEntity.status(200).body(prestamo);
 	}
+	@GetMapping("/realizarPago/{id}")
+	public ResponseEntity<?> realizarPago(@PathVariable int id) {
+		PrestamoDTO prestamo = prestamoService.realizarPago(id);
+		return ResponseEntity.status(200).body(prestamo);
+	}
 	
 	@GetMapping("/buscarUsuario/{idUsuario}")
 	public ResponseEntity<?> getByUsuarioId(@PathVariable int idUsuario) {

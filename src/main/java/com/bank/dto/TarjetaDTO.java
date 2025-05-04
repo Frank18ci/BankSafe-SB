@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.bank.model.Tarjeta;
+import com.bank.model.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,7 +37,7 @@ public class TarjetaDTO {
 				.numeroTarjeta(tarjeta.getNumeroTarjeta())
 				.claveInternet(tarjeta.getClaveInternet())
 				.monto(tarjeta.getMonto())
-				.user(UserDTO.userToUserDTO(tarjeta.getUser()))
+				.user(UserDTO.userToUserDTO(tarjeta.getUser() != null ? tarjeta.getUser() : User.builder().build()))
 				.tipoTarjeta(TipoTarjetaDTO.builder()
 						.id(tarjeta.getTipoTarjeta().getId())
 						.tipo(tarjeta.getTipoTarjeta().getTipo())
@@ -57,7 +59,7 @@ public class TarjetaDTO {
 				.numeroTarjeta(tarjetaDTO.getNumeroTarjeta())
 				.claveInternet(tarjetaDTO.getClaveInternet())
 				.monto(tarjetaDTO.getMonto())
-				.user(UserDTO.userDTOToUser(tarjetaDTO.getUser()))
+				.user(UserDTO.userDTOToUser(tarjetaDTO.getUser()!= null ? tarjetaDTO.getUser() : UserDTO.builder().build()))
 				.tipoTarjeta(TipoTarjetaDTO.tipoTarjetaDTOToTipoTarjeta(tarjetaDTO.getTipoTarjeta()))
 				.tipoMonedaTarjeta(TipoMonedaTarjetaDTO.tipoMonedaTarjetaDTOToTipoMonedaTarjeta(tarjetaDTO.getTipoMonedaTarjeta()))
 				.build();

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.bank.model.RoleUser;
+import com.bank.model.TipoDocumentoUser;
 import com.bank.model.User;
 
 import lombok.AllArgsConstructor;
@@ -37,8 +39,8 @@ public class UserDTO {
 				.fechaNacimiento(user.getFechaNacimiento())
 				.imagePath(user.getImagePath())
 				.correo(user.getCorreo())
-				.roleUser(RoleUserDTO.rolUserToRolUserDTO(user.getRoleUser()))
-				.tipoDocumentoUser(TipoDocumentoUserDTO.tipoDocumentoUserToTipoDocumentoUserDTO(user.getTipoDocumentoUser()))
+				.roleUser(RoleUserDTO.rolUserToRolUserDTO(user.getRoleUser() != null ? user.getRoleUser() : RoleUser.builder().build()))
+				.tipoDocumentoUser(TipoDocumentoUserDTO.tipoDocumentoUserToTipoDocumentoUserDTO(user.getTipoDocumentoUser() != null ? user.getTipoDocumentoUser() : TipoDocumentoUser.builder().build()))
 				.build();
 	}
 	
@@ -57,8 +59,8 @@ public class UserDTO {
 				.fechaNacimiento(userDTO.getFechaNacimiento())
 				.imagePath(userDTO.getImagePath())
 				.correo(userDTO.getCorreo())
-				.roleUser(RoleUserDTO.rolUserDTOToRolUser(userDTO.getRoleUser()))
-				.tipoDocumentoUser(TipoDocumentoUserDTO.tipoDocumentoUserDTOToTipoDocumentoUser(userDTO.getTipoDocumentoUser()))
+				.roleUser(RoleUserDTO.rolUserDTOToRolUser(userDTO.getRoleUser() != null ? userDTO.getRoleUser() : RoleUserDTO.builder().build()))
+				.tipoDocumentoUser(TipoDocumentoUserDTO.tipoDocumentoUserDTOToTipoDocumentoUser(userDTO.getTipoDocumentoUser() != null ? userDTO.getTipoDocumentoUser() : TipoDocumentoUserDTO.builder().build()))
 				.build();
 	}
 }

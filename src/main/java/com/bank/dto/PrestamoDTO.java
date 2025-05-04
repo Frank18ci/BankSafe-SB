@@ -42,10 +42,12 @@ public class PrestamoDTO {
 	
 	public static PrestamoDTO prestamoToPrestamoDTO(Prestamo prestamo) {
 		return PrestamoDTO.builder()
+				.id(prestamo.getId())
 				.monto(prestamo.getMonto())
 				.montoPrestamo(prestamo.getMontoPrestamo())
 				.montoPagado(prestamo.getMontoPagado())
 				.montoPorPlazo(prestamo.getMontoPorPlazo())
+				.interesAnual(prestamo.getInteresAnual())
 				.plazos(prestamo.getPlazos())
 				.fechaInicio(prestamo.getFechaInicio())
 				.fechaFin(prestamo.getFechaFin())
@@ -72,10 +74,12 @@ public class PrestamoDTO {
 	}
 	public static Prestamo prestamoDTOToPrestamo(PrestamoDTO prestamoDTO) {
 		return Prestamo.builder()
+				.id(prestamoDTO.getId())
 				.monto(prestamoDTO.getMonto())
 				.montoPrestamo(prestamoDTO.getMontoPrestamo())
 				.montoPagado(prestamoDTO.getMontoPagado())
 				.montoPorPlazo(prestamoDTO.getMontoPorPlazo())
+				.interesAnual(prestamoDTO.getInteresAnual())
 				.plazos(prestamoDTO.getPlazos())
 				.fechaInicio(prestamoDTO.getFechaInicio())
 				.fechaFin(prestamoDTO.getFechaFin())
@@ -85,9 +89,7 @@ public class PrestamoDTO {
 					    EstadoPrestamoDTO.estadoPrestamoDTOToEstadoPrestamo(
 					        Optional.ofNullable(prestamoDTO.getEstadoPrestamo())
 					                .orElse(EstadoPrestamoDTO.builder().build())))
-				.user(UserDTO.userDTOToUser(
-						Optional.ofNullable(prestamoDTO.getUser())
-									.orElse(UserDTO.builder().build())))
+				.user(UserDTO.userDTOToUser(prestamoDTO.getUser() != null ? prestamoDTO.getUser() : UserDTO.builder().build()))
 				.tarjetaRecepcion(TarjetaDTO.tarjetaDTOTotarjeta(
 							Optional.ofNullable(prestamoDTO.getTarjetaRecepcion())
 									.orElse(TarjetaDTO.builder().build())))
