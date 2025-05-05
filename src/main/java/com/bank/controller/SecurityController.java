@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.dto.TarjetaDTO;
-import com.bank.dto.UserDTO;
 import com.bank.model.Tarjeta;
-import com.bank.model.User;
 import com.bank.repository.TarjetaRepository;
-import com.bank.repository.UserRepository;
 
 @RestController
 @RequestMapping("/auth")
