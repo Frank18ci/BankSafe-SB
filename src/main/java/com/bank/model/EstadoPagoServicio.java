@@ -25,7 +25,7 @@ public class EstadoPagoServicio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;	
 	@Column(unique = true)
-	private String estado_servicio;
+	private String estadoServicio;
 	@OneToMany(mappedBy = "estadoPagoServicio")
 	private List<PagoServicio> pagoServicios;
 	

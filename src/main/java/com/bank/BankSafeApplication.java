@@ -1,25 +1,37 @@
 package com.bank;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.bank.dto.EmpresaDTO;
+import com.bank.dto.EstadoPagoServicioDTO;
 import com.bank.dto.EstadoPrestamoDTO;
+import com.bank.dto.PagoServicioDTO;
 import com.bank.dto.RoleUserDTO;
+import com.bank.dto.ServicioDTO;
 import com.bank.dto.TarjetaDTO;
 import com.bank.dto.TipoDocumentoUserDTO;
+import com.bank.dto.TipoEmpresaDTO;
 import com.bank.dto.TipoMonedaTarjetaDTO;
 import com.bank.dto.TipoPlazoDTO;
 import com.bank.dto.TipoTarjetaDTO;
 import com.bank.dto.TipoTransacionDTO;
 import com.bank.dto.UserDTO;
-import com.bank.model.EstadoPrestamo;
+import com.bank.service.EmpresaService;
+import com.bank.service.EstadoPagoServicioService;
 import com.bank.service.EstadoPrestamoService;
+import com.bank.service.PagoServicioService;
 import com.bank.service.RoleUserService;
+import com.bank.service.ServicioService;
 import com.bank.service.TarjetaService;
 import com.bank.service.TipoDocumentoUserService;
+import com.bank.service.TipoEmpresaService;
 import com.bank.service.TipoMonedaTarjetaService;
 import com.bank.service.TipoPlazoService;
 import com.bank.service.TipoTarjetaService;
@@ -42,6 +54,11 @@ public class BankSafeApplication {
     		TipoTransacionService tipoTransacionService,
     		EstadoPrestamoService estadoPrestamoService,
     		TarjetaService tarjetaService,
+    		TipoEmpresaService tipoEmpresaService,
+    		EmpresaService empresaService,
+    		ServicioService servicioService,
+    		EstadoPagoServicioService estadoPagoServicioService,
+    		PagoServicioService pagoServicioService,
     		PasswordEncoder passwordEncoder
     		) {
         return args -> {
@@ -312,6 +329,193 @@ public class BankSafeApplication {
                     			.build())
                     .build();
                 tarjetaService.save(tarjeta);
+                
+                //Agregando servicios
+        		//TipoEmpresaService tipoEmpresaService,
+        		//EmpresaService empresaService,
+        		//ServicioService servicioService,
+        		//EstadoPagoServicioService estadoPagoServicioService,
+        		//PagoServicioService pagoServicioService,
+                TipoEmpresaDTO tipoInternet = tipoEmpresaService.save(
+                        TipoEmpresaDTO.builder().descripcion("Internet").build()
+                );
+                tipoEmpresaService.save(tipoInternet);
+                TipoEmpresaDTO tipoAgua = tipoEmpresaService.save(
+                        TipoEmpresaDTO.builder().descripcion("Agua").build()
+                );
+                tipoEmpresaService.save(tipoAgua);
+                TipoEmpresaDTO tipoElectricidad = tipoEmpresaService.save(
+                        TipoEmpresaDTO.builder().descripcion("Electricidad").build()
+                );
+                tipoEmpresaService.save(tipoElectricidad);
+        		
+        		EmpresaDTO empresaDTO = EmpresaDTO.builder()
+        				.nombre("Perú Seal")
+        				.tipoEmpresa(TipoEmpresaDTO.builder()
+        						.id(3)
+        						.build())
+        				.build();
+        		empresaService.save(empresaDTO);
+        		empresaDTO = EmpresaDTO.builder()
+        				.nombre("Sedapar")
+        				.tipoEmpresa(TipoEmpresaDTO.builder()
+        						.id(2)
+        						.build())
+        				.build();
+        		empresaService.save(empresaDTO);
+        		empresaDTO = EmpresaDTO.builder()
+        				.nombre("Claro")
+        				.tipoEmpresa(TipoEmpresaDTO.builder()
+        						.id(1)
+        						.build())
+        				.build();
+        		empresaService.save(empresaDTO);
+        		empresaDTO = EmpresaDTO.builder()
+        				.nombre("Win")
+        				.tipoEmpresa(TipoEmpresaDTO.builder()
+        						.id(1)
+        						.build())
+        				.build();
+        		empresaService.save(empresaDTO);
+        		empresaDTO = EmpresaDTO.builder()
+        				.nombre("Movistar")
+        				.tipoEmpresa(TipoEmpresaDTO.builder()
+        						.id(1)
+        						.build())
+        				.build();
+        		empresaService.save(empresaDTO);
+        		
+        		
+        		
+        		ServicioDTO servicioDTO = ServicioDTO.builder()
+        				.codigo("PERU-001")
+        				.descripcion("Servicio Eléctrico Perú Seal")
+        				.empresa(EmpresaDTO.builder()
+        						.id(1)
+        						.build())
+        				.build();
+        		servicioService.save(servicioDTO);
+        		servicioDTO = ServicioDTO.builder()
+        				.codigo("SEDA-001")
+        				.descripcion("Servicio de Agua Sedapar")
+        				.empresa(EmpresaDTO.builder()
+        						.id(2)
+        						.build())
+        				.build();
+        		servicioService.save(servicioDTO);
+        		servicioDTO = ServicioDTO.builder()
+        				.codigo("CLARO-001")
+        				.descripcion("Servicio de Internet Claro")
+        				.empresa(EmpresaDTO.builder()
+        						.id(3)
+        						.build())
+        				.build();
+        		servicioService.save(servicioDTO);
+        		servicioDTO = ServicioDTO.builder()
+        				.codigo("WIN-001")
+        				.descripcion("Servicio de Internet Win")
+        				.empresa(EmpresaDTO.builder()
+        						.id(4)
+        						.build())
+        				.build();
+        		servicioService.save(servicioDTO);
+        		servicioDTO = ServicioDTO.builder()
+        				.codigo("MOVI-001")
+        				.descripcion("Servicio de Internet Movistar")
+        				.empresa(EmpresaDTO.builder()
+        						.id(5)
+        						.build())
+        				.build();
+        		servicioService.save(servicioDTO);
+        		
+        		
+        		
+        		EstadoPagoServicioDTO estadoPagoServicioDTO = EstadoPagoServicioDTO.builder()
+        				.estadoServicio("Pagado")
+        				.build();
+        		estadoPagoServicioService.save(estadoPagoServicioDTO);
+        		estadoPagoServicioDTO = EstadoPagoServicioDTO.builder()
+        				.estadoServicio("Pendiente")
+        				.build();
+        		estadoPagoServicioService.save(estadoPagoServicioDTO);
+        		
+        		
+        		Calendar calendar = Calendar.getInstance();
+        		calendar.add(Calendar.DAY_OF_MONTH, 10);
+        		Date fechaDiezDias = calendar.getTime();
+
+        		PagoServicioDTO pagoServicio1 = PagoServicioDTO.builder()
+        		        .montoPago(100.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(1).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio1);
+        		PagoServicioDTO pagoServicio2 = PagoServicioDTO.builder()
+        		        .montoPago(150.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(2).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio2);
+        		PagoServicioDTO pagoServicio3 = PagoServicioDTO.builder()
+        		        .montoPago(200.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(3).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio3);
+        		PagoServicioDTO pagoServicio4 = PagoServicioDTO.builder()
+        		        .montoPago(250.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(4).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio4);
+        		PagoServicioDTO pagoServicio5 = PagoServicioDTO.builder()
+        		        .montoPago(300.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(5).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio5);
+        		PagoServicioDTO pagoServicio6 = PagoServicioDTO.builder()
+        		        .montoPago(350.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(1).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio6);
+        		PagoServicioDTO pagoServicio7 = PagoServicioDTO.builder()
+        		        .montoPago(400.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(2).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio7);
+        		PagoServicioDTO pagoServicio8 = PagoServicioDTO.builder()
+        		        .montoPago(450.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(3).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio8);
+        		PagoServicioDTO pagoServicio9 = PagoServicioDTO.builder()
+        		        .montoPago(500.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(4).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio9);
+        		PagoServicioDTO pagoServicio10 = PagoServicioDTO.builder()
+        		        .montoPago(550.00)
+        		        .fechaPago(fechaDiezDias)
+        		        .servicio(ServicioDTO.builder().id(5).build())
+        		        .estadoPagoServicio(EstadoPagoServicioDTO.builder().id(2).build())
+        		        .build();
+        		pagoServicioService.save(pagoServicio10);
+        		
+        		
         };
     }
 }
