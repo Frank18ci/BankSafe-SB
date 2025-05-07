@@ -1,7 +1,5 @@
 package com.bank.serviceImpl;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -42,14 +40,12 @@ public class PrestamoServiseImpl implements PrestamoService {
 		}
 		double tasaInteresEfectiva = 1 + (interes / prestamoDTO.getTipoPlazo().getValorAnual());
 		prestamoDTO.setInteresAnual(interes);
-		BigDecimal montoPrestamo = BigDecimal
-				.valueOf(prestamoDTO.getMonto() * Math.pow(tasaInteresEfectiva, prestamoDTO.getPlazos()))
-				.setScale(2, RoundingMode.HALF_UP);
-		prestamoDTO.setMontoPrestamo(montoPrestamo.doubleValue());
+		double montoPrestamo = prestamoDTO.getMonto() * Math.pow(tasaInteresEfectiva, prestamoDTO.getPlazos()); 
+				
+		prestamoDTO.setMontoPrestamo(montoPrestamo);
 
-		BigDecimal montoPorPlazo = montoPrestamo.divide(BigDecimal.valueOf(prestamoDTO.getPlazos()), 2,
-				RoundingMode.HALF_UP);
-		prestamoDTO.setMontoPorPlazo(montoPorPlazo.doubleValue());
+		double montoPorPlazo = montoPrestamo / prestamoDTO.getPlazos();
+		prestamoDTO.setMontoPorPlazo(montoPorPlazo);
 
 		LocalDate fechaInicio = prestamoDTO.getFechaInicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		int mesesPorPlazo = 12 / prestamoDTO.getTipoPlazo().getValorAnual();
