@@ -2,6 +2,7 @@ package com.bank.model;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,4 +30,6 @@ public class PagoServicio {
 	private Servicio servicio;
 	@ManyToOne
 	private EstadoPagoServicio estadoPagoServicio;
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+	private boolean estado;
 }
