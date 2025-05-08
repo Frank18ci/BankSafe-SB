@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.dto.EmpresaDTO;
@@ -29,6 +30,13 @@ public class EmpresaController {
 	public ResponseEntity<?> getAll() {
 		List<EmpresaDTO> empresaDTOs = empresaService.list();
 		return ResponseEntity.status(200).body(empresaDTOs);
+	}
+	@GetMapping("buscarNombreAndDescripcion")
+	public ResponseEntity<?> getNombreAndDescripcion(
+			@RequestParam(defaultValue = "") String nombre,
+			@RequestParam(defaultValue = "") String tipoEmpresaDescripcion
+			) {
+		return ResponseEntity.status(200).body(empresaService.buscarPorNombreAndipoEmpresaDescripcion(nombre, tipoEmpresaDescripcion));
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable int id) {

@@ -27,7 +27,6 @@ public class Servicio {
 	private int id;	
 	@Column(unique = true)
 	private String codigo;
-	private String descripcion;
 	@ManyToOne
 	private Empresa empresa;
 	@OneToMany(mappedBy = "servicio")

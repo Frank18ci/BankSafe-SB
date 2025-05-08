@@ -2,6 +2,7 @@ package com.bank.model;
 
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -29,11 +30,11 @@ public class Prestamo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private double monto;
-	private double montoPrestamo;
-	private double montoPagado;
-	private double montoPorPlazo;
-	private double interesAnual;
+	private BigDecimal monto;
+	private BigDecimal montoPrestamo;
+	private BigDecimal montoPagado;
+	private BigDecimal montoPorPlazo;
+	private BigDecimal interesAnual;
     private Integer plazos;
     
     @Temporal(TemporalType.TIMESTAMP)
