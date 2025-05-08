@@ -37,7 +37,13 @@ public class PagoServicioController {
 		PagoServicioDTO pagoServicio = pagoServicioService.find(id);
 		return ResponseEntity.status(200).body(pagoServicio);
 	}
-
+	@PostMapping("/realizarPago")
+	public ResponseEntity<?> realizarPago(@RequestBody PagoServicioDTO pagoServicio,
+			@RequestParam int idTarjeta) {
+		PagoServicioDTO pagoServicioS = pagoServicioService.realizarPago(pagoServicio, idTarjeta);
+		return ResponseEntity.status(201).body(pagoServicioS);
+	} 
+	
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody PagoServicioDTO pagoServicio) {
 		PagoServicioDTO pagoServicioS = pagoServicioService.save(pagoServicio);
