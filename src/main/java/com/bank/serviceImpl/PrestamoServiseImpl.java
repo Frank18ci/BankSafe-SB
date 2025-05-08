@@ -1,5 +1,7 @@
 package com.bank.serviceImpl;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -32,25 +34,33 @@ public class PrestamoServiseImpl implements PrestamoService {
 
 	@Override
 	public PrestamoDTO calcularPrestamo(PrestamoDTO prestamoDTO) {
-		double interes = 0;
-		if (prestamoDTO.getMonto() >= 10000 && prestamoDTO.getPlazos() >= 12) {
-			interes = 0.10;
+		BigDecimal interes = BigDecimal.ZERO;
+
+		BigDecimal monto = prestamoDTO.getMonto();
+		BigDecimal plazos = new BigDecimal(prestamoDTO.getPlazos());
+
+		if (monto.compareTo(new BigDecimal("10000")) >= 0 && plazos.compareTo(new BigDecimal("12")) >= 0) {
+			interes = new BigDecimal("0.12");
 		} else {
-			interes = 0.14;
+			interes = new BigDecimal("0.14");
 		}
-		double tasaInteresEfectiva = 1 + (interes / prestamoDTO.getTipoPlazo().getValorAnual());
+		BigDecimal tasaInteresEfectiva = BigDecimal.ONE.add(
+				interes.divide(new BigDecimal(prestamoDTO.getTipoPlazo().getValorAnual()), 10, RoundingMode.HALF_UP));
+
+		BigDecimal montoPrestamo = prestamoDTO.getMonto().multiply(tasaInteresEfectiva.pow(prestamoDTO.getPlazos()));
+
 		prestamoDTO.setInteresAnual(interes);
-		double montoPrestamo = prestamoDTO.getMonto() * Math.pow(tasaInteresEfectiva, prestamoDTO.getPlazos()); 
-				
 		prestamoDTO.setMontoPrestamo(montoPrestamo);
 
-		double montoPorPlazo = montoPrestamo / prestamoDTO.getPlazos();
+		BigDecimal montoPorPlazo = montoPrestamo.divide(new BigDecimal(prestamoDTO.getPlazos()), 2,
+				RoundingMode.HALF_UP);
 		prestamoDTO.setMontoPorPlazo(montoPorPlazo);
 
 		LocalDate fechaInicio = prestamoDTO.getFechaInicio().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		int mesesPorPlazo = 12 / prestamoDTO.getTipoPlazo().getValorAnual();
 		LocalDate fechaFin = fechaInicio.plusMonths(prestamoDTO.getPlazos() * mesesPorPlazo);
 		prestamoDTO.setFechaFin(Date.from(fechaFin.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
 		return prestamoDTO;
 	}
 
@@ -95,12 +105,12 @@ public class PrestamoServiseImpl implements PrestamoService {
 		prestamoTransformado.setEstado(true);
 		prestamoTransformado.setEstadoPrestamo(EstadoPrestamo.builder().id(1).build());
 		Prestamo result = prestamoRepository.save(Objects.requireNonNull(prestamoTransformado));
-		
-		//Actualizacion de tarjeta
+
+		// Actualizacion de tarjeta
 		TarjetaDTO tarjeta = tarjetaService.find(result.getTarjetaRecepcion().getId());
-		tarjeta.setMonto(tarjeta.getMonto() + result.getMonto());
+		tarjeta.setMonto(tarjeta.getMonto() + result.getMonto().doubleValue());
 		tarjetaService.update(tarjeta);
-		
+
 		return PrestamoDTO.prestamoToPrestamoDTO(result);
 	}
 
@@ -123,23 +133,27 @@ public class PrestamoServiseImpl implements PrestamoService {
 		prestamoRepository.save(result);
 		return "Prestamo eliminado correctamente";
 	}
+
 	@Override
 	public PrestamoDTO realizarPago(int id) {
 		Prestamo result = prestamoRepository.findPrestamoByIdAndEstadoTrue(id)
 				.orElseThrow(() -> new ResourceNotFound("Prestamo no encontrado " + id));
-		
+
 		TarjetaDTO tarjeta = tarjetaService.find(result.getTarjetaRecepcion().getId());
-		tarjeta.setMonto(tarjeta.getMonto() - result.getMontoPorPlazo());
-		tarjetaService.update(tarjeta);
-		
-		result.setMontoPagado(result.getMontoPagado()+ result.getMontoPorPlazo());
-		if(result.getMontoPagado() == result.getMontoPrestamo()) {
+		tarjeta.setMonto(tarjeta.getMonto() - result.getMontoPorPlazo().doubleValue());
+		TarjetaDTO tarjetaU = tarjetaService.update(tarjeta);
+
+		result.setMontoPagado(result.getMontoPagado() != null ? result.getMontoPagado().add(result.getMontoPorPlazo())
+				: BigDecimal.ZERO.add(result.getMontoPorPlazo()));
+		if (result.getMontoPagado().compareTo(result.getMontoPrestamo()) >= 0) {
+			BigDecimal extraDeMonto = result.getMontoPagado().subtract(result.getMontoPrestamo());
+			tarjetaU.setMonto(tarjeta.getMonto() + extraDeMonto.doubleValue());
+			tarjetaService.update(tarjeta);
+			result.setMontoPagado(result.getMontoPrestamo());
 			result.setEstadoPrestamo(EstadoPrestamo.builder().id(2).build());
 		}
 		Prestamo resultS = prestamoRepository.save(result);
-		
-		
-		
+
 		return PrestamoDTO.prestamoToPrestamoDTO(resultS);
 	}
 

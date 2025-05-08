@@ -18,13 +18,11 @@ import lombok.NoArgsConstructor;
 public class ServicioDTO {
 	private int id;	
 	private String codigo;
-	private String descripcion;
 	private EmpresaDTO empresa;
 	public static ServicioDTO servicioToServicioDTO(Servicio servicio) {
 		return ServicioDTO.builder()
 				.id(servicio.getId())
 				.codigo(servicio.getCodigo())
-				.descripcion(servicio.getDescripcion())
 				.empresa(servicio.getEmpresa() != null ?
 						EmpresaDTO.empresaToEmpresaDTO(servicio.getEmpresa()):
 							EmpresaDTO.builder().build())
@@ -38,7 +36,6 @@ public class ServicioDTO {
 		return Servicio.builder()
 				.id(servicioDTO.getId())
 				.codigo(servicioDTO.getCodigo())
-				.descripcion(servicioDTO.getDescripcion())
 				.empresa(servicioDTO.getEmpresa() != null ?
 						EmpresaDTO.empresaDTOToEmpresa(servicioDTO.getEmpresa()):
 							Empresa.builder().build())

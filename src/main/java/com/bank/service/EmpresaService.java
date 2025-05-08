@@ -12,4 +12,5 @@ public interface EmpresaService {
 	public EmpresaDTO save(EmpresaDTO empresaDTO);
 	public EmpresaDTO update(EmpresaDTO empresaDTO);
 	public String delete(int id);
+	public List<EmpresaDTO> buscarPorNombreAndipoEmpresaDescripcion(String nombre, String tipoEmpresaDescripcion);
 }

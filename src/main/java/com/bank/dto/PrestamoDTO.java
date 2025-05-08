@@ -1,5 +1,6 @@
 package com.bank.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,11 +24,11 @@ import lombok.NoArgsConstructor;
 public class PrestamoDTO {
 	
 	private int id;
-	private double monto;
-	private double montoPrestamo;
-	private double montoPagado;
-	private double montoPorPlazo;
-	private double interesAnual;
+	private BigDecimal monto;
+	private BigDecimal montoPrestamo;
+	private BigDecimal montoPagado;
+	private BigDecimal montoPorPlazo;
+	private BigDecimal interesAnual;
     private Integer plazos;
     
     private Date fechaInicio;

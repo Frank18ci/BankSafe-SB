@@ -389,7 +389,6 @@ public class BankSafeApplication {
         		
         		ServicioDTO servicioDTO = ServicioDTO.builder()
         				.codigo("PERU-001")
-        				.descripcion("Servicio Eléctrico Perú Seal")
         				.empresa(EmpresaDTO.builder()
         						.id(1)
         						.build())
@@ -397,7 +396,6 @@ public class BankSafeApplication {
         		servicioService.save(servicioDTO);
         		servicioDTO = ServicioDTO.builder()
         				.codigo("SEDA-001")
-        				.descripcion("Servicio de Agua Sedapar")
         				.empresa(EmpresaDTO.builder()
         						.id(2)
         						.build())
@@ -405,7 +403,6 @@ public class BankSafeApplication {
         		servicioService.save(servicioDTO);
         		servicioDTO = ServicioDTO.builder()
         				.codigo("CLARO-001")
-        				.descripcion("Servicio de Internet Claro")
         				.empresa(EmpresaDTO.builder()
         						.id(3)
         						.build())
@@ -413,7 +410,6 @@ public class BankSafeApplication {
         		servicioService.save(servicioDTO);
         		servicioDTO = ServicioDTO.builder()
         				.codigo("WIN-001")
-        				.descripcion("Servicio de Internet Win")
         				.empresa(EmpresaDTO.builder()
         						.id(4)
         						.build())
@@ -421,7 +417,6 @@ public class BankSafeApplication {
         		servicioService.save(servicioDTO);
         		servicioDTO = ServicioDTO.builder()
         				.codigo("MOVI-001")
-        				.descripcion("Servicio de Internet Movistar")
         				.empresa(EmpresaDTO.builder()
         						.id(5)
         						.build())
