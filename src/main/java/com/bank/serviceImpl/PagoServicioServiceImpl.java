@@ -6,11 +6,14 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.PagoServicioDTO;
+import com.bank.dto.TarjetaDTO;
 import com.bank.exception.BadRequestParam;
 import com.bank.exception.ResourceNotFound;
+import com.bank.model.EstadoPagoServicio;
 import com.bank.model.PagoServicio;
 import com.bank.repository.PagoServicioRepository;
 import com.bank.service.PagoServicioService;
+import com.bank.service.TarjetaService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PagoServicioServiceImpl implements PagoServicioService{
 	private final PagoServicioRepository pagoServicioRepository;
+	private final TarjetaService tarjetaService;
 	
 	@Override
 	public List<PagoServicioDTO> list() {
@@ -48,6 +52,18 @@ public class PagoServicioServiceImpl implements PagoServicioService{
 		PagoServicio result = pagoServicioRepository.save(pagoServicioTransformado);
 		return PagoServicioDTO.pagoServicioToPagoServicioDTO(result);
 	}
+	@Override
+	public PagoServicioDTO realizarPago(PagoServicioDTO pagoServicio, int idTarjeta) {
+		PagoServicio pagoServicioEncontrado = PagoServicioDTO.pagoServicioDTOToPagoServicio(find(pagoServicio.getId()));
+		pagoServicioEncontrado.setEstado(true);
+		pagoServicioEncontrado.setEstadoPagoServicio(EstadoPagoServicio.builder().id(1).build());
+		
+		TarjetaDTO tarjeta = tarjetaService.find(idTarjeta);
+		tarjeta.setMonto(tarjeta.getMonto() - pagoServicioEncontrado.getMontoPago());
+		tarjetaService.save(tarjeta);
+		PagoServicio result = pagoServicioRepository.save(pagoServicioEncontrado);
+		return PagoServicioDTO.pagoServicioToPagoServicioDTO(result);	
+		}
 	@Override
 	public PagoServicioDTO update(PagoServicioDTO pagoServicioDTO) {
 		if(Objects.isNull(pagoServicioDTO.getId())) {

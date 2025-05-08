@@ -32,7 +32,7 @@ public class EmpresaServiceImpl implements EmpresaService{
 	@Override
 	public List<EmpresaDTO> buscarPorNombreAndipoEmpresaDescripcion(String nombre, String tipoEmpresaDescripcion) {
 		return EmpresaDTO.listaEmpresaToListaEmpresaDTO(
-				empresaRepository.findByNombreContainingAndTipoEmpresa_descripcionContainingAndEstadoTrue(nombre, tipoEmpresaDescripcion));
+				empresaRepository.findByNombreContainingOrTipoEmpresa_descripcionContainingAndEstadoTrue(nombre, tipoEmpresaDescripcion));
 	}
 	@Override
 	public EmpresaDTO find(int id) {

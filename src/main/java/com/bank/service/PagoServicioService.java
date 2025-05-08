@@ -13,4 +13,5 @@ public interface PagoServicioService {
 	public PagoServicioDTO save(PagoServicioDTO pagoServicioDTO);
 	public PagoServicioDTO update(PagoServicioDTO pagoServicioDTO);
 	public String delete(int id);
+	public PagoServicioDTO realizarPago(PagoServicioDTO pagoServicio, int idTarjeta);
 }

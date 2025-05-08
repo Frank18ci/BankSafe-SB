@@ -11,6 +11,6 @@ import com.bank.model.Empresa;
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer>{
 	List<Empresa> findByEstadoTrue();
-	List<Empresa> findByNombreContainingAndTipoEmpresa_descripcionContainingAndEstadoTrue(String nombre, String tipoEmpresaDescripcion);
+	List<Empresa> findByNombreContainingOrTipoEmpresa_descripcionContainingAndEstadoTrue(String nombre, String tipoEmpresaDescripcion);
 	Optional<Empresa> findByIdAndEstadoTrue(int id);
 }
