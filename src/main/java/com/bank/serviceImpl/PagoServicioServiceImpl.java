@@ -59,7 +59,10 @@ public class PagoServicioServiceImpl implements PagoServicioService{
 		pagoServicioEncontrado.setEstadoPagoServicio(EstadoPagoServicio.builder().id(1).build());
 		
 		TarjetaDTO tarjeta = tarjetaService.find(idTarjeta);
-		tarjeta.setMonto(tarjeta.getMonto() - pagoServicioEncontrado.getMontoPago());
+		double montoDisminuido = tarjeta.getMonto() - pagoServicioEncontrado.getMontoPago();
+		if(montoDisminuido < 0)
+			throw new BadRequestParam("No cuentas con el dinero suficiente");
+		tarjeta.setMonto(montoDisminuido);
 		tarjetaService.save(tarjeta);
 		PagoServicio result = pagoServicioRepository.save(pagoServicioEncontrado);
 		return PagoServicioDTO.pagoServicioToPagoServicioDTO(result);	

@@ -61,7 +61,10 @@ public class TransaccionServiceimpl implements TransaccionService {
 	public TransacionDTO save(TransacionDTO transacionDTO) {
 		Tarjeta tarjetaE = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaService.find(transacionDTO.getTarjetaOrigen().getId()));
 		Tarjeta tarjetaD = TarjetaDTO.tarjetaDTOTotarjeta(tarjetaService.find(transacionDTO.getTarjetaDestino().getId()));
-		tarjetaE.setMonto(tarjetaE.getMonto() - Double.parseDouble(transacionDTO.getMonto().toString()));
+		double montoDisminuido = tarjetaE.getMonto() - Double.parseDouble(transacionDTO.getMonto().toString());
+		if(montoDisminuido < 0)
+			throw new BadRequestParam("No cuentas con el dinero suficiente");
+		tarjetaE.setMonto(montoDisminuido);
 		tarjetaD.setMonto(tarjetaD.getMonto() + Double.parseDouble(transacionDTO.getMonto().toString()));
 		tarjetaService.update(TarjetaDTO.tarjetaToTarjetaDTO(tarjetaE));
 		tarjetaService.update(TarjetaDTO.tarjetaToTarjetaDTO(tarjetaD));
@@ -98,10 +101,14 @@ public class TransaccionServiceimpl implements TransaccionService {
 	@Override
 	public TransacionDTO realizarConversionyTransferencia(TransaccionConversionMonedaDTO transaccionConversionMonedaDTO) {
 		TarjetaDTO tarjetaO = tarjetaService.find(transaccionConversionMonedaDTO.getTarjetaOrigen().getId());
-		tarjetaO.setMonto(tarjetaO.getMonto() - Double.parseDouble(transaccionConversionMonedaDTO.getMontoTarjetaOrigen().toString()));
-		tarjetaService.save(tarjetaO);
+		double montoDisminuido = tarjetaO.getMonto() - Double.parseDouble(transaccionConversionMonedaDTO.getMontoTarjetaOrigen().toString());
+		if(montoDisminuido < 0)
+			throw new BadRequestParam("No cuentas con el dinero suficiente");
+		tarjetaO.setMonto(montoDisminuido);
+		
 		TarjetaDTO tarjetaD = tarjetaService.find(transaccionConversionMonedaDTO.getTarjetaDestino().getId());
 		tarjetaD.setMonto(tarjetaD.getMonto() + Double.parseDouble(transaccionConversionMonedaDTO.getMontoTarjetaDestino().toString()));
+		tarjetaService.save(tarjetaO);
 		tarjetaService.save(tarjetaD);
 		
 		Transacion t = Transacion.builder()
@@ -134,6 +141,7 @@ public class TransaccionServiceimpl implements TransaccionService {
 		
 		Calendar calFin = Calendar.getInstance();
 		calFin.set(Calendar.DAY_OF_MONTH, calFin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		calInicio.add(Calendar.MONTH, -1);
 		calFin.set(Calendar.HOUR_OF_DAY, 23);
 		calFin.set(Calendar.MINUTE, 59);
 		calFin.set(Calendar.SECOND, 59);
@@ -147,7 +155,7 @@ public class TransaccionServiceimpl implements TransaccionService {
 	@Override
 	public List<TransacionDTO> listByTarjetaOrigen_numeroTarjetaUltimoMes(String numeroTarjeta) {
 		Calendar calInicio = Calendar.getInstance();
-		calInicio.set(Calendar.MONTH, - 1);
+		calInicio.add(Calendar.MONTH, -1);
 		calInicio.set(Calendar.DAY_OF_MONTH, 1);
 		calInicio.set(Calendar.HOUR_OF_DAY, 0);
 		calInicio.set(Calendar.MINUTE, 0);
@@ -157,7 +165,7 @@ public class TransaccionServiceimpl implements TransaccionService {
 		
 		Calendar calFin = Calendar.getInstance();
 		calFin.set(Calendar.DAY_OF_MONTH, calFin.getActualMaximum(Calendar.DAY_OF_MONTH));
-		calInicio.set(Calendar.MONTH, - 1);
+		calFin.add(Calendar.MONTH, -1);
 		calFin.set(Calendar.HOUR_OF_DAY, 23);
 		calFin.set(Calendar.MINUTE, 59);
 		calFin.set(Calendar.SECOND, 59);

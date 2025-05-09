@@ -140,7 +140,10 @@ public class PrestamoServiseImpl implements PrestamoService {
 				.orElseThrow(() -> new ResourceNotFound("Prestamo no encontrado " + id));
 
 		TarjetaDTO tarjeta = tarjetaService.find(result.getTarjetaRecepcion().getId());
-		tarjeta.setMonto(tarjeta.getMonto() - result.getMontoPorPlazo().doubleValue());
+		double montoDisminuido = tarjeta.getMonto() - result.getMontoPorPlazo().doubleValue();
+		if(montoDisminuido < 0)
+			throw new BadRequestParam("No cuentas con el dinero suficiente");
+		tarjeta.setMonto(montoDisminuido);
 		TarjetaDTO tarjetaU = tarjetaService.update(tarjeta);
 
 		result.setMontoPagado(result.getMontoPagado() != null ? result.getMontoPagado().add(result.getMontoPorPlazo())
@@ -148,6 +151,15 @@ public class PrestamoServiseImpl implements PrestamoService {
 		if (result.getMontoPagado().compareTo(result.getMontoPrestamo()) >= 0) {
 			BigDecimal extraDeMonto = result.getMontoPagado().subtract(result.getMontoPrestamo());
 			tarjetaU.setMonto(tarjeta.getMonto() + extraDeMonto.doubleValue());
+			tarjetaService.update(tarjeta);
+			result.setMontoPagado(result.getMontoPrestamo());
+			result.setEstadoPrestamo(EstadoPrestamo.builder().id(2).build());
+		}else if (result.getMontoPrestamo().subtract(result.getMontoPagado()).compareTo(result.getMontoPorPlazo()) < 0) {
+			BigDecimal extraDeMonto = result.getMontoPrestamo().subtract(result.getMontoPagado());
+			double montoDisminuidoExcedente = tarjeta.getMonto() - extraDeMonto.doubleValue();
+			if(montoDisminuido < 0)
+				throw new BadRequestParam("No cuentas con el dinero suficiente");
+			tarjetaU.setMonto(montoDisminuidoExcedente);
 			tarjetaService.update(tarjeta);
 			result.setMontoPagado(result.getMontoPrestamo());
 			result.setEstadoPrestamo(EstadoPrestamo.builder().id(2).build());
