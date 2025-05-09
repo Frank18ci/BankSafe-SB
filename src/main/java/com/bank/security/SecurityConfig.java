@@ -44,15 +44,13 @@ public class SecurityConfig {
 				.csrf(config -> config.disable())
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/*").permitAll();
 					auth.requestMatchers("/login").permitAll();
-					auth.requestMatchers("login").permitAll();
-					auth.requestMatchers("/auth/*").permitAll();
-					auth.requestMatchers("/login/*").permitAll();
+					auth.requestMatchers("/auth/register").permitAll();
+					auth.requestMatchers("/tarjeta").permitAll();
+					auth.requestMatchers("/tipoTarjeta/**").permitAll();
+					auth.requestMatchers("/tipoMonedaTarjeta/**").permitAll();
+					auth.requestMatchers("/tipoDocumentoUser/**").permitAll();
 					auth.requestMatchers("/user/**").permitAll();
-					auth.requestMatchers("/user/img").permitAll();
-					auth.requestMatchers("/uploads/*").permitAll();
-					auth.requestMatchers("/cambioMoneda/**").permitAll();
 					auth.anyRequest().authenticated();
 				})
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -115,7 +115,8 @@ public class TarjetaServiceImpl implements TarjetaService, UserDetailsService{
 			user = tarjetaTransformado.getUser();
 		      user.setRoleUser(role);
 		      user.setEstado(true);
-		      userRepository.save(user);
+		    	  userRepository.save(user);
+		    
 		} else {
 			user = userRepository.findUserByIdAndEstadoTrue(userDTO.getId())
 				    .orElseThrow(() -> new ResourceNotFound("Usuario no encontrado con id: " + userDTO.getId()));
